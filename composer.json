@@ -20,12 +20,19 @@
         "topthink/framework": "^5.0",
         "topthink/think-helper": "^1.0",
         "topthink/think-testing": "^1.0",
-        "topthink/think-migration": "^1.0"
+        "topthink/think-migration": "^1.0",
+        "qsnh/think-auth": "^0.2.0"
     },
     "extra": {
         "think-path": "thinkphp"
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
     }
 }
