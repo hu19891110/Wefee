@@ -3,7 +3,7 @@
 use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
-class CreateWefeeUsersTable extends AbstractMigration
+class CreateWefeeAdminsTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -29,10 +29,10 @@ class CreateWefeeUsersTable extends AbstractMigration
 
     public function up()
     {
-        $table = $this->table('users');
-        $table->addColumn('username', 'string', ['limit' => 32, 'null' => false, 'comment' => '用户名'])
-            ->addColumn('password', 'string', ['limit' => 64, 'null' => false, 'comment' => '密码'])
-            ->addColumn('last_login_ip', 'string', ['limit' => 32, 'null' => false, 'comment' => '最后登录IP'])
+        $table = $this->table('admins');
+        $table->addColumn('username', 'string', ['limit' => 32, 'comment' => '用户名'])
+            ->addColumn('password', 'string', ['limit' => 64, 'comment' => '密码'])
+            ->addColumn('last_login_ip', 'string', ['limit' => 32, 'comment' => '最后登录IP'])
             ->addColumn('last_login_date', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP', 'comment' => '最后登录时间'])
             ->addColumn('login_times', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'default' => 0, 'comment' => '登录次数'])
             ->save();
@@ -40,8 +40,8 @@ class CreateWefeeUsersTable extends AbstractMigration
 
     public function down()
     {
-        if ($this->hasTable('users')) {
-            $this->dropTable('users');
+        if ($this->hasTable('admins')) {
+            $this->dropTable('admins');
         }
     }
 }
