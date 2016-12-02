@@ -21,7 +21,8 @@
         "topthink/think-helper": "^1.0",
         "topthink/think-testing": "^1.0",
         "topthink/think-migration": "^1.0",
-        "qsnh/think-auth": "^0.2.0"
+        "qsnh/think-auth": "^0.2.0",
+        "overtrue/wechat": "^3.1"
     },
     "extra": {
         "think-path": "thinkphp"
@@ -32,7 +33,7 @@
     "repositories": {
         "packagist": {
             "type": "composer",
-            "url": "https://packagist.org"
+            "url": "https://packagist.phpcomposer.com"
         }
     }
 }
