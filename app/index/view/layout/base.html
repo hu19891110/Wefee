@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{$title}</title>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <script src="/static/require.js"></script>
     <script src="/static/main.js"></script>
@@ -13,7 +14,9 @@
 
 {block name="body"}{/block}
 
-<script>require(['bootstrap']);</script>
+{literal}
+<script>require(['bootstrap'])</script>
+{/literal}
 {block name="footer"}{/block}
 </body>
 </html>

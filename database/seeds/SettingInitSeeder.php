@@ -17,43 +17,43 @@ class SettingInitSeeder extends AbstractSeed
         $init = [
             /** 微信公众号基本信息 */
             [
-                'wefee_key'   => 'wechat.appid',
+                'wefee_key'   => 'wechat_appid',
                 'wefee_value' => '',
             ],
             [
-                'wefee_key'   => 'wechat.appsecret',
+                'wefee_key'   => 'wechat_appsecret',
                 'wefee_value' => '',
             ],
             [
-                'wefee_key'   => 'wechat.token',
+                'wefee_key'   => 'wechat_token',
                 'wefee_value' => '',
             ],
             [
-                'wefee_key'   => 'wechat.aeskey',
+                'wefee_key'   => 'wechat_aeskey',
                 'wefee_value' => '',
             ],
 
             /** 微信支付基本信息 */
             [
-                'wefee_key'   => 'wepay.mchid',
+                'wefee_key'   => 'wepay_mchid',
                 'wefee_value' => '',
             ],
             [
-                'wefee_key'   => 'wepay.key',
+                'wefee_key'   => 'wepay_key',
                 'wefee_value' => '',
             ],
             [
-                'wefee_key'   => 'wepay.public_pem',
+                'wefee_key'   => 'wepay_public_pem',
                 'wefee_value' => '',
             ],
             [
-                'wefee_key'   => 'wepay.private_pem',
+                'wefee_key'   => 'wepay_private_pem',
                 'wefee_value' => '',
             ],
 
             /** 关注回复消息 */
             [
-                'wefee_key'   => 'wechat.focus.reply.message',
+                'wefee_key'   => 'wechat_focus_reply.message',
                 'wefee_value' => ''
             ],
         ];
