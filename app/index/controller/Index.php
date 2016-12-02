@@ -2,6 +2,8 @@
 namespace app\index\controller;
 
 use think\Request;
+use think\Validate;
+use think\helper\Hash;
 use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
 
@@ -19,6 +21,8 @@ class Index extends Base
      */
     public function postLogin(Request $request)
     {
+        $this->checkToken($request);
+
         if (
             $request->post('username') == '' ||
             $request->post('password') == ''
@@ -54,10 +58,57 @@ class Index extends Base
         $user->save();
     }
 
+    /**
+     * 退出登录
+     */
     public function logout()
     {
         Auth::logout();
 
         $this->success('成功退出', url('index/index'));
+    }
+
+    /**
+     * 账户面板
+     */
+    public function admin()
+    {
+        $this->checkLogin();
+
+        $title = '账户中心';
+
+        $user = Auth::user();
+
+        return view('', compact('title', 'user'));
+    }
+
+    /**
+     * 修改密码
+     */
+    public function postChangePassword(Request $request)
+    {
+        $this->checkLogin();
+
+        $validator = new Validate([
+            'old_password|原密码' => 'require|token',
+            'new_password|新密码' => 'require|length:6,15|confirm:new_password_confirmation',
+        ], [
+            'new_password.confirm' => '两次输入密码不一致',
+        ]);
+
+        $user = Auth::user();
+
+        if (!$validator->check($request->post())) {
+            $this->error($validator->getError());
+        }
+
+        if (!Hash::check($request->post('old_password'), $user->password)) {
+            $this->error('原密码错误');
+        }
+
+        $user->password = Hash::make($request->post('new_password'));
+        $user->save();
+
+        $this->success('操作成功');
     }
 }

@@ -3,9 +3,9 @@ namespace app\index\controller;
 
 use think\Db;
 use think\Request;
+use think\Session;
 use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
-use think\Session;
 
 class Setting extends Base
 {
@@ -28,7 +28,7 @@ class Setting extends Base
 
     public function postSave(Request $request)
     {
-        Session::get('__token__') != $request->post('__token__') && $this->error('请刷新页面重新提交', url('setting/wechat'));
+        $this->checkToken($request);
 
         $data = $request->post();
 

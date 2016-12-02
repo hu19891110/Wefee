@@ -20,6 +20,7 @@
             <div class="col-lg-10 col-lg-offset-1">
                 <h3 class="text-center">Wefee</h3>
                 <form action="{:url('index/postLogin')}" method="post" role="form">
+                    {:token()}
                     <div class="form-group">
                         <label for="username">账号</label>
                         <input type="text" class="form-control" name="username" id="username" placeholder="请输入账号">
