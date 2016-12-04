@@ -9,6 +9,8 @@ use Qsnh\think\Auth\Auth;
 class Base extends Controller
 {
 
+    protected $repository = null;
+
     public function __construct(Request $request)
     {
         parent::__construct($request);
