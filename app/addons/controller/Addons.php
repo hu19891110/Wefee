@@ -9,6 +9,8 @@ use app\repository\AddonsRepository;
 class Addons extends Base
 {
 
+    protected $index_template = './common/addons';
+
     public function _initialize()
     {
         parent::_initialize();
@@ -273,7 +275,17 @@ class Addons extends Base
      */
     public function index(Request $request)
     {
-        $this->queryValidator($request);
+        $addons = $this->existsValidator($request);
+
+        $path = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'main.html';
+
+        $path = file_exists($path) ? $path : $this->index_template;
+
+        $title = "{$addons['addons_name']}的主页 - PowerBy Wefee.CC";
+
+        $user = Auth::user();
+
+        return view($path, compact('user', 'title', 'addons'));
     }
 
     /**
