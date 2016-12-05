@@ -1,12 +1,9 @@
 <?php
-/**
- * Created by Wefee.
- * User: Qsnh
- * Date: 02/12/2016
- * Time: 16:18
- */
-
 if (!function_exists('get_wechat_config')) {
+    /**
+     * 获取微信配置
+     * @return array
+     */
     function get_wechat_config()
     {
         return [
@@ -40,5 +37,70 @@ if (!function_exists('get_wechat_config')) {
             ],
 
         ];
+    }
+}
+
+if (!function_exists('get_addons_thumb')) {
+    /**
+     * 获取插件的封面
+     * @param string $addons_sign 插件的标识符
+     * @return string base64编码
+     */
+    function get_addons_thumb($addons_sign)
+    {
+        $file = ADDONS_PATH . $addons_sign . '/icon.';
+        if (file_exists($file . 'gif')) {
+            $file .= 'gif';
+        } elseif (file_exists($file . 'jpg')) {
+            $file .= 'jpg';
+        } elseif (file_exists($file . 'png')) {
+            $file .= 'png';
+        } else {
+            throw new \Exception("{$addons_sign} addons has no thumb.");
+        }
+
+        $type = getimagesize($file);
+
+        $fp   = fopen($file, "r") or die("Can't open file");
+
+        $file_content = chunk_split(base64_encode(fread($fp, filesize($file))));
+
+        switch($type[2]) {
+            case 1:
+                $img_type = "gif";
+                break;
+            case 2:
+                $img_type = "jpg";
+                break;
+            case 3:
+                $img_type = "png";
+                break;
+        }
+
+        $img = 'data:image/' . $img_type . ';base64,' . $file_content;
+
+        fclose($fp);
+
+        return $img;
+    }
+}
+
+if (!function_exists('has_new_version')) {
+    /**
+     * 插件升级版本检测
+     * @param array $addons 待检测的插件
+     * @return boolean
+     */
+    function has_new_version(array $addons)
+    {
+        $path = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'wefee.json';
+
+        if (!file_exists($path)) {
+            return false;
+        }
+
+        $json = json_decode(@file_get_contents($path), true);
+
+        return version_compare($json['version'], $addons['addons_version'], '>');
     }
 }

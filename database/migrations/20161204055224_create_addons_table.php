@@ -1,5 +1,6 @@
 <?php
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 class CreateAddonsTable extends AbstractMigration
@@ -35,7 +36,9 @@ class CreateAddonsTable extends AbstractMigration
             ->addColumn('addons_author', 'string', ['limit' => 24, 'comment' => '插件作者'])
             ->addColumn('addons_version', 'string', ['limit' => 24, 'comment' => '插件版本'])
             ->addColumn('addons_config', 'text', ['comment' => '插件配置，json格式'])
-            ->addTimestamps()
+            ->addColumn('addons_status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '1正常 3禁用', 'default' => 1])
+            ->addColumn('created_at', 'timestamp')
+            ->addColumn('updated_at', 'timestamp')
             ->save();
     }
 

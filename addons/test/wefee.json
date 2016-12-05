@@ -1,6 +1,6 @@
 {
     "name": "测试插件",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "我是插件系统的测试插件",
     "author": "小滕"
 }

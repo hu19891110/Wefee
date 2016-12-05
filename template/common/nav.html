@@ -6,18 +6,23 @@
     <div class="col-lg-8 top-header-menu-box">
         <ul>
             <li class="{if condition="stristr(request()->pathinfo(), 'dashboard/index') neq false"}active{/if}">
-                <a href="{:url('dashboard/index')}">
+                <a href="{:url('index/dashboard/index')}">
                     <i class="fa fa-tachometer" aria-hidden="true"></i> 主面板
                 </a>
             </li>
             <li class="{if condition="stristr(request()->pathinfo(), 'setting/wechat') neq false"}active{/if}">
-                <a href="{:url('setting/wechat')}">
+                <a href="{:url('index/setting/wechat')}">
                     <i class="fa fa-weixin" aria-hidden="true"></i> 微信设置
                 </a>
             </li>
             <li class="{if condition="stristr(request()->pathinfo(), 'index/admin') neq false"}active{/if}">
-                <a href="{:url('index/admin')}">
+                <a href="{:url('index/index/admin')}">
                     <i class="fa fa-user" aria-hidden="true"></i> 账户中心
+                </a>
+            </li>
+            <li class="{if condition="stristr(request()->pathinfo(), 'addons') neq false"}active{/if}">
+                <a href="{:url('addons/addons/getList')}">
+                    <i class="fa fa-puzzle-piece" aria-hidden="true"></i> 插件管理
                 </a>
             </li>
         </ul>

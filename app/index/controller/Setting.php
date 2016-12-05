@@ -13,8 +13,6 @@ class Setting extends Base
     public function __construct(Request $request)
     {
         parent::__construct($request);
-
-        !Auth::check() && $this->error('请重新登录', url('index/index'));
     }
 
     public function wechat()
