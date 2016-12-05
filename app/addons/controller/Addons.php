@@ -276,8 +276,11 @@ class Addons extends Base
     public function index(Request $request)
     {
         $addons = $this->existsValidator($request);
+        if ($addons['addons_config']) {
+            $addons['addons_config'] = unserialize($addons['addons_config']);
+        }
 
-        $path = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'main.html';
+        $path = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'wefee.html';
 
         $path = file_exists($path) ? $path : $this->index_template;
 
@@ -286,6 +289,50 @@ class Addons extends Base
         $user = Auth::user();
 
         return view($path, compact('user', 'title', 'addons'));
+    }
+
+    /**
+     * 插件配置
+     */
+    public function config(Request $request)
+    {
+        $addons = $this->existsValidator($request);
+
+        $path = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'config.html';
+
+        if (!file_exists($path)) {
+            $this->error('该插件无需配置');
+        }
+
+        if ($addons['addons_config']) {
+            $addons['addons_config'] = unserialize($addons['addons_config']);
+        }
+
+        $title = '插件配置';
+
+        $user = Auth::user();
+
+        return view($path, compact('user', 'title', 'addons'));
+    }
+
+    /**
+     * 保存插件配置
+     */
+    public function postConfig(Request $request)
+    {
+        $addons = $this->existsValidator($request);
+
+        $post = $request->except(['__token__', 'addons_sign']);
+
+        $data = [
+            'addons_config' => serialize($post),
+        ];
+
+        if ($this->repository->update(['id' => $addons['id']], $data)) {
+            $this->success('配置成功');
+        }
+
+        $this->success('配置失败');
     }
 
     /**

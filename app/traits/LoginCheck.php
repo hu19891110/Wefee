@@ -25,7 +25,7 @@ trait LoginCheck
 
     private function _loginCheck()
     {
-        !Auth::check() && $this->error('请重新登录', url('index/index'));
+        !Auth::check() && $this->error('请重新登录', url('index/index/index'));
 
         return ;
     }

@@ -5,7 +5,6 @@ use Qsnh\think\Repository\Repository;
 
 class AddonsRepository extends Repository
 {
-
     protected $table = 'wefee_addons';
 
     protected $fields = [
