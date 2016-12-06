@@ -2,6 +2,7 @@
 namespace app\addons\controller;
 
 use think\Request;
+use app\wefee\Tree;
 use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
 use app\repository\AddonsRepository;
@@ -112,22 +113,31 @@ class Addons extends Base
             'addons_config'  => '',
             'updated_at'     => date('Y-m-d H:i:s'),
         ];
-
         $id = $this->repository->insert($data);
         if (!$id) {
             $this->error('安装失败，错误代码：100.');
         }
 
-        /** 插件安装 */
-        $obj = $this->getAddonsObj($data);
+        /** 4.安装钩子 */
+        if (!Tree::hook()->install($data['addons_sign'])) {
+            /** 数据库回滚 */
+            $this->repository->delete($id);
+            /** 通知错误信息 */
+            $this->error('插件钩子安装失败，请联系技术人员。');
+        }
 
+        /** 5.插件安装 */
+        $obj = $this->getAddonsObj($data);
         if (method_exists($obj, 'up')) {
             try {
                 /** 执行插件安装方法 */
                 $obj->up();
             } catch (\Exception $e) {
-                /** 回滚 */
+                /** 数据库回滚 */
                 $this->repository->delete($id);
+                /** 注册钩子回滚 */
+                Tree::hook()->uninstall($data['addons_sign']);
+                /** 通知错误信息 */
                 $this->error($e->getMessage());
             }
         }
@@ -142,7 +152,12 @@ class Addons extends Base
     {
         $addons = $this->existsValidator($request);
 
-        /** 1.执行插件的卸载方案 */
+        /** 1.卸载钩子 */
+        if (!Tree::hook()->uninstall($addons['addons_sign'])) {
+            $this->error('插件钩子卸载失败，请联系技术人员。');
+        }
+
+        /** 2.执行插件的卸载方案 */
         $obj = $this->getAddonsObj($addons);
 
         if (method_exists($obj, 'down')) {
@@ -153,6 +168,7 @@ class Addons extends Base
             }
         }
 
+        /** 3.删除数据库记录 */
         $this->repository->delete($addons['id']);
 
         $this->success('操作成功');
@@ -163,7 +179,7 @@ class Addons extends Base
      */
     public function upgrade(Request $request)
     {
-        $addons = $this->existsValidator($request);
+        $addons     = $this->existsValidator($request);
 
         $addonsInfo = $this->getAddonsInfo($addons);
 
@@ -173,7 +189,12 @@ class Addons extends Base
 
         $obj = $this->getAddonsObj($addons);
 
-        /** 1.执行插件升级方案 */
+        /** 1。更新钩子 */
+        if (!Tree::hook()->upgrade($addons['addons_sign'])) {
+            $this->error('插件钩子更新失败，请联系技术人员。');
+        }
+
+        /** 2.执行插件升级方案 */
         if (method_exists($obj, 'down')) {
             try {
                 $obj->upgrade();
@@ -182,7 +203,7 @@ class Addons extends Base
             }
         }
 
-        /** 2.修改信息 */
+        /** 3.修改数据库信息 */
         $this->repository->update(
             ['id' => $addons['id']],
             [
@@ -332,7 +353,7 @@ class Addons extends Base
             $this->success('配置成功');
         }
 
-        $this->success('配置失败');
+        $this->error('配置失败');
     }
 
     /**

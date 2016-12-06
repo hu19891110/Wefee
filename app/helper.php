@@ -104,3 +104,21 @@ if (!function_exists('has_new_version')) {
         return version_compare($json['version'], $addons['addons_version'], '>');
     }
 }
+
+if (!function_exists('camel_case')) {
+    /**
+     * 将hook名转换为首字母小写的驼峰法写法
+     * @param string $hook_name
+     * @return string
+     */
+    function get_method_by_hook_name($hook_name)
+    {
+        $preg = '#(-[0-9A-Za-z]{0,1})#';
+
+        $name = preg_replace_callback($preg, function ($m) {
+            return strtoupper(substr($m[0], 1));
+        }, $hook_name);
+
+        return $name;
+    }
+}

@@ -8,7 +8,7 @@ namespace addons\test\hook\view;
 class Hook
 {
 
-    public function login_form()
+    public function loginForm()
     {
         
     }

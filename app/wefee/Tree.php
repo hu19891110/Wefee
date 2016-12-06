@@ -8,8 +8,11 @@ class Tree
 
     const WECHAT = 'eashwechat';
 
+    const HOOK = 'hook';
+
     protected static $tree = [
         self::WECHAT => null,
+        self::HOOK => null,
     ];
 
     /**
@@ -23,6 +26,19 @@ class Tree
         }
 
         return self::$tree[self::WECHAT];
+    }
+
+    /**
+     * 获取Hook对象
+     * @return app\wefee\Hooks
+     */
+    public static function hook()
+    {
+        if (is_null(self::$tree[self::HOOK])) {
+            self::$tree[self::HOOK] = new Hooks();
+        }
+
+        return self::$tree[self::HOOK];
     }
 
 }
