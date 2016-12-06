@@ -7,12 +7,12 @@ namespace addons\test\hook\model;
 class Hook
 {
 
-    public function beforeLogin(&$param)
+    public function beforeLogin(&$params)
     {
 
     }
 
-    public function afterLogin(&$param)
+    public function afterLogin(&$params)
     {
 
     }
