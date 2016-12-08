@@ -56,7 +56,7 @@ if (!function_exists('get_addons_thumb')) {
         } elseif (file_exists($file . 'png')) {
             $file .= 'png';
         } else {
-            throw new \Exception("{$addons_sign} addons has no thumb.");
+            return '';
         }
 
         $type = getimagesize($file);
@@ -105,7 +105,7 @@ if (!function_exists('has_new_version')) {
     }
 }
 
-if (!function_exists('camel_case')) {
+if (!function_exists('get_method_by_hook_name')) {
     /**
      * 将hook名转换为首字母小写的驼峰法写法
      * @param string $hook_name
@@ -120,5 +120,36 @@ if (!function_exists('camel_case')) {
         }, $hook_name);
 
         return $name;
+    }
+}
+
+if (!function_exists('aurl')) {
+    /**
+     * 生成插件的控制器访问URL
+     * @param string $path 格式：插件标识/控制器/方法
+     * @param array $params 附加参数
+     * @return string URL
+     */
+    function aurl($path, $params = [])
+    {
+        if (substr($path, 0, 1) == '/') {
+            $path = substr($path, 1);
+        }
+
+        $path = explode('/', $path);
+
+        if (!isset($path[0])) {
+            throw new \Exception('Addons Url Error');
+        }
+
+        $data = [
+            'addons'     => $path[0],
+            'controller' => isset($path[1]) ? $path[1] : 'index',
+            'action'     => isset($path[2]) ? $path[2] : 'index',
+        ];
+
+        $data = array_merge($params, $data);
+
+        return url('addons/api/plus', $data);
     }
 }
