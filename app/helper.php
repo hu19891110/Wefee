@@ -1,4 +1,23 @@
 <?php
+if (!function_exists('table_exists')) {
+    /**
+     * 检测数据表是否存在
+     * @param string $table 表名
+     * @return boolean
+     */
+    function table_exists($table)
+    {
+        $result = \think\Db::query('show tables');
+        if (is_null($table)) {
+            return false;
+        }
+        $tables = [];
+        foreach ($result as $val) {
+            $tables[] = $val['Tables_in_'.config('database.database')];
+        }
+        return in_array($table, $tables);
+    }
+}
 if (!function_exists('get_wechat_config')) {
     /**
      * 获取微信配置
