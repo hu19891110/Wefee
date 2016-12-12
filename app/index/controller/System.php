@@ -1,9 +1,9 @@
 <?php
 namespace app\index\controller;
 
+use think\Db;
 use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
-use think\Db;
 
 class System extends Base
 {
