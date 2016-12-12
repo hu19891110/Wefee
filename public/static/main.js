@@ -5,7 +5,10 @@ require.config({
         "jquery": "jquery.min",
         "bootstrap": "../bootstrap/js/bootstrap.min",
         "particleground": "particleground/jquery.particleground.min",
-        "smvalidator": "SMValidator.min"
+        "smvalidator": "SMValidator.min",
+        "icheck": "icheck.min",
+        "layer": "layer/layer",
+        "bootstrapswitch": "bootstrap-switch/bootstrap-switch.min"
     },
     shim: {
         "particleground": {
@@ -15,6 +18,16 @@ require.config({
         "bootstrap": {
             deps: ["jquery"],
             exports: "bootstrap"
+        },
+        "icheck": {
+            deps: ["jquery"],
+            exports: "icheck"
+        },
+        "layer": {
+            deps: ["jquery"]
+        },
+        "bootstrapswitch": {
+            deps: ["bootstrap"]
         }
     }
 });
