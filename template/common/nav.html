@@ -45,8 +45,8 @@
                     <i class="fa fa-cloud-download" aria-hidden="true"></i> 云更新
                 </a>
             </li>
-            <li class="{if condition="stristr(request()->pathinfo(), 'hooks') neq false"}active{/if}">
-                <a href="{:url('addons/hooks/getList')}">
+            <li class="{if condition="stristr(request()->pathinfo(), 'index/system') neq false"}active{/if}">
+                <a href="{:url('index/system/index')}">
                     <i class="fa fa-info-circle" aria-hidden="true"></i> 系统信息
                 </a>
             </li>
