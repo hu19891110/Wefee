@@ -28,7 +28,7 @@ class Base extends Controller
 
     protected function checkToken(Request $request)
     {
-        Session::get('__token__') != $request->post('__token__') && $this->error('请刷新页面重新提交', url('setting/wechat'));
+        Session::get('__token__') != $request->post('__token__') && $this->error('请刷新页面重新提交');
     }
 
 }
