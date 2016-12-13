@@ -6,7 +6,7 @@ require.config({
         "bootstrap": "../bootstrap/js/bootstrap.min",
         "particleground": "particleground/jquery.particleground.min",
         "smvalidator": "SMValidator.min",
-        "icheck": "icheck.min",
+        "icheck": "icheck/icheck.min",
         "layer": "layer/layer",
         "bootstrapswitch": "bootstrap-switch/bootstrap-switch.min"
     },
