@@ -9,6 +9,16 @@ use app\common\controller\Base;
 class Database extends Base
 {
 
+    protected $path = '';
+
+    public function _initialize()
+    {
+        parent::_initialize();
+
+        $this->path = ROOT_PATH . 'data' . DS . 'backup';
+    }
+
+    /** 备份数据库界面 */
     public function backup()
     {
         $tables = $this->getAllTables();
@@ -58,11 +68,10 @@ class Database extends Base
         }
 
         /** 创建备份文件 */
-        $path = ROOT_PATH . 'data' . DS . 'backup';
-        !is_dir($path) && $this->error('备份文件夹不存在');
+        !is_dir($this->path) && $this->error('备份文件夹不存在');
 
         /** 存储文件名 */
-        $file = $path . DS . date('YmdHis') . '.sql';
+        $file = $this->path . DS . date('YmdHis') . '.sql';
         if (!file_put_contents($file, $sql)) {
             $this->error('备份失败，原因：创建备份文件失败，请检查权限！');
         }
@@ -80,10 +89,12 @@ class Database extends Base
         $sql = "";
         /** 表的删除语句 */
         $sql .= "DROP TABLE IF EXISTS {$table};\r\n";
+
         /** 表的创建语句 */
         $tmp = Db::query("show create table {$table};");
         $createSql = $tmp[0]['Create Table'];
         $sql .= $createSql . ";\r\n";
+
         /** 表的记录语句 -> 插入 */
         $records = Db::table($table)->select();
         $insertSql = '';
@@ -92,7 +103,7 @@ class Database extends Base
             $fields = implode(',', array_keys($record));
             /** 获取值 */
             $tmp = array_map(function ($val) {
-                return addslashes("\"{$val}\"");
+                return '"'.addslashes($val).'"';
             }, $record);
             $values = implode(',', $tmp);
             /** 拼接插入语句 */
@@ -106,17 +117,101 @@ class Database extends Base
     /** 还原 */
     public function restore()
     {
+        /** 获取已经备份的文件 */
+        $files = scandir($this->path);
+
+        $backupFiles = [];
+        foreach ($files as $file) {
+            if (substr($file, -3 , 3) == 'sql') {
+                $tmp = [];
+                $filepath = $this->path . DS . $file;
+                /** 文件名 */
+                $tmp['name'] = $file;
+                /** 文件大小 */
+                $size = floatval(filesize($filepath) / 1024);
+                $size = $size >= 1024 ? round(floatval($size / 1024), 2) . 'MB' : round($size, 2) . 'KB';
+                $tmp['size'] = $size;
+                /** 文件创建时间 */
+                $tmp['created_at'] = date('Y-m-d H:i:s', filemtime($filepath));
+
+                $backupFiles[] = $tmp;
+            }
+        }
+
         $title = '数据库恢复';
 
         $user = Auth::user();
 
-        return view('', compact('user', 'title'));
+        return view('', compact('user', 'title', 'backupFiles'));
     }
 
-    /** 提交还原 */
+    /**
+     * POST提交还原，验证token,防止CSRF攻击
+     */
     public function postRestore(Request $request)
     {
         $this->checkToken($request);
+
+        /** 文件存在检测 */
+        $pathname = $this->path . DS . $request->post('file');
+        !file_exists($pathname) && $this->error('备份文件不存在');
+
+        /** 读取备份文件 */
+        $text = @file_get_contents($pathname);
+        !$text && $this->error('读取文件错误，请检查权限.');
+
+        /** 切割SQL成单句 */
+        $sqls = explode("\r\n", $text);
+
+        /** 执行SQL */
+        $success = 0;
+        $error = 0;
+        $errorSqls = [];
+        foreach ($sqls as $sql) {
+            if (substr($sql, 0, 1) == '#' || substr($sql, 0, 2) == '--' || $sql == '') {
+                continue;
+            }
+
+            try {
+                Db::query($sql);
+            } catch (\Exception $e) {
+                $error++;
+                $errorSqls[] = $sql;
+                continue;
+            }
+            $success++;
+        }
+
+        if ($error == 0) {
+            $this->success('数据库还原成功');
+        }
+
+        header('Content-type:text/html,charset=utf8;');
+        echo '成功条数：'.$success.'<br />';
+        echo '失败条数：'.$error.'<br />';
+        echo '失败Sql语句：<br />';
+        foreach ($errorSqls as $key => $sql) {
+            echo '<b>'.$key.'：</b>'.$sql.'<br />';
+        }
+    }
+
+
+    /**
+     * 删除备份文件
+     */
+    public function deleteBackupFile(Request $request)
+    {
+        $file = $this->path . DS . $request->param('file');
+
+        $obj = new \phootwork\file\File($file);
+
+        try {
+            $obj->delete();
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+
+        $this->success('操作成功');
     }
 
 }

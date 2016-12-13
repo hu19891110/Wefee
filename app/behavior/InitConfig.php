@@ -38,6 +38,10 @@ class InitConfig
 
     protected function uploadConfig($config)
     {
+        if (!isset($config['upload_driver'])) {
+            return ;
+        }
+
         $upload = [
             'driver' => $config['upload_driver'],
             'size' => $config['upload_size'],
@@ -67,6 +71,10 @@ class InitConfig
 
     protected function memcacheConfig($config)
     {
+        if (!isset($config['memcache_host'])) {
+            return ;
+        }
+
         $memcache = [
             'host' => $config['memcache_host'],
             'port' => $config['memcache_port'],
@@ -77,6 +85,10 @@ class InitConfig
 
     protected function redisConfig($config)
     {
+        if (!isset($config['redis_host'])) {
+            return ;
+        }
+
         $redis = [
             'host' => $config['redis_host'],
             'port' => $config['redis_port'],
