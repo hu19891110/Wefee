@@ -13,5 +13,7 @@
 
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../app/');
+/** 定义插件目录 */
+define('ADDONS_PATH', __DIR__ . '/../addons/');
 // 加载框架引导文件
 require __DIR__ . '/../thinkphp/start.php';

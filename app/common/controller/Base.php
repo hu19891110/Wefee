@@ -4,24 +4,31 @@ namespace app\common\controller;
 use think\Session;
 use think\Request;
 use think\Controller;
-use Qsnh\think\Auth\Auth;
+use app\traits\LoginCheck;
 
 class Base extends Controller
 {
+    use LoginCheck;
+
+    protected $loginOnly = [];
+
+    protected $loginExcept = [];
+
+    protected $repository = null;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
     }
 
-    protected function checkToken(Request $request)
+    public function _initialize()
     {
-        Session::get('__token__') != $request->post('__token__') && $this->error('请刷新页面重新提交', url('setting/wechat'));
+        $this->loginCheck();
     }
 
-    protected function checkLogin()
+    protected function checkToken(Request $request)
     {
-        !Auth::check() && $this->error('请重新登录', url('index/index'));
+        Session::get('__token__') != $request->post('__token__') && $this->error('请刷新页面重新提交');
     }
 
 }

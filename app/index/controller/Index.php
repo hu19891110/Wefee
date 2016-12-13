@@ -9,9 +9,13 @@ use app\common\controller\Base;
 
 class Index extends Base
 {
+    protected $loginOnly = [
+        'admin', 'postchangepassword'
+    ];
+
     public function index()
     {
-        $title = 'Wefee';
+        $title = 'Wefee 微信管理系统';
 
         return view('', compact('title'));
     }
@@ -73,8 +77,6 @@ class Index extends Base
      */
     public function admin()
     {
-        $this->checkLogin();
-
         $title = '账户中心';
 
         $user = Auth::user();
@@ -87,8 +89,6 @@ class Index extends Base
      */
     public function postChangePassword(Request $request)
     {
-        $this->checkLogin();
-
         $validator = new Validate([
             'old_password|原密码' => 'require|token',
             'new_password|新密码' => 'require|length:6,15|confirm:new_password_confirmation',
