@@ -7,7 +7,7 @@ if (!function_exists('table_exists')) {
      */
     function table_exists($table)
     {
-        $result = \think\Db::query('show tables');
+        $result = \think\Db::query('show tables;');
         if (is_null($table)) {
             return false;
         }
@@ -20,7 +20,7 @@ if (!function_exists('table_exists')) {
 }
 if (!function_exists('get_wechat_config')) {
     /**
-     * 获取微信配置
+     * 获取Easywechat需要的微信配置格式数组
      * @return array
      */
     function get_wechat_config()
@@ -170,5 +170,35 @@ if (!function_exists('aurl')) {
         $data = array_merge($params, $data);
 
         return url('addons/api/plus', $data);
+    }
+}
+
+if (!function_exists('data_size')) {
+    /**
+     * 将整形的字节大小转换为易读的kb或MB形式
+     * @param integer $size 字节大小
+     * @return string
+     */
+    function data_size($size)
+    {
+        if ($size < 1024) {
+            return $size . ' byte';
+        }
+
+        $kb = $size / 1024;
+
+        if ($kb < 1024) {
+            return round($kb, 2) . ' KB';
+        }
+
+        $mb = $kb / 1024;
+
+        if ($mb < 1024) {
+            return round($mb, 2) . ' MB';
+        }
+
+        $gb = $mb / 1024;
+
+        return round($gb, 2) . ' GB';
     }
 }
