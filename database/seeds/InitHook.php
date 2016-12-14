@@ -55,6 +55,82 @@ class InitHook extends AbstractSeed
                 'hook_name' => '登录后钩子',
                 'hook_sign' => 'after-login',
             ],
+
+            /** 消息订阅钩子 */
+            [
+                'hook_name' => '微信事件订阅',
+                'hook_sign' => 'wefee-subscribe-event',
+            ],
+            [
+                'hook_name' => '文本消息订阅',
+                'hook_sign' => 'wefee-subscribe-text',
+            ],
+            [
+                'hook_name' => '图片消息订阅',
+                'hook_sign' => 'wefee-subscribe-image',
+            ],
+            [
+                'hook_name' => '微信事件订阅',
+                'hook_sign' => 'wefee-subscribe-event',
+            ],
+            [
+                'hook_name' => '语音消息订阅',
+                'hook_sign' => 'wefee-subscribe-voice',
+            ],
+            [
+                'hook_name' => '视频消息订阅',
+                'hook_sign' => 'wefee-subscribe-video',
+            ],
+            [
+                'hook_name' => '位置消息订阅',
+                'hook_sign' => 'wefee-subscribe-location',
+            ],
+            [
+                'hook_name' => '链接消息订阅',
+                'hook_sign' => 'wefee-subscribe-link',
+            ],
+            [
+                'hook_name' => '原始消息订阅',
+                'hook_sign' => 'wefee-subscribe-original',
+            ],
+
+            /** 消息处理钩子 */
+            [
+                'hook_name' => '微信事件处理',
+                'hook_sign' => 'wefee-process-event',
+            ],
+            [
+                'hook_name' => '文本消息处理',
+                'hook_sign' => 'wefee-process-text',
+            ],
+            [
+                'hook_name' => '图片消息处理',
+                'hook_sign' => 'wefee-process-image',
+            ],
+            [
+                'hook_name' => '微信事件处理',
+                'hook_sign' => 'wefee-process-event',
+            ],
+            [
+                'hook_name' => '语音消息处理',
+                'hook_sign' => 'wefee-process-voice',
+            ],
+            [
+                'hook_name' => '视频消息处理',
+                'hook_sign' => 'wefee-process-video',
+            ],
+            [
+                'hook_name' => '位置消息处理',
+                'hook_sign' => 'wefee-process-location',
+            ],
+            [
+                'hook_name' => '链接消息处理',
+                'hook_sign' => 'wefee-process-link',
+            ],
+            [
+                'hook_name' => '原始消息处理',
+                'hook_sign' => 'wefee-process-original',
+            ],
         ];
 
         $table = $this->table('hooks');

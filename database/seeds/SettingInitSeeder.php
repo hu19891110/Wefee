@@ -146,6 +146,30 @@ class SettingInitSeeder extends AbstractSeed
                 'wefee_key'   => 'redis_database',
                 'wefee_value' => ''
             ],
+
+            /** 微信关注统计 */
+            [
+                'wefee_key'   => 'today_subscribe',
+                'wefee_value' => 0
+            ],
+            [
+                'wefee_key'   => 'today_unsubscribe',
+                'wefee_value' => 0
+            ],
+            [
+                'wefee_key'   => 'yesterday_subscribe',
+                'wefee_value' => 0
+            ],
+            [
+                'wefee_key'   => 'yesterday_unsubscribe',
+                'wefee_value' => 0
+            ],
+
+            /** 系统相关配置 */
+            [
+                'wefee_key'   => 'updated_at',
+                'wefee_value' => date('Y-m-d H:i:s'),
+            ],
         ];
 
 

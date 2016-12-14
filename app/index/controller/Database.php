@@ -214,4 +214,40 @@ class Database extends Base
         $this->success('操作成功');
     }
 
+    public function optimize()
+    {
+        /** 获取需要优化的表 */
+        $mysql = Db::query('SHOW TABLE STATUS;');
+        $tables = [];
+        foreach ($mysql as $table) {
+            if ($table['Data_free'] > 0) {
+                $tables[] = $table;
+            }
+        }
+
+        $title = '数据库优化';
+
+        $user = Auth::user();
+
+        return view('', compact('user', 'title', 'tables'));
+    }
+
+    /**
+     * 优化数据库
+     */
+    public function postOptimize(Request $request)
+    {
+        $this->checkToken($request);
+
+        $tables = $request->post('table/a');
+
+        !$tables && $this->error('请选择需要优化的数据表');
+
+        $tableString = implode(',', $tables);
+
+        Db::query('OPTIMIZE TABLE '.$tableString.';');
+
+        $this->success('优化成功');
+    }
+
 }
