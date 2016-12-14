@@ -51,9 +51,7 @@ php think seed:run
 举个例子说明：当前的程序目录为：`/var/www/Wefee`，那么Apache设置的目录应该是`/var/www/Wefee/public`。
 
 ### 5.安装完成。
-直接访问
-账号：`admin`
-密码：`ilovewefee`
+账号：`admin`，密码：`ilovewefee`
 
 ### 在这里感谢：
 [Easywechat] [1]
