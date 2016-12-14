@@ -8,7 +8,20 @@
 <div class="container mt-20 bg-fff br-5">
     <div class="row">
         <div class="col-lg-12 pt-15-pb-15">
-            我是主面板<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <div class="row">
+                <div class="col-lg-4 text-center" style="border-right: 1px solid #eee;">
+                    <h3 class="lh-50">今日关注：{:config('wefee.today_subscribe')}</h3>
+                    <p>昨日关注：{:config('wefee.yesterday_subscribe')}</p>
+                </div>
+                <div class="col-lg-4 text-center" style="border-right: 1px solid #eee;">
+                    <h3 class="lh-50">今日取消：{:config('wefee.today_unsubscribe')}</h3>
+                    <p>昨日关注：{:config('wefee.yesterday_unsubscribe')}</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <h3 class="lh-50">今日净增：{php}echo config('wefee.today_subscribe') - config('wefee.today_unsubscribe'){/php}</h3>
+                    <p>昨日净增：{php}echo config('wefee.yesterday_subscribe') - config('wefee.yesterday_unsubscribe'){/php}</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,7 +1,6 @@
 <?php
 namespace app\index\controller;
 
-use app\wefee\Tree;
 use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
 

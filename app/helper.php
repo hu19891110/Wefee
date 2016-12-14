@@ -40,7 +40,7 @@ if (!function_exists('get_wechat_config')) {
 
             'oauth' => [
                 'scopes'   => ['snsapi_userinfo'],
-                'callback' => url('index/api/authNotify'),
+                'callback' => url('wechat/wechat/webNotify'),
             ],
 
             'payment' => [

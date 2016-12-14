@@ -5,6 +5,7 @@ use think\Hook;
 use think\Request;
 use app\wefee\Tree;
 use think\Controller;
+use think\Session;
 
 class Wechat extends Controller
 {
@@ -60,9 +61,31 @@ class Wechat extends Controller
      * 网页授权回调
      * @param think\Request $request
      */
+    public function requestAuth(Request $request)
+    {
+        /** 前一页地址 */
+        $targetUrl = $_SERVER['HTTP_REFERER'];
+        Session::set('target_url', $targetUrl);
+
+        $oauth = Tree::wechat()->oauth;
+
+        $oauth->redirect()->send();
+    }
+
+    /**
+     * 微信网页授权回调
+     */
     public function webNotify(Request $request)
     {
+        $oauth = Tree::wechat()->oauth;
 
+        $user = $oauth->user();
+
+        Session::set('wechat_user', $user);
+
+        $url = Session::has('target_url') ? Session::get('target_url') : '/';
+
+        header('Location:'.$url);
     }
 
 }
