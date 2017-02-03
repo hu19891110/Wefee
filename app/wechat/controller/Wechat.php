@@ -43,9 +43,9 @@ class Wechat extends Controller
             /** 消息处理钩子 */
             $result = Hook::listen('process_message', $message);
 
-            /** 如果存在回复消息，则回复此条消息，默认回复最后一条钩子的回复消息 */
-            if ($result) {
-                return $result[count($result) - 1];
+            /** 如果存在回复消息，则回复此条消息，默认回复第一条消息 */
+            if (! is_null($result)) {
+                return $result[0];
             }
 
             return null;

@@ -218,7 +218,7 @@ class Hooks
 
             /** 执行方法 */
             $method = get_method_by_hook_name($listen['hook_sign']);
-            $obj->$method($params);
+            return $obj->$method($params);
         }
 
         return ;
