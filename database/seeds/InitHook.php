@@ -70,10 +70,6 @@ class InitHook extends AbstractSeed
                 'hook_sign' => 'wefee-subscribe-image',
             ],
             [
-                'hook_name' => '微信事件订阅',
-                'hook_sign' => 'wefee-subscribe-event',
-            ],
-            [
                 'hook_name' => '语音消息订阅',
                 'hook_sign' => 'wefee-subscribe-voice',
             ],
@@ -106,10 +102,6 @@ class InitHook extends AbstractSeed
             [
                 'hook_name' => '图片消息处理',
                 'hook_sign' => 'wefee-process-image',
-            ],
-            [
-                'hook_name' => '微信事件处理',
-                'hook_sign' => 'wefee-process-event',
             ],
             [
                 'hook_name' => '语音消息处理',

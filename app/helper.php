@@ -241,7 +241,7 @@ if (!function_exists('wechat_subscribe_event')) {
         } else {
             $id = $r['id'];
         }
-trace('微信统计数据ID', $id);
+
         /** 2.记录 */
         if ($type == 1) {
             \think\Db::table(full_table('wechat_focus_records'))
@@ -276,5 +276,23 @@ if (!function_exists('env')) {
     function env($key, $default = null)
     {
         return \think\Env::get($key, $default);
+    }
+}
+
+if (!function_exists('get_addon_config')) {
+    /**
+     * 获取插件的配置信息
+     * @param string $addon_sign 插件标识
+     * @return array
+     */
+    function get_addon_config($addon_sign)
+    {
+        $addon = \think\Db::table(full_table('addons'))->field(['addons_config'])->where('addons_sign', $addon_sign)->find();
+
+        if ($addon) {
+            return $addon['addons_config'] == '' ? [] : unserialize($addon['addons_config']);
+        }
+
+        return [];
     }
 }
