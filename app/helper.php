@@ -224,11 +224,11 @@ if (!function_exists('wechat_subscribe_event')) {
     function wechat_subscribe_event($type = 1)
     {
         /** 1.检测今天记录是否创建 */
-        $r = \think\Db::table(full_table('wechat_focus_records'))->where('created_at', date('Y-m-d'))->find();
+        $r = \think\Db::table(full_table('wechat_focus_records'))->whereTime('created_at', 'today')->find();
 
         if (! $r) {
             /** 获取昨天的记录 用于总关注数量传递 */
-            $yesterday = \think\Db::table(full_table('wechat_focus_records'))->where('created_at', date('Y-m-d', strtotime('-1 days')))->find();
+            $yesterday = \think\Db::table(full_table('wechat_focus_records'))->whereTime('created_at', 'yesterday')->find();
 
             /** 未创建记录，创建记录 */
             $id = \think\Db::table(full_table('wechat_focus_records'))->insertGetId([
@@ -236,12 +236,12 @@ if (!function_exists('wechat_subscribe_event')) {
                 'focus_cancel_num'  => 0,
                 'focus_confirm_num' => 0,
                 'focus_all_num'     => $yesterday ? $yesterday['focus_all_num'] : 0,
-                'created_at'        => date('Y-m-d'),
+                'created_at'        => date('Y-m-d', time()),
             ]);
         } else {
             $id = $r['id'];
         }
-
+trace('微信统计数据ID', $id);
         /** 2.记录 */
         if ($type == 1) {
             \think\Db::table(full_table('wechat_focus_records'))

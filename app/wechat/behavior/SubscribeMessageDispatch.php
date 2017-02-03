@@ -15,10 +15,9 @@ class SubscribeMessageDispatch
         $hook = Tree::hook();
         switch ($message->MsgType) {
             case 'event':
-
                 /** 系统自身关注统计 */
                 if ($message->Event == 'subscribe' || $message->Event == 'unsubscribe') {
-                    wechat_subscribe_event($message->Event == 'subscribe' ? 1 : 0);
+                    wechat_subscribe_event($message->Event == 'subscribe' ? 1 : -1);
                 }
 
                 /** 事件 */
