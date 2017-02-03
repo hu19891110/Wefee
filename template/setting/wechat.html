@@ -34,14 +34,20 @@
                 <div class="row mb-20">
                     <label class="col-lg-3 text-right">微信Token</label>
                     <div class="col-lg-4">
-                        <input type="text" name="wechat_token" value="{:config('wefee.wechat_token')}" class="form-control" placeholder="请输入微信Token">
+                        <div class="input-group">
+                            <input type="text" name="wechat_token" value="{:config('wefee.wechat_token')}" class="form-control" placeholder="请输入微信Token">
+                            <div class="input-group-addon click-gen-token-button">点击生成</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row mb-20">
                     <label class="col-lg-3 text-right">微信AesKey</label>
                     <div class="col-lg-4">
-                        <input type="text" name="wechat_aeskey" value="{:config('wefee.wechat_aeskey')}" class="form-control" placeholder="请输入微信AesKey">
+                        <div class="input-group">
+                            <input type="text" name="wechat_aeskey" value="{:config('wefee.wechat_aeskey')}" class="form-control" placeholder="请输入微信AesKey">
+                            <div class="input-group-addon click-gen-aeskey-button">点击生成</div>
+                        </div>
                     </div>
                 </div>
 
@@ -109,4 +115,35 @@
 
 {include file="common:footer"}
 
+{/block}
+
+{block name="footer"}
+<script>
+    require(['jquery'], function ($) {
+        /**
+         *  生成随机字符串
+         * */
+        var randomStr = function (randomFlag, min, max){
+            var str = "",
+                    range = min,
+                    arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            if(randomFlag){
+                range = Math.round(Math.random() * (max-min)) + min;
+            }
+            for(var i=0; i<range; i++){
+                pos = Math.round(Math.random() * (arr.length-1));
+                str += arr[pos];
+            }
+            return str;
+        };
+
+        $('.click-gen-token-button').click(function () {
+            $('input[name="wechat_token"]').val(randomStr(false, 32));
+        });
+
+        $('.click-gen-aeskey-button').click(function () {
+            $('input[name="wechat_aeskey"]').val(randomStr(false, 64));
+        });
+    });
+</script>
 {/block}
