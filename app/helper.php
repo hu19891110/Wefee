@@ -265,3 +265,16 @@ if (!function_exists('wechat_subscribe_event')) {
         return ;
     }
 }
+
+if (!function_exists('env')) {
+    /**
+     * \think\Env的封装
+     * @param string $key 键
+     * @param mixed $default 默认值，没有获取到值的情况下返回
+     * @return mixed
+     */
+    function env($key, $default = null)
+    {
+        return \think\Env::get($key, $default);
+    }
+}
