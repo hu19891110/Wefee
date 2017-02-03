@@ -1,4 +1,16 @@
 <?php
+if (!function_exists('full_table')) {
+    /**
+     * 补全数据库表的前缀
+     * @param string $table_name 数据表名
+     * @return string
+     */
+    function full_table($table_name)
+    {
+        return config('database.prefix') . $table_name;
+    }
+}
+
 if (!function_exists('table_exists')) {
     /**
      * 检测数据表是否存在
@@ -20,7 +32,7 @@ if (!function_exists('table_exists')) {
 }
 if (!function_exists('get_wechat_config')) {
     /**
-     * 获取Easywechat需要的微信配置格式数组
+     * 获取 Easywechat 需要的微信配置格式数组
      * @return array
      */
     function get_wechat_config()
@@ -200,5 +212,56 @@ if (!function_exists('data_size')) {
         $gb = $mb / 1024;
 
         return round($gb, 2) . ' GB';
+    }
+}
+
+if (!function_exists('wechat_subscribe_event')) {
+    /**
+     * 微信关注，取消关注处理函数
+     * @param integer $type 操作类型 1:关注 -1:取消关注
+     * @return void
+     */
+    function wechat_subscribe_event($type = 1)
+    {
+        /** 1.检测今天记录是否创建 */
+        $r = \think\Db::table(full_table('wechat_focus_records'))->where('created_at', date('Y-m-d'))->find();
+
+        if (! $r) {
+            /** 获取昨天的记录 用于总关注数量传递 */
+            $yesterday = \think\Db::table(full_table('wechat_focus_records'))->where('created_at', date('Y-m-d', strtotime('-1 days')))->find();
+
+            /** 未创建记录，创建记录 */
+            $id = \think\Db::table(full_table('wechat_focus_records'))->insertGetId([
+                'focus_submit_num'  => 0,
+                'focus_cancel_num'  => 0,
+                'focus_confirm_num' => 0,
+                'focus_all_num'     => $yesterday ? $yesterday['focus_all_num'] : 0,
+                'created_at'        => date('Y-m-d'),
+            ]);
+        } else {
+            $id = $r['id'];
+        }
+
+        /** 2.记录 */
+        if ($type == 1) {
+            \think\Db::table(full_table('wechat_focus_records'))
+                ->where('id', $id)
+                ->inc('focus_submit_num')
+                ->inc('focus_confirm_num')
+                ->inc('focus_all_num')
+                ->update();
+        } elseif ($type == -1) {
+            \think\Db::table(full_table('wechat_focus_records'))
+                ->where('id', $id)
+                ->dec('focus_submit_num')
+                ->inc('focus_cancel_num')
+                ->dec('focus_confirm_num')
+                ->dec('focus_all_num')
+                ->update();
+        } else {
+            //none
+        }
+
+        return ;
     }
 }

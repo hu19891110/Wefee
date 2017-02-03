@@ -3,9 +3,9 @@ namespace app\wechat\controller;
 
 use think\Hook;
 use think\Request;
+use think\Session;
 use app\wefee\Tree;
 use think\Controller;
-use think\Session;
 
 class Wechat extends Controller
 {
@@ -42,6 +42,7 @@ class Wechat extends Controller
 
             /** 消息处理钩子 */
             $result = Hook::listen('process_message', $message);
+
             /** 如果存在回复消息，则回复此条消息，默认回复最后一条钩子的回复消息 */
             if ($result) {
                 return $result[count($result) - 1];
@@ -59,7 +60,7 @@ class Wechat extends Controller
 
     /**
      * 网页授权回调
-     * @param think\Request $request
+     * @param \think\Request $request
      */
     public function requestAuth(Request $request)
     {

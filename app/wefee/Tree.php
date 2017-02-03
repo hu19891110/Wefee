@@ -30,7 +30,7 @@ class Tree
 
     /**
      * 获取Hook对象
-     * @return app\wefee\Hooks
+     * @return \app\wefee\Hooks
      */
     public static function hook()
     {

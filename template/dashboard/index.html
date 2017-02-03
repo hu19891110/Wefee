@@ -10,16 +10,16 @@
         <div class="col-lg-12 pt-15-pb-15">
             <div class="row">
                 <div class="col-lg-4 text-center" style="border-right: 1px solid #eee;">
-                    <h3 class="lh-50">今日关注：{:config('wefee.today_subscribe')}</h3>
-                    <p>昨日关注：{:config('wefee.yesterday_subscribe')}</p>
+                    <h3 class="lh-50">今日关注：{$subscribe_today.focus_submit_num}</h3>
+                    <p>昨日关注：{$subscribe_yesterday.focus_submit_num}</p>
                 </div>
                 <div class="col-lg-4 text-center" style="border-right: 1px solid #eee;">
-                    <h3 class="lh-50">今日取消：{:config('wefee.today_unsubscribe')}</h3>
-                    <p>昨日关注：{:config('wefee.yesterday_unsubscribe')}</p>
+                    <h3 class="lh-50">今日取消：{$subscribe_today.focus_cancel_num}</h3>
+                    <p>昨日取消：{$subscribe_yesterday.focus_cancel_num}</p>
                 </div>
                 <div class="col-lg-4 text-center">
-                    <h3 class="lh-50">今日净增：{php}echo config('wefee.today_subscribe') - config('wefee.today_unsubscribe'){/php}</h3>
-                    <p>昨日净增：{php}echo config('wefee.yesterday_subscribe') - config('wefee.yesterday_unsubscribe'){/php}</p>
+                    <h3 class="lh-50">今日净增：{$subscribe_today.focus_confirm_num}</h3>
+                    <p>昨日净增：{$subscribe_yesterday.focus_confirm_num}</p>
                 </div>
             </div>
         </div>
