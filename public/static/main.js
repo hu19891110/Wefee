@@ -8,7 +8,8 @@ require.config({
         "smvalidator": "SMValidator.min",
         "icheck": "icheck/icheck.min",
         "layer": "layer/layer",
-        "bootstrapswitch": "bootstrap-switch/bootstrap-switch.min"
+        "bootstrapswitch": "bootstrap-switch/bootstrap-switch.min",
+        "webuploader": "webuploader/webuploader.min"
     },
     shim: {
         "particleground": {

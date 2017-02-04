@@ -136,6 +136,8 @@ return [
         'taglib_begin' => '{',
         // 标签库标签结束标记
         'taglib_end'   => '}',
+        /** 预先加载标签库 */
+        'taglib_pre_load' => 'app\wefee\components\tablib\Wefee',
     ],
 
     // 视图输出字符串内容替换
