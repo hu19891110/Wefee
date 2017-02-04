@@ -6,7 +6,7 @@ use app\common\controller\Base;
 class Uploader extends Base
 {
 
-    public function uploadSingleImage()
+    public function image()
     {
         $upload = new Upload(config('upload'));
 
