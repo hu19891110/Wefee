@@ -11,7 +11,8 @@ require.config({
         "bootstrapswitch": "bootstrap-switch/bootstrap-switch.min",
         "webuploader": "webuploader/webuploader.min",
         "flatpickr": "flatpickr/flatpickr.min",
-        'flatpickrzh': "flatpickr/l10n/zh"
+        'flatpickrzh': "flatpickr/l10n/zh",
+        'jscolor': "jscolor/jscolor.min"
     },
     shim: {
         "particleground": {
