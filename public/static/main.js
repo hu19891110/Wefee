@@ -9,7 +9,9 @@ require.config({
         "icheck": "icheck/icheck.min",
         "layer": "layer/layer",
         "bootstrapswitch": "bootstrap-switch/bootstrap-switch.min",
-        "webuploader": "webuploader/webuploader.min"
+        "webuploader": "webuploader/webuploader.min",
+        "flatpickr": "flatpickr/flatpickr.min",
+        'flatpickrzh': "flatpickr/l10n/zh"
     },
     shim: {
         "particleground": {

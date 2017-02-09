@@ -8,6 +8,8 @@ class Wefee extends TagLib
     protected $tags = [
         'image' => ['attr' => 'title,name,value', 'close' => 0],
         'multiimage' => ['attr' => 'title,name,value', 'close' => 0],
+        'date' => ['attr' => 'title,name,value', 'close' => 0],
+        'daterange' => ['attr' => 'title,name,value', 'close' => 0],
     ];
 
     /**
@@ -162,4 +164,63 @@ HTML;
         return $html;
     }
 
+    public function tagDate($tag)
+    {
+        /** 属性 */
+        $title = isset($tag['title']) ? $tag['title'] : '';
+        $name  = isset($tag['name']) ? $tag['name'] : 'date';
+        /** 默认值循环遍历 */
+        $flag = substr($tag['value'], 0, 1);
+        if ('$' == $flag || ':' == $flag) {
+            $value = $this->autoBuildVar($tag['value']);
+        } else {
+            $value = '""';
+        }
+
+        $html = <<<HTML
+<div class="form-group">
+    <label class="control-label col-sm-2">{$title}</label>
+    <div class="col-sm-10">
+        <input type="text" name="{$name}" class="form-control" id="{$name}" value="<?php echo $value; ?>">
+    </div>
+</div>
+<script >
+require(['flatpickr', 'flatpickrzh'], function () {
+    flatpickr('input#{$name}', {locale: "zh"});
+});
+</script>
+HTML;
+
+        return $html;
+    }
+
+    public function tagDaterange($tag)
+    {
+        /** 属性 */
+        $title = isset($tag['title']) ? $tag['title'] : '';
+        $name  = isset($tag['name']) ? $tag['name'] : 'date';
+        /** 默认值循环遍历 */
+        $flag = substr($tag['value'], 0, 1);
+        if ('$' == $flag || ':' == $flag) {
+            $value = $this->autoBuildVar($tag['value']);
+        } else {
+            $value = '[]';
+        }
+
+        $html = <<<HTML
+<div class="form-group">
+    <label class="control-label col-sm-2">{$title}</label>
+    <div class="col-sm-10">
+        <input type="text" name="{$name}" class="form-control" id="{$name}" value="<?php echo implode(' to ', {$value}); ?>">
+    </div>
+</div>
+<script >
+require(['flatpickr', 'flatpickrzh'], function () {
+    flatpickr('input#{$name}', {locale: "zh", mode: "range"});
+});
+</script>
+HTML;
+
+        return $html;
+    }
 }
