@@ -71,48 +71,21 @@ if (!function_exists('get_wechat_config')) {
     }
 }
 
-if (!function_exists('get_addons_thumb')) {
+if (!function_exists('get_addon_logo')) {
     /**
      * 获取插件的封面
      * @param string $addons_sign 插件的标识符
-     * @return string base64编码
+     * @return string logo
      */
-    function get_addons_thumb($addons_sign)
+    function get_addon_logo_name($addons_sign)
     {
-        $file = ADDONS_PATH . $addons_sign . '/icon.';
-        if (file_exists($file . 'gif')) {
-            $file .= 'gif';
-        } elseif (file_exists($file . 'jpg')) {
-            $file .= 'jpg';
-        } elseif (file_exists($file . 'png')) {
-            $file .= 'png';
-        } else {
-            return '';
+        $path = APP_PATH . '../addons/' . $addons_sign . '/';
+
+        if ($result = glob($path . 'icon.*')) {
+            return basename($result[0]);
         }
 
-        $type = getimagesize($file);
-
-        $fp   = fopen($file, "r") or die("Can't open file");
-
-        $file_content = chunk_split(base64_encode(fread($fp, filesize($file))));
-
-        switch($type[2]) {
-            case 1:
-                $img_type = "gif";
-                break;
-            case 2:
-                $img_type = "jpg";
-                break;
-            case 3:
-                $img_type = "png";
-                break;
-        }
-
-        $img = 'data:image/' . $img_type . ';base64,' . $file_content;
-
-        fclose($fp);
-
-        return $img;
+        return 'logo.png';
     }
 }
 
