@@ -12,7 +12,14 @@ require.config({
         "webuploader": "webuploader/webuploader.min",
         "flatpickr": "flatpickr/flatpickr.min",
         'flatpickrzh': "flatpickr/l10n/zh",
-        'jscolor': "jscolor/jscolor.min"
+        'jscolor': "jscolor/jscolor.min",
+        'ueditor': "ueditor/ueditor.all.min",
+        'ueditor.config': "ueditor/ueditor.config",
+    },
+    map: {
+        '*': {
+            'css': '../css.min'
+        }
     },
     shim: {
         "particleground": {
@@ -32,6 +39,12 @@ require.config({
         },
         "bootstrapswitch": {
             deps: ["bootstrap"]
+        },
+        "flatpickr": {
+            deps: ["css!/static/js/flatpickr/flatpickr.min.css"]
+        },
+        "ueditor": {
+            deps: ["jquery", "ueditor.config", "css!/static/js/ueditor/themes/default/css/ueditor.min.css"]
         }
     }
 });

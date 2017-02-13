@@ -11,6 +11,7 @@ class Wefee extends TagLib
         'date' => ['attr' => 'title,name,value', 'close' => 0],
         'daterange' => ['attr' => 'title,name,value', 'close' => 0],
         'color' => ['attr' => 'title,name,value', 'close' => 0],
+        'umeditor' => ['attr' => 'title,name,content', 'close' => 0],
     ];
 
     /**
@@ -247,6 +248,39 @@ HTML;
 </div>
 <script >
 require(['jquery', 'jscolor']);
+</script>
+HTML;
+
+        return $html;
+    }
+
+    public function tagUmeditor($tag)
+    {
+        /** 属性 */
+        $title = isset($tag['title']) ? $tag['title'] : '';
+        $name  = isset($tag['name']) ? $tag['name'] : 'content';
+        /** 默认值循环遍历 */
+        $flag = substr($tag['content'], 0, 1);
+        if ('$' == $flag || ':' == $flag) {
+            $content = $this->autoBuildVar($tag['content']);
+        } else {
+            $content = $tag['content'];
+        }
+
+        $html = <<<HTML
+<div class="form-group">
+    <label class="control-label col-sm-2">{$title}</label>
+    <div class="col-sm-10">
+          <textarea name="{$name}" id="{$name}" style="width: 100%; height: 450px;">{$content}</textarea>
+    </div>
+</div>
+<script >
+require(['ueditor'], function () {
+    window.UE.getEditor('{$name}', {
+        UEDITOR_HOME_URL: '/static/js/ueditor/',
+        serverUrl: '/static/js/ueditor/php/controller.php'
+    });
+});
 </script>
 HTML;
 
