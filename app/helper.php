@@ -296,3 +296,50 @@ if (!function_exists('get_addon_config')) {
         return [];
     }
 }
+
+if (! function_exists('copy_all')) {
+    /**
+     * 将一个目录下的所有文件复制到另一个目录下
+     * @param string $original 等待复制的目录
+     * @param string $dest 需要复制到的目录
+     */
+    function copy_all($original, $dest)
+    {
+        if (! $lists = glob($original . '/*')) {
+            return ;
+        }
+
+        foreach ($lists as $item) {
+            $val = str_replace($original, '', $item);
+            if (preg_match('#(.*)\.(.*)#ius', $val)) {
+                /** 文件Copy */
+                @mkdir($dest, 0777, true);
+                copy($item, $dest . $val);
+            } else {
+                /** 递归 */
+                copy_all($item, $dest . $val);
+            }
+        }
+    }
+}
+
+if (! function_exists('delete_dir')) {
+    /**
+     * 删除目录
+     * @param string $dest 待删除的目录
+     * @return void
+     */
+    function delete_dir($dest)
+    {
+        if (! is_dir($dest)) {
+            return ;
+        }
+        $dest = realpath($dest);
+
+        if (strtolower(substr(PHP_OS, 0, 3)) == 'win') {
+            exec('rmdir /s/q '. $dest, $result, $status);
+        } else {
+            exec('rm -rf '. $dest, $result, $status);
+        }
+    }
+}

@@ -26,7 +26,8 @@
         "qsnh/think-addons": "^0.1.1",
         "qsnh/think-repository": "^0.1.0",
         "phootwork/file": "^0.1.2",
-        "qsnh/think-upload": "^0.2.5"
+        "qsnh/think-upload": "^0.2.5",
+        "topthink/think-queue": "^1.1"
     },
     "extra": {
         "think-path": "thinkphp"

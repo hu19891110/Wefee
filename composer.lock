@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "324254dc11799108f54aad4c79d23af7",
-    "content-hash": "d9672f6c5adf721196adf92a67422e2a",
+    "hash": "80351335e31dd373aada79a63c966db8",
+    "content-hash": "e5894174f900d00d496da1cb97481ac0",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -2357,6 +2357,51 @@
                 }
             ],
             "time": "2016-10-17 03:31:17"
+        },
+        {
+            "name": "topthink/think-queue",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-queue.git",
+                "reference": "503c5b809585ca60cba9485a233aa8be4b22c990"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/top-think/think-queue/503c5b809585ca60cba9485a233aa8be4b22c990.zip",
+                "reference": "503c5b809585ca60cba9485a233aa8be4b22c990",
+                "shasum": ""
+            },
+            "require": {
+                "topthink/think-helper": ">=1.0.4",
+                "topthink/think-installer": ">=1.0.10"
+            },
+            "type": "think-extend",
+            "extra": {
+                "think-config": {
+                    "queue": "src/config.php"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "think\\": "src"
+                },
+                "files": [
+                    "src/common.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yunwuxin",
+                    "email": "448901948@qq.com"
+                }
+            ],
+            "description": "The ThinkPHP5 Queue Package",
+            "time": "2016-12-01 04:29:39"
         },
         {
             "name": "topthink/think-testing",

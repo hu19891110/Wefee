@@ -100,8 +100,15 @@ class Addons extends Base
             $this->error('插件缺少wefee.json文件');
         }
 
+        /** 获取插件的信息 */
         $addons = json_decode(@file_get_contents($path . 'wefee.json'), true);
         $addons['sign'] = $addons_sign;
+
+        /** 分发Logo */
+        $this->distAddonLogo($path, $addons_sign);
+
+        /** 分发Assets */
+        $this->distAssets($path, $addons_sign);
 
         /** 3.数据库安装 */
         $data = [
@@ -146,11 +153,57 @@ class Addons extends Base
     }
 
     /**
+     * 创建插件Logo的分发目录
+     * @param string $addons_sign 插件标识
+     * @return void
+     */
+    protected function distAddonLogo($addonsPath, $addons_sign)
+    {
+        /** Logo分发目录 */
+        $path = $this->getAddonLogoDistDir($addons_sign);
+
+        /** 查询是否存在Logo文件 */
+        if ($result = glob($addonsPath . 'icon.*')) {
+            /** 是否需要创建目录 */
+            if (! $this->mkdir($path)) {
+                $this->error("创建目录：{$path} 失败，请检查权限.");
+            }
+            /** 分发 */
+            if (! copy($result[0], $path . '/' . basename($result[0]))) {
+                $this->error('插件Logo分发失败，请检查目录权限');
+            }
+        }
+    }
+
+    /** 分发AssetsResource */
+    protected function distAssets($addonPath, $addonSign)
+    {
+        /** 待复制目录检测 */
+        $copyPath = $addonPath . 'public/assets';
+        if (! is_dir($copyPath)) {
+            return ;
+        }
+
+        /** 目标目录检测 */
+        $distPath = $this->getAddonAssetsDistDir($addonSign);
+        if (! $this->mkdir($distPath)) {
+            $this->error('创建Assets目录失败');
+        }
+
+        /** 复制 */
+        copy_all($copyPath, $distPath);
+    }
+
+    /**
      * 插件卸载
      */
     public function uninstall(Request $request)
     {
         $addons = $this->existsValidator($request);
+
+        $this->removeAddonLogo($addons['addons_sign']);
+
+        $this->removeAddonAssets($addons['addons_sign']);
 
         /** 1.卸载钩子 */
         if (!Tree::hook()->uninstall($addons['addons_sign'])) {
@@ -172,6 +225,24 @@ class Addons extends Base
         $this->repository->delete($addons['id']);
 
         $this->success('操作成功');
+    }
+
+    /** 删除插件分发的Logo */
+    protected function removeAddonLogo($addonSign)
+    {
+        $path = $this->getAddonLogoDistDir($addonSign);
+
+        if ($result = glob($path . '/' . 'icon.*')) {
+            @unlink($result[0]);
+        }
+    }
+
+    /** 删除插件分发的Assets */
+    protected function removeAddonAssets($addonSign)
+    {
+        $path = $this->getAddonAssetsDistDir($addonSign);
+
+        delete_dir($path);
     }
 
     /**
@@ -213,6 +284,31 @@ class Addons extends Base
         );
 
         $this->success('操作成功');
+    }
+
+    /** 创建目录 */
+    protected function mkdir($path)
+    {
+        if (! is_dir($path)) {
+            return @mkdir($path, 0777, true);
+        }
+
+        return true;
+    }
+
+    /**
+     * 获取插件的Logo分发目录
+     * @param string $addons_sign 插件标识
+     * @return string
+     */
+    protected function getAddonLogoDistDir($addons_sign)
+    {
+        return APP_PATH . '../public/addons/logo/' . $addons_sign;
+    }
+
+    protected function getAddonAssetsDistDir($addonSign)
+    {
+        return APP_PATH . '../public/addons/assets/' . $addonSign;
     }
 
     /**
