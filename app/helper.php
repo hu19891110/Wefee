@@ -132,7 +132,7 @@ if (!function_exists('aurl')) {
      * 生成插件的控制器访问URL
      * @param string $path 格式：插件标识/控制器/方法
      * @param array $params 附加参数
-     * @return string URL
+     * @return string
      */
     function aurl($path, $params = [])
     {
@@ -310,9 +310,9 @@ if (! function_exists('delete_dir')) {
         $dest = realpath($dest);
 
         if (strtolower(substr(PHP_OS, 0, 3)) == 'win') {
-            exec('rmdir /s/q '. $dest, $result, $status);
+            exec('rmdir /s/q '. $dest);
         } else {
-            exec('rm -rf '. $dest, $result, $status);
+            exec('rm -rf '. $dest);
         }
     }
 }
