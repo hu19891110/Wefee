@@ -37,8 +37,12 @@ class Setting extends Base
             }
             /** 不存在直接创建 */
             $exists = Db::table('wefee_settings')->where('wefee_key', $key)->find();
-            if (!$exists) {
-                Db::table('wefee_settings')->insert(['wefee_key' => $key]);
+            if (! $exists) {
+                Db::table('wefee_settings')->insert([
+                    'wefee_key' => $key,
+                    'wefee_value' => $val,
+                ]);
+                continue;
             }
             /** 修改值 */
             Db::table('wefee_settings')->where('wefee_key', $key)->update(['wefee_value' => $val]);

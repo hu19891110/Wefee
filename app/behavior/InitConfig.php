@@ -13,7 +13,7 @@ class InitConfig
         $this->autoloadRegister();
 
         /** 配置预注册 */
-        if (!table_exists('wefee_settings')) {
+        if (table_exists('wefee_settings')) {
             $settings = Db::table('wefee_settings')->select();
             $config = [];
 
