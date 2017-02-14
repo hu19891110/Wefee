@@ -37,7 +37,7 @@
                                 {if condition="$item['addons_status'] eq 1"}
                                 <a onclick="if (confirm('确定禁用？')) { location.href = '{:url('addons/addons/ban', ['addons_sign' => $item['addons_sign']])}'; }" class="btn btn-primary">禁用</a>
                                 {/if}
-                                {if condition="$item['addons_status'] eq 3"}
+                                {if condition="$item['addons_status'] neq 1"}
                                 <a onclick="if (confirm('确定启用？')) { location.href = '{:url('addons/addons/ban', ['addons_sign' => $item['addons_sign']])}'; }" class="btn btn-primary">启用</a>
                                 {/if}
                             </p>
