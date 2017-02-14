@@ -10,10 +10,12 @@ class InitConfig
     public function run(&$params)
     {
         /** 插件Autoload Register */
-        $this->autoloadRegister();
+        if (table_exists(full_table('addons'))) {
+            $this->autoloadRegister();
+        }
 
         /** 配置预注册 */
-        if (table_exists('wefee_settings')) {
+        if (table_exists(full_table('settings'))) {
             $settings = Db::table('wefee_settings')->select();
             $config = [];
 
