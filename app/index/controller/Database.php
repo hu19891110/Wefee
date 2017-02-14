@@ -220,7 +220,10 @@ class Database extends Base
         $mysql = Db::query('SHOW TABLE STATUS;');
         $tables = [];
         foreach ($mysql as $table) {
-            if ($table['Data_free'] > 0) {
+            if ($table['Engine'] == 'InnoDB') {
+                continue;
+            }
+            if (! empty($table['Data_free'])) {
                 $tables[] = $table;
             }
         }
