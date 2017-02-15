@@ -15,7 +15,8 @@ require.config({
         'jscolor': "jscolor/jscolor.min",
         'ueditor': "ueditor/ueditor.all.min",
         'ueditor.config': "ueditor/ueditor.config",
-        'sortable': "Sortable.min"
+        'sortable': "Sortable.min",
+        'cxselect': 'cx-select/jquery.cxselect.min'
     },
     map: {
         '*': {
@@ -46,6 +47,9 @@ require.config({
         },
         "ueditor": {
             deps: ["jquery", "ueditor.config", "css!/static/js/ueditor/themes/default/css/ueditor.min.css"]
+        },
+        "cxselect": {
+            deps: ["jquery"]
         }
     }
 });

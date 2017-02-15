@@ -12,6 +12,7 @@ class Wefee extends TagLib
         'daterange' => ['attr' => 'title,name,value', 'close' => 0],
         'color' => ['attr' => 'title,name,value', 'close' => 0],
         'umeditor' => ['attr' => 'title,name,content', 'close' => 0],
+        'province' => ['attr' => 'title,province,city,area', 'close' => 0],
     ];
 
     /**
@@ -282,6 +283,59 @@ require(['ueditor'], function () {
     });
 });
 </script>
+HTML;
+
+        return $html;
+    }
+
+    public function tagProvince($tag)
+    {
+        /** 属性 */
+        $title = isset($tag['title']) ? $tag['title'] : '';
+        /** 省份 */
+        $province = substr($tag['province'], 0, 1);
+        if ('$' == $province || ':' == $province) {
+            $province = $this->autoBuildVar($tag['province']);
+        } else {
+            $province = $tag['province'];
+        }
+        /** 城市 */
+        $city = substr($tag['city'], 0, 1);
+        if ('$' == $city || ':' == $city) {
+            $city = $this->autoBuildVar($tag['city']);
+        } else {
+            $city = $tag['city'];
+        }
+        /** 地区 */
+        $area = substr($tag['area'], 0, 1);
+        if ('$' == $area || ':' == $area) {
+            $area = $this->autoBuildVar($tag['area']);
+        } else {
+            $area = $tag['area'];
+        }
+        $random = mt_rand(0,99);
+
+        $html = <<<HTML
+
+<div class="form-group">
+    <label class="control-label col-sm-2">{$title}</label>
+    <div class="col-sm-10">
+        <div class="row pca-box">
+            <div class="col-sm-4"><select name="province" data-value="{$province}" class="form-control province_{$random}"></select></div>
+            <div class="col-sm-4"><select name="city" data-value="{$city}" class="form-control city_{$random}"></select></div>
+            <div class="col-sm-4"><select name="area" data-value="{$area}" class="form-control area_{$random}"></select></div>
+        </div>
+    </div>
+</div>
+<script >
+require(["cxselect"], function () {
+    $('.pca-box').cxSelect({
+        url: '/static/js/cx-select/cityData.min.json',
+        selects: ['province_{$random}', 'city_{$random}', 'area_{$random}'],
+    });
+});
+</script>
+
 HTML;
 
         return $html;
