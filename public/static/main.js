@@ -15,6 +15,7 @@ require.config({
         'jscolor': "jscolor/jscolor.min",
         'ueditor': "ueditor/ueditor.all.min",
         'ueditor.config': "ueditor/ueditor.config",
+        'sortable': "Sortable.min"
     },
     map: {
         '*': {
