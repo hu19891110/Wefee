@@ -25,9 +25,7 @@ class Database extends Base
 
         $title = '数据库备份';
 
-        $user = Auth::user();
-
-        return view('', compact('user', 'title', 'tables'));
+        return view('', compact('title', 'tables'));
     }
 
     /**
@@ -140,9 +138,7 @@ class Database extends Base
 
         $title = '数据库恢复';
 
-        $user = Auth::user();
-
-        return view('', compact('user', 'title', 'backupFiles'));
+        return view('', compact('title', 'backupFiles'));
     }
 
     /**
@@ -230,9 +226,7 @@ class Database extends Base
 
         $title = '数据库优化';
 
-        $user = Auth::user();
-
-        return view('', compact('user', 'title', 'tables'));
+        return view('', compact('title', 'tables'));
     }
 
     /**

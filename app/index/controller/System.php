@@ -46,9 +46,7 @@ class System extends Base
 
         $title =  '系统信息';
 
-        $user = Auth::user();
-
-        return view('', compact('user', 'title', 'system'));
+        return view('', compact('title', 'system'));
     }
 
 }

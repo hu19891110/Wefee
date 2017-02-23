@@ -10,18 +10,11 @@ use app\common\controller\Base;
 class Setting extends Base
 {
 
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-    }
-
     public function wechat()
     {
         $title = '微信配置';
 
-        $user = Auth::user();
-
-        return view('', compact('title', 'user'));
+        return view('', compact('title'));
     }
 
     /** 配置保存 */
@@ -57,9 +50,7 @@ class Setting extends Base
 
         $title = '站点配置';
 
-        $user = Auth::user();
-
-        return view('', compact('user', 'title', 'upload'));
+        return view('', compact('title', 'upload'));
     }
 
 }

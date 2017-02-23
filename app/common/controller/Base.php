@@ -4,6 +4,7 @@ namespace app\common\controller;
 use think\Session;
 use think\Request;
 use think\Controller;
+use Qsnh\think\Auth\Auth;
 use app\traits\LoginCheck;
 
 class Base extends Controller
@@ -16,14 +17,12 @@ class Base extends Controller
 
     protected $repository = null;
 
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-    }
-
     public function _initialize()
     {
         $this->loginCheck();
+
+        /** 当前认证用户 */
+        \think\View::share('user', Auth::user());
     }
 
     protected function checkToken(Request $request)

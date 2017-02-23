@@ -17,9 +17,7 @@ class Dashboard extends Base
 
         $title = '后台管理主面板 - PowerBy Wefee';
 
-        $user = Auth::user();
-
-        return view('', compact('user', 'title', 'subscribe_yesterday', 'subscribe_today'));
+        return view('', compact('title', 'subscribe_yesterday', 'subscribe_today'));
     }
 
 }

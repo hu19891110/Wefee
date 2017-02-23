@@ -33,7 +33,7 @@ require.config({
             exports: "bootstrap"
         },
         "icheck": {
-            deps: ["jquery"],
+            deps: ["jquery", "css!/static/js/icheck/minimal/green.css"],
             exports: "icheck"
         },
         "layer": {
