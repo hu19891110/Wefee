@@ -10,6 +10,8 @@ use app\repository\AddonsRepository;
 class Addons extends Base
 {
 
+    protected $repository;
+
     protected $index_template = './common/addons';
 
     public function _initialize()
@@ -121,7 +123,7 @@ class Addons extends Base
             'updated_at'     => date('Y-m-d H:i:s'),
         ];
         $id = $this->repository->insert($data);
-        if (!$id) {
+        if (! $id) {
             $this->error('安装失败，错误代码：100.');
         }
 
@@ -140,6 +142,7 @@ class Addons extends Base
                 /** 执行插件安装方法 */
                 $obj->up();
             } catch (\Exception $e) {
+                halt($e->getMessage());
                 /** 数据库回滚 */
                 $this->repository->delete($id);
                 /** 注册钩子回滚 */

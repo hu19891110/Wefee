@@ -250,7 +250,7 @@ class Hooks
      */
     private function getAddonsHookObj($hook_type, $addons_sign)
     {
-        $key = md5($addons_sign.$hook_type);
+        $key = md5($addons_sign . $hook_type);
 
         if (!isset($this->objContainer[$key])) {
             $path = $this->addons_path . $addons_sign . DS . 'hook' . DS . strtolower($hook_type) . DS . 'Hook' . EXT;
