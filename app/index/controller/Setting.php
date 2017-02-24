@@ -30,7 +30,7 @@ class Setting extends Base
             $exists = Db::table('wefee_settings')->where('wefee_key', $key)->find();
             if (! $exists) {
                 Db::table('wefee_settings')->insert([
-                    'wefee_key' => $key,
+                    'wefee_key'   => $key,
                     'wefee_value' => $val,
                 ]);
                 continue;
