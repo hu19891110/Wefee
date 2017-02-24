@@ -1,5 +1,6 @@
 <?php namespace app\index\controller;
 
+use app\model\ReplyContent;
 use think\Request;
 use think\Validate;
 use app\common\controller\Base;
@@ -99,6 +100,9 @@ class Rule extends Base
 
     public function delete(Request $request)
     {
+        /** 删除该规则下的回复内容 */
+        ReplyContent::destroy(['rule_id' => $request->param('id')]);
+
         RuleModel::destroy($request->param('id'));
 
         $this->success('操作成功');
