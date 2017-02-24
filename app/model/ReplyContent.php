@@ -10,4 +10,9 @@ class ReplyContent extends Model
     protected $createTime = 'created_at';
     protected $updateTime = 'updated_at';
 
+    public function rule()
+    {
+        return $this->belongsTo('Rule', 'rule_id');
+    }
+
 }

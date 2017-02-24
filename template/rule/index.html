@@ -49,9 +49,10 @@
                     <b>{$rule->rule_name}</b>
                 </div>
                 <div class="panel-body">
-                    <p>排序：<span class="label label-warning">{$rule->rule_sort}</span></p>
-                    <p>
-                        规则：
+                    <div>
+                        <p>排序：<span class="label label-warning">{$rule->rule_sort}</span></p>
+                        <p>
+                            规则：
                         <span class="label label-danger">
                         {switch name="rule.rule_type"}
                             {case value="equal"}完全相等{/case}
@@ -59,11 +60,48 @@
                             {case value="reg"}正则{/case}
                         {/switch}
                         </span>
-                    </p>
-                    <p>内容：<span class="label label-success">{$rule->rule_content}</span></p>
-                    <p>状态：<span class="label label-info">{$rule['rule_status'] == 1 ? '正常' : '停止'}</span></p>
+                        </p>
+                        <p>内容：<span class="label label-success">{$rule->rule_content}</span></p>
+                        <p>状态：<span class="label label-info">{$rule['rule_status'] == 1 ? '正常' : '停止'}</span></p>
+                    </div>
+                    <div>
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th width="5%">编号</th>
+                                <th width="5%">顺序</th>
+                                <th width="10%">状态</th>
+                                <th width="65%">回复内容</th>
+                                <th width="15%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="$rule->replies()->order('sort', 'asc')->select()" id="reply"}
+                            <tr>
+                                <td>{$reply->id}</td>
+                                <td>{$reply->sort}</td>
+                                <td>
+                                    {if condition="$reply->status eq 1"}
+                                    <span class="label label-success">正常</span>
+                                    {else}
+                                    <span class="label label-danger">停止</span>
+                                    {/if}
+                                </td>
+                                <td>{$reply->content}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{:url('index/reply/edit', ['id' => $reply['id']])}" class="btn btn-warning btn-sm">编辑</a>
+                                        <a onclick="if (confirm('确定删除？')) { location.href = '{:url('index/reply/delete', ['id' => $reply['id']])}'; }" class="btn btn-danger btn-sm">删除</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="panel-footer text-right">
+                    <a href="{:url('index/reply/add', ['rule_id' => $rule['id']])}" class="btn btn-info">添加回复内容</a>
                     <a onclick="if (confirm('确定删除？')) { location.href = '{:url('index/rule/delete', ['id' => $rule['id']])}'; }" class="btn btn-danger delete">删除</a>
                     <a href="{:url('index/rule/edit', ['id' => $rule['id']])}" class="btn btn-warning">编辑</a>
                 </div>

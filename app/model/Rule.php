@@ -10,4 +10,10 @@ class Rule extends Model
     protected $createTime = 'created_at';
     protected $updateTime = 'updated_at';
 
+
+    public function replies()
+    {
+        return $this->hasMany('ReplyContent', 'rule_id');
+    }
+
 }
