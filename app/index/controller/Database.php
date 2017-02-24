@@ -3,7 +3,6 @@ namespace app\index\controller;
 
 use think\Db;
 use think\Request;
-use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
 
 class Database extends Base

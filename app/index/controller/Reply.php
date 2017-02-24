@@ -1,7 +1,7 @@
 <?php namespace app\index\controller;
 
-use app\model\Rule;
 use think\Request;
+use app\model\Rule;
 use think\Validate;
 use app\common\controller;
 use app\model\ReplyContent;

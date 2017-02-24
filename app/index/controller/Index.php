@@ -50,7 +50,7 @@ class Index extends Base
 
     /**
      * 登录之后
-     * @param $request think\Request 登录请求
+     * @param $request \think\Request 登录请求
      * @return void
      */
     protected function loginAfter(Request $request)

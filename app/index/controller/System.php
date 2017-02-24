@@ -2,7 +2,6 @@
 namespace app\index\controller;
 
 use think\Db;
-use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
 
 class System extends Base
