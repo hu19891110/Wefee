@@ -28,7 +28,9 @@
         "phootwork/file": "^0.1.2",
         "qsnh/think-upload": "^0.2.5",
         "topthink/think-queue": "^1.1",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "topthink/think-image": "^1.0",
+        "topthink/think-captcha": "^1.0"
     },
     "extra": {
         "think-path": "thinkphp"
