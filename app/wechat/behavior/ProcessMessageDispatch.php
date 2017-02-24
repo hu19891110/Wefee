@@ -5,6 +5,7 @@
  */
 namespace app\wechat\behavior;
 
+use app\model\Rule;
 use app\wefee\Tree;
 
 class ProcessMessageDispatch
@@ -20,7 +21,8 @@ class ProcessMessageDispatch
                 break;
             case 'text':
                 /** 文本消息 */
-                return $hook->listen('wefee-process-text', $message);
+                //return $hook->listen('wefee-process-text', $message);
+                return $this->textMessageProcess($message);
                 break;
             case 'image':
                 /** 图片消息 */
@@ -47,6 +49,29 @@ class ProcessMessageDispatch
                 return $hook->listen('wefee-process-original', $message);
                 break;
         }
+    }
+
+    /**
+     * 文本消息给 Wefee 自身处理
+     */
+    protected function textMessageProcess($message)
+    {
+        /** 1.获取消息内容 */
+        $content = $message->Content;
+
+        /** 2.构造WhereCondition */
+        $where = "rule_content REGEXP '{$content}' AND rule_status = 1";
+
+        /** 3.查询结果 */
+        $rule = Rule::where($where)->order('rule_sort', 'asc')->find();
+        if ($rule) {
+            $reply = $rule->replies()->order('sort', 'asc')->find();
+            if ($reply) {
+                return $reply->content;
+            }
+        }
+
+        return '';
     }
 
 }
