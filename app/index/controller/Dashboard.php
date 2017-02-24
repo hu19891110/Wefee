@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use GuzzleHttp\Client;
 use think\Db;
 use app\common\controller\Base;
 

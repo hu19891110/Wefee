@@ -1,8 +1,8 @@
 <?php namespace app\index\controller;
 
-use app\model\ReplyContent;
 use think\Request;
 use think\Validate;
+use app\model\ReplyContent;
 use app\common\controller\Base;
 use app\model\Rule AS RuleModel;
 

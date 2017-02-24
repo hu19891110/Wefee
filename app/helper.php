@@ -316,3 +316,52 @@ if (! function_exists('delete_dir')) {
         }
     }
 }
+
+if (! function_exists('wefee_get')) {
+    /**
+     * GET请求方法
+     * @param string $url 请求地址
+     * @param array $data 发送参数
+     * @param bool $safe SSL验证
+     * @return \GuzzleHttp\Psr7\Response
+     */
+    function wefee_get($url, $data = [],  $safe = false)
+    {
+        return wefee_request('GET', $url, $data, $safe);
+    }
+}
+
+if (! function_exists('wefee_post')) {
+    /**
+     * POST请求方法
+     * @param string $url 请求地址
+     * @param array $data 发送参数可选
+     * @param bool $safe SSL验证
+     * @return \GuzzleHttp\Psr7\Response
+     */
+    function wefee_post($url, $data = [], $safe = false)
+    {
+        return wefee_request('POST', $url, $data, $safe);
+    }
+}
+
+if (! function_exists('wefee_request')) {
+    /**
+     * HTTP请求方法
+     * @param string $method 请求方法
+     * @param string $url 请求地址
+     * @param array $data 发送参数可选
+     * @param bool $safe SSL验证
+     * @return \GuzzleHttp\Psr7\Response
+     */
+    function wefee_request($method, $url, $data = [], $safe = false)
+    {
+        $client = new \GuzzleHttp\Client([
+            'verify' => $safe,
+        ]);
+
+        $res = $client->request(strtoupper($method), $url, $data);
+
+        return $res;
+    }
+}
