@@ -31,12 +31,17 @@ class Assets extends Base
 
     public function voices()
     {
-        return view('', compact('voice'));
+        return view('');
     }
 
     public function videos()
     {
-        return view('', compact('videos'));
+        return view('');
+    }
+
+    public function thumbs()
+    {
+        return view('');
     }
 
 }

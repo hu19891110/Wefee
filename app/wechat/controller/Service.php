@@ -11,12 +11,15 @@ class Service extends Base
 
     protected $videoDir = '';
 
+    protected $thumbDir = '';
+
     public function _initialize()
     {
         parent::_initialize();
 
         $this->voiceDir = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'voices';
         $this->voiceDir = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'video';
+        $this->thumbDir = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'thumb';
     }
 
     /** 上传图片到微信 */
@@ -89,6 +92,30 @@ class Service extends Base
         }
 
         return json(['success' => $res['media_id']]);
+    }
+
+    public function uploadThumb(Request $request)
+    {
+        $file = $request->file('file');
+
+        $result = $file->validate([
+            'size' => 1024 * 64,
+            'ext'  => 'jpg',
+        ])->move($this->thumbDir);
+
+        if (! $result) {
+            return json(['error' => $file->getError()]);
+        }
+
+        $path = $this->thumbDir . DS . $result->getSaveName();
+
+        $res = json_decode(Tree::wechat()->material_temporary->uploadThumb($path), true);
+
+        if (isset($res['errcode'])) {
+            return json(['error' => '获取缩率图MediaID失败！可能原因：文件过大，文件敏感。']);
+        }
+
+        return json(['success' => $res['thumb_media_id']]);
     }
 
 }
