@@ -73,7 +73,8 @@
                             <tr>
                                 <th width="5%">编号</th>
                                 <th width="5%">顺序</th>
-                                <th width="10%">状态</th>
+                                <th width="5%">类型</th>
+                                <th width="5%">状态</th>
                                 <th width="65%">回复内容</th>
                                 <th width="15%">操作</th>
                             </tr>
@@ -83,6 +84,17 @@
                             <tr>
                                 <td>{$reply->id}</td>
                                 <td>{$reply->sort}</td>
+                                <td>
+                                    <span class="label label-info">
+                                    {switch name="reply.type"}
+                                    {case value="text"}文本{/case}
+                                    {case value="image"}图片{/case}
+                                    {case value="video"}视频{/case}
+                                    {case value="voice"}音频{/case}
+                                    {case value="news"}图文{/case}
+                                    {/switch}
+                                    </span>
+                                </td>
                                 <td>
                                     {if condition="$reply->status eq 1"}
                                     <span class="label label-success">正常</span>

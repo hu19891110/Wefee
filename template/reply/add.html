@@ -1,5 +1,11 @@
 {extend name="layout:base" /}
 
+{block name="header"}
+<style>
+    .message-container { background-color: #fbfbfb; }
+</style>
+{/block}
+
 {block name="body"}
 
 {include file="common:nav" /}
@@ -41,12 +47,15 @@
                                     <option value="video">视频消息</option>
                                     <option value="voice">音频消息</option>
                                     <option value="news">图文消息</option>
-                                    <option value="article">文章消息</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="container"></div>
+                        <div class="form-group">
+                            <div class="panel panel-default">
+                                <div class="panel-body message-container"></div>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label class="control-label col-sm-2">状态</label>
@@ -76,35 +85,87 @@
     <div class="form-group">
         <label class="control-label col-sm-2">回复内容</label>
         <div class="col-sm-10">
-            <textarea name="content" class="form-control" cols="30" rows="10"></textarea>
+            <textarea name="content" class="form-control" rows="5" placeholder="回复文本"></textarea>
         </div>
     </div>
 </script>
 
 <script type="text/html" id="message-image">
     <div class="form-group">
-
+        <label class="control-label col-sm-2">图片MediaID</label>
+        <div class="col-sm-10">
+            <input type="text" name="image_media_id" class="form-control">
+        </div>
+        <div class="col-sm-10 col-sm-offset-2">
+            <span class="help-block"><a href="{:url('index/assets/images')}" target="_blank">点击获取图片MediaID</a></span>
+        </div>
     </div>
 </script>
 
-<script type="text/html" id="video-image">
+<script type="text/html" id="message-video">
+    <div class="form-group">
+        <label class="control-label col-sm-2">视频MediaID</label>
+        <div class="col-sm-10">
+            <input type="text" name="video_media_id" class="form-control">
+        </div>
+        <div class="col-sm-10 col-sm-offset-2">
+            <span class="help-block"><a href="{:url('index/assets/videos')}" target="_blank">点击获取视频MediaID</a></span>
+        </div>
+    </div>
+
     <div class="form-group">
         <label class="control-label col-sm-2">标题</label>
         <div class="col-sm-10">
-            <input type="text" name="video_title" class="form-control">
+            <input type="text" name="video_title" class="form-control" placeholder="视频标题">
         </div>
     </div>
 
     <div class="form-group">
         <label class="control-label col-sm-2">描述</label>
         <div class="col-sm-10">
-            <textarea name="video_des" class="form-control" cols="30" rows="10"></textarea>
+            <textarea name="video_des" class="form-control" rows=15"" placeholder="视频描述"></textarea>
         </div>
     </div>
-
-
 </script>
 
+<script type="text/html" id="message-voice">
+    <div class="form-group">
+        <label class="control-label col-sm-2">音频MediaID</label>
+        <div class="col-sm-10">
+            <input type="text" name="voice_media_id" class="form-control">
+        </div>
+        <div class="col-sm-10 col-sm-offset-2">
+            <span class="help-block"><a href="{:url('index/assets/voices')}" target="_blank">点击获取音频MediaID</a></span>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="message-news">
+<div class="form-group">
+    <label class="control-label col-sm-2">标题</label>
+    <div class="col-sm-10">
+        <input type="text" name="news_title[]" placeholder="图文标题" class="form-control">
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-2">描述</label>
+    <div class="col-sm-10">
+        <textarea name="news_des[]" class="form-control" rows="10" placeholder="图文描述"></textarea>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-2">封面链接</label>
+    <div class="col-sm-10">
+        <input type="text" name="news_image[]" placeholder="图文封面，可选" class="form-control">
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-2">链接地址</label>
+    <div class="col-sm-10">
+        <input type="text" name="news_url[]" placeholder="图文链接地址" class="form-control">
+    </div>
+</div>
+</script>
 
 {/block}
 
@@ -115,6 +176,22 @@
             checkboxClass: 'icheckbox_minimal-green',
             radioClass: 'iradio_minimal-green',
             increaseArea: '20%'
+        });
+    });
+
+    require(['jquery'], function ($) {
+        $('.message-container').html($('#message-text').html());
+
+        $('select[name="type"]').change(function () {
+            var v = $(this).val(),html=$('#message-' + v).html();
+            if (v == 'news') {
+                html += '<div class="form-group"><div class="col-sm-10 col-sm-offset-2"><button type="button" class="btn btn-primary add-news-item">再添加一个图文消息（最多8条）</button></div></div>';
+            }
+            $('.message-container').html(html);
+        });
+
+        $('body').on('click', '.add-news-item', function () {
+            $('.message-container').append($('#message-news').html() + '<hr>');
         });
     });
 </script>

@@ -21,10 +21,12 @@ class Reply extends controller\Base
     public function create(Request $request)
     {
         $data = $request->only([
-            'rule_id', 'sort', 'content', 'status',
+            'rule_id', 'sort', 'type', 'status',
         ]);
 
         $this->validator($data);
+
+        $data['content'] = serialize($this->getMessageContent($request));
 
         $reply = new ReplyContent($data);
         $reply->save();
@@ -36,6 +38,8 @@ class Reply extends controller\Base
     {
         $reply = $this->getReply($request->param('id'));
 
+        $reply->content = unserialize($reply->content);
+
         $title = '编辑回复内容';
 
         return view('', compact('title', 'reply'));
@@ -46,21 +50,82 @@ class Reply extends controller\Base
         $reply = $this->getReply($request->param('id'));
 
         $data = $request->only([
-            'rule_id', 'sort', 'content', 'status',
+            'sort', 'type', 'status',
         ]);
 
         $this->validator($data);
+
+        $data['content'] = serialize($this->getMessageContent($request));
 
         $reply->save($data);
 
         $this->success('操作成功');
     }
 
+    protected function getMessageContent(Request $request)
+    {
+        $box = [];
+        switch ($request->param('type')) {
+            case 'text':
+                $box['content'] = $request->param('content');
+                ($box['content'] == '') && $this->error('请填写完成数据！');
+                break;
+            case 'image':
+                $box['media_id'] = $request->param('image_media_id');
+                ($box['media_id'] == '') && $this->error('请填写完成数据！');
+                break;
+            case 'voice':
+                $box['media_id'] = $request->param('voice_media_id');
+                ($box['media_id'] == '') && $this->error('请填写完成数据！');
+                break;
+            case 'video':
+                $box = [
+                    'title'       => $request->param('video_title'),
+                    'description' => $request->param('video_des'),
+                    'media_id'    => $request->param('video_media_id'),
+                ];
+
+                if ($box['title'] == '' || $box['description'] == '' || $box['media_id'] == '') {
+                    $this->error('请填写完整数据！');
+                }
+                break;
+            case 'news':
+                $title = $request->param('news_title/a');
+                $des   = $request->param('news_des/a');
+                $image = $request->param('news_image/a');
+                $url   = $request->param('news_url/a');
+
+                foreach ($title as $key => $val) {
+                    $tmp = [
+                        'title'       => $val,
+                        'description' => $des[$key],
+                        'image'       => $image[$key],
+                        'url'         => $url[$key],
+                    ];
+                    if ($tmp['title'] == '' || $tmp['description'] == '' || $tmp['url'] == '') {
+                        continue;
+                    }
+                    $box[] = $tmp;
+                    /** 最多8条数据 */
+                    if (count($box) >= 8) {
+                        break;
+                    }
+                }
+
+                if (! $box) {
+                    $this->error('请填写完整数据！');
+                }
+                break;
+        }
+
+        return $box;
+    }
+
     protected function validator(array $data)
     {
         $validator = new Validate([
             'sort|排序' => 'require',
-            'content|回复内容' => 'require',
+            'type|类型' => 'require',
             'status|状态' => 'require',
         ]);
 
