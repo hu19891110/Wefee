@@ -7,6 +7,11 @@ namespace app\wechat\behavior;
 
 use app\model\Rule;
 use app\wefee\Tree;
+use EasyWeChat\Message\News;
+use EasyWeChat\Message\Text;
+use EasyWeChat\Message\Image;
+use EasyWeChat\Message\Video;
+use EasyWeChat\Message\Voice;
 
 class ProcessMessageDispatch
 {
@@ -60,14 +65,32 @@ class ProcessMessageDispatch
         $content = $message->Content;
 
         /** 2.构造WhereCondition */
-        $where = "rule_content REGEXP '{$content}' AND rule_status = 1";
+        $where = "'{$content}' REGEXP rule_content AND rule_status = 1";
 
         /** 3.查询结果 */
         $rule = Rule::where($where)->order('rule_sort', 'asc')->find();
         if ($rule) {
             $reply = $rule->replies()->order('sort', 'asc')->find();
             if ($reply) {
-                return $reply->content;
+
+                switch ($reply->type) {
+                    case 'text':
+                        return new Text(unserialize($reply->content));
+                        break;
+                    case 'image':
+                        return new Image(unserialize($reply->content));
+                        break;
+                    case 'video':
+                        return new Video(unserialize($reply->content));
+                        break;
+                    case 'voice':
+                        return new Voice(unserialize($reply->content));
+                        break;
+                    case 'news':
+                        return new News(unserialize($reply->content));
+                        break;
+                }
+
             }
         }
 
