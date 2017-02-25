@@ -63,7 +63,7 @@ if (!function_exists('get_wechat_config')) {
             ],
 
             'guzzle' => [
-                'timeout' => 3.0,
+                'timeout' => 30,
                 'verify' => false,
             ],
 
@@ -314,6 +314,32 @@ if (! function_exists('delete_dir')) {
         } else {
             exec('rm -rf '. $dest);
         }
+    }
+}
+
+if (! function_exists('get_all_files')) {
+    /**
+     * 获取目录下所有的文件，包括子目录
+     * @param string $path 目标路径
+     * @return array
+     */
+    function get_all_files($path)
+    {
+        $box = [];
+
+        $path = rtrim($path, DS) . DS;
+
+        $files = \Anekdotes\File\File::files($path);
+
+        $box = array_merge($box, $files);
+
+        $dirs = \Anekdotes\File\File::directories($path);
+
+        foreach ($dirs as $item) {
+            $box = array_merge($box, get_all_files($item));
+        }
+
+        return $box;
     }
 }
 

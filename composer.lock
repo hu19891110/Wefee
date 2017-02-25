@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2934d8de026da2495e5f6f8c5069d0d3",
-    "content-hash": "316c71581bc3ef61caa23df5b5573b6c",
+    "hash": "8872715341341413b549f9d0c443f714",
+    "content-hash": "7204670b154afe2c8a6cf9a5c0b38401",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -47,6 +47,53 @@
             "description": "Aliyun OSS SDK for PHP",
             "homepage": "http://www.aliyun.com/product/oss/",
             "time": "2017-01-18 08:56:15"
+        },
+        {
+            "name": "anekdotes/file",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anekdotes/file.git",
+                "reference": "733b488b469fcb6b58a4e3f8bd91abdbfa0a1de7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/anekdotes/file/733b488b469fcb6b58a4e3f8bd91abdbfa0a1de7.zip",
+                "reference": "733b488b469fcb6b58a4e3f8bd91abdbfa0a1de7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0|~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Anekdotes\\File\\": "src/anekdotes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathieu Gosselin",
+                    "email": "mathieu.gosselin@anekdotes.com",
+                    "homepage": "http://anekdotes.com"
+                }
+            ],
+            "description": "Provides an easier way to manipulate file for common use like move,rename etc.",
+            "homepage": "https://github.com/anekdotes/file",
+            "keywords": [
+                "directory",
+                "file",
+                "move",
+                "rename"
+            ],
+            "time": "2016-11-15 15:12:25"
         },
         {
             "name": "doctrine/cache",
@@ -423,16 +470,16 @@
         },
         {
             "name": "overtrue/socialite",
-            "version": "1.0.21",
+            "version": "1.0.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/socialite.git",
-                "reference": "28d852f188719c57bd8c3282338eb69cc7d6971e"
+                "reference": "e749ea09ab7b356a94c823804e95650efc616337"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/overtrue/socialite/28d852f188719c57bd8c3282338eb69cc7d6971e.zip",
-                "reference": "28d852f188719c57bd8c3282338eb69cc7d6971e",
+                "url": "https://packagist.phpcomposer.com/files/overtrue/socialite/e749ea09ab7b356a94c823804e95650efc616337.zip",
+                "reference": "e749ea09ab7b356a94c823804e95650efc616337",
                 "shasum": ""
             },
             "require": {
@@ -469,20 +516,20 @@
                 "wechat",
                 "weibo"
             ],
-            "time": "2017-01-19 04:17:07"
+            "time": "2017-02-13 09:01:56"
         },
         {
             "name": "overtrue/wechat",
-            "version": "3.2.4",
+            "version": "3.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/wechat.git",
-                "reference": "59b9aa7d9e92119d87f53d0ad8e5cf579992bf3d"
+                "reference": "ac77966d3549e14222c15e3950bc2c6949c2ce31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/overtrue/wechat/59b9aa7d9e92119d87f53d0ad8e5cf579992bf3d.zip",
-                "reference": "59b9aa7d9e92119d87f53d0ad8e5cf579992bf3d",
+                "url": "https://packagist.phpcomposer.com/files/overtrue/wechat/ac77966d3549e14222c15e3950bc2c6949c2ce31.zip",
+                "reference": "ac77966d3549e14222c15e3950bc2c6949c2ce31",
                 "shasum": ""
             },
             "require": {
@@ -527,7 +574,7 @@
                 "weixin",
                 "weixin-sdk"
             ],
-            "time": "2017-01-24 07:27:49"
+            "time": "2017-02-04 05:38:34"
         },
         {
             "name": "phootwork/file",
@@ -1055,16 +1102,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.34",
+            "version": "4.8.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7eb45205d27edd94bd2b3614085ea158bd1e2bca"
+                "reference": "791b1a67c25af50e230f841ee7a9c6eba507dc87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/7eb45205d27edd94bd2b3614085ea158bd1e2bca.zip",
-                "reference": "7eb45205d27edd94bd2b3614085ea158bd1e2bca",
+                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/791b1a67c25af50e230f841ee7a9c6eba507dc87.zip",
+                "reference": "791b1a67c25af50e230f841ee7a9c6eba507dc87",
                 "shasum": ""
             },
             "require": {
@@ -1123,7 +1170,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-26 16:15:36"
+            "time": "2017-02-06 05:18:07"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1913,16 +1960,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v2.8.16",
+            "version": "v2.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "52cc211afa9458c0a54c478010a55f44892c1c02"
+                "reference": "6225d65e001b3f03f63d43e302a26314f8e1e6fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/symfony/dom-crawler/52cc211afa9458c0a54c478010a55f44892c1c02.zip",
-                "reference": "52cc211afa9458c0a54c478010a55f44892c1c02",
+                "url": "https://packagist.phpcomposer.com/files/symfony/dom-crawler/6225d65e001b3f03f63d43e302a26314f8e1e6fe.zip",
+                "reference": "6225d65e001b3f03f63d43e302a26314f8e1e6fe",
                 "shasum": ""
             },
             "require": {
@@ -1965,20 +2012,20 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-02 20:30:24"
+            "time": "2017-01-21 16:40:50"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.2.2",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "33eb76bf1d833c705433e5361a646c164696394b"
+                "reference": "a90da6dd679605d88c9803a57a6fc1fb7a19a6e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/symfony/http-foundation/33eb76bf1d833c705433e5361a646c164696394b.zip",
-                "reference": "33eb76bf1d833c705433e5361a646c164696394b",
+                "url": "https://packagist.phpcomposer.com/files/symfony/http-foundation/a90da6dd679605d88c9803a57a6fc1fb7a19a6e0.zip",
+                "reference": "a90da6dd679605d88c9803a57a6fc1fb7a19a6e0",
                 "shasum": ""
             },
             "require": {
@@ -2018,7 +2065,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-08 20:47:33"
+            "time": "2017-02-16 22:46:52"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2141,16 +2188,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.2",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "50eadbd7926e31842893c957eca362b21592a97d"
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/symfony/yaml/50eadbd7926e31842893c957eca362b21592a97d.zip",
-                "reference": "50eadbd7926e31842893c957eca362b21592a97d",
+                "url": "https://packagist.phpcomposer.com/files/symfony/yaml/9724c684646fcb5387d579b4bfaa63ee0b0c64c8.zip",
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
                 "shasum": ""
             },
             "require": {
@@ -2192,20 +2239,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-03 13:51:32"
+            "time": "2017-02-16 22:46:52"
         },
         {
             "name": "topthink/framework",
-            "version": "v5.0.5",
+            "version": "v5.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/framework.git",
-                "reference": "86cc9378a0c46e66dabed6681f8b8de758585ae1"
+                "reference": "a3a37e6cfad132d5b02ffff8f23a4abc565f7928"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/top-think/framework/86cc9378a0c46e66dabed6681f8b8de758585ae1.zip",
-                "reference": "86cc9378a0c46e66dabed6681f8b8de758585ae1",
+                "url": "https://packagist.phpcomposer.com/files/top-think/framework/a3a37e6cfad132d5b02ffff8f23a4abc565f7928.zip",
+                "reference": "a3a37e6cfad132d5b02ffff8f23a4abc565f7928",
                 "shasum": ""
             },
             "require": {
@@ -2243,7 +2290,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2017-01-23 05:59:21"
+            "time": "2017-02-07 09:39:59"
         },
         {
             "name": "topthink/think-captcha",

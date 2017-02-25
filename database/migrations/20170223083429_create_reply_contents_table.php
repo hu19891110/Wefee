@@ -34,6 +34,7 @@ class CreateReplyContentsTable extends AbstractMigration
         $table
             ->addColumn('rule_id', 'integer')
             ->addColumn('sort', 'integer', ['limit' => MysqlAdapter::INT_SMALL, 'comment' => '小靠前'])
+            ->addColumn('type', 'string', ['limit' => 10, 'comment' => '回复类型', 'default' => 'text'])
             ->addColumn('content', 'text', ['comment' => '序列化内容'])
             ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1, 'comment' => '1正常-1停止'])
             ->addColumn('created_at', 'timestamp')

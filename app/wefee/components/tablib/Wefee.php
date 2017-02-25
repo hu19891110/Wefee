@@ -30,7 +30,12 @@ class Wefee extends TagLib
         /** 属性 */
         $title = isset($tag['title']) ? $tag['title'] : '';
         $name  = isset($tag['name']) ? $tag['name'] : 'image';
-        $value = $tag['value'];
+        $flag = substr($tag['value'], 0, 1);
+        if ('$' == $flag || ':' == $flag) {
+            $value = $this->autoBuildVar($tag['value']);
+        } else {
+            $value = '""';
+        }
         /** // */
         $id = mt_rand(1, 100) . $name;
 

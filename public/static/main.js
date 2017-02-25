@@ -16,7 +16,8 @@ require.config({
         'ueditor': "ueditor/ueditor.all.min",
         'ueditor.config': "ueditor/ueditor.config",
         'sortable': "Sortable.min",
-        'cxselect': 'cx-select/jquery.cxselect.min'
+        'cxselect': 'cx-select/jquery.cxselect.min',
+        'lazyload': 'jquery.lazyload/jquery.lazyload'
     },
     map: {
         '*': {
@@ -37,7 +38,7 @@ require.config({
             exports: "icheck"
         },
         "layer": {
-            deps: ["jquery"]
+            deps: ["jquery", "css!/static/js/layer/skin/default/layer.css"]
         },
         "bootstrapswitch": {
             deps: ["bootstrap"]
@@ -49,6 +50,9 @@ require.config({
             deps: ["jquery", "ueditor.config", "css!/static/js/ueditor/themes/default/css/ueditor.min.css"]
         },
         "cxselect": {
+            deps: ["jquery"]
+        },
+        "lazyload": {
             deps: ["jquery"]
         }
     }
