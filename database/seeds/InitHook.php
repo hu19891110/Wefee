@@ -96,10 +96,6 @@ class InitHook extends AbstractSeed
                 'hook_sign' => 'wefee-process-event',
             ],
             [
-                'hook_name' => '文本消息处理',
-                'hook_sign' => 'wefee-process-text',
-            ],
-            [
                 'hook_name' => '图片消息处理',
                 'hook_sign' => 'wefee-process-image',
             ],

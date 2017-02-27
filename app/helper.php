@@ -136,13 +136,9 @@ if (!function_exists('aurl')) {
      */
     function aurl($path, $params = [])
     {
-        if (substr($path, 0, 1) == '/') {
-            $path = substr($path, 1);
-        }
+        $path = explode('/', ltrim($path, '/'));
 
-        $path = explode('/', $path);
-
-        if (!isset($path[0])) {
+        if (! isset($path[0])) {
             throw new \Exception('Addons Url Error');
         }
 

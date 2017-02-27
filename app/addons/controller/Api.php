@@ -5,7 +5,6 @@
  */
 namespace app\addons\controller;
 
-use think\File;
 use think\Request;
 use think\Controller;
 use app\repository\AddonsRepository;
@@ -40,9 +39,12 @@ class Api extends Controller
             DS . 'controller' .
             DS . ucfirst($request->param('controller')) . EXT;
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             $this->error('插件文件文件丢失');
         }
+
+        /** 预定义常量 */
+        define('VIEW_PATH', ROOT_PATH . 'addons' . DS . strtolower($request->param('addons')) . DS . 'views');
 
         require_once $path;
         $objName = 'addons\\'.strtolower($request->param('addons')).'\\controller\\'.ucfirst($request->param('controller'));
