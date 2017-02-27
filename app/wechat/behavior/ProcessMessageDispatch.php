@@ -87,7 +87,8 @@ class ProcessMessageDispatch
                         return new Voice(unserialize($reply->content));
                         break;
                     case 'news':
-                        return new News(unserialize($reply->content));
+                        $news = unserialize($reply->content);
+                        return new News(count($news) == 1 ? $news[1] : $news);
                         break;
                 }
 
