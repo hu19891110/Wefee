@@ -222,7 +222,6 @@ if (!function_exists('wechat_subscribe_event')) {
         } elseif ($type == -1) {
             \think\Db::table(full_table('wechat_focus_records'))
                 ->where('id', $id)
-                ->dec('focus_submit_num')
                 ->inc('focus_cancel_num')
                 ->dec('focus_confirm_num')
                 ->dec('focus_all_num')
