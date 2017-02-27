@@ -60,12 +60,16 @@
                 extensions: 'jpg'
             }
         });
+        uploader.on('startUpload', function () {
+            layer.load(1, {shade: [0.5, '#fff']});
+        });
         uploader.on('uploadSuccess', function(file, response) {
             if (typeof (response.error) != 'undefined') {
                 alert(response.error);
                 return ;
             }
             $('input[name="thumb_media_id"]').val(response.success);
+            layer.closeAll();
         });
     });
 </script>

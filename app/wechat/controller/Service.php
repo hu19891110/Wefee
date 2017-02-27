@@ -27,6 +27,10 @@ class Service extends Base
     {
         $file = $request->param('file');
 
+        if ($file == '') {
+            return json(['error' => '请选择文件。']);
+        }
+
         $tmp = explode('images', $file);
 
         $path = realpath(ROOT_PATH . DS . 'public' . DS . 'images' . DS . $tmp[1]);
@@ -73,8 +77,12 @@ class Service extends Base
     {
         $file = $request->file('file');
 
+        if (is_null($file)) {
+            return json(['error' => '请上传文件']);
+        }
+
         $result = $file->validate([
-            'size' => 1024 * 10240,
+            'size' => 1024 * 1024 * 10,
             'ext'  => 'mp4',
         ])->move($this->videoDir);
 

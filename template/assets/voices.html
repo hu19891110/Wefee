@@ -60,12 +60,16 @@
                 extensions: 'mp3,amr'
             }
         });
+        uploader.on('startUpload', function () {
+            layer.load(1, {shade: [0.5, '#fff']});
+        });
         uploader.on('uploadSuccess', function(file, response) {
             if (typeof (response.error) != 'undefined') {
                 alert(response.error);
                 return ;
             }
             $('input[name="voice_media_id"]').val(response.success);
+            layer.closeAll();
         });
     });
 </script>
