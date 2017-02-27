@@ -70,7 +70,7 @@ class ProcessMessageDispatch
         /** 3.查询结果 */
         $rule = Rule::where($where)->order('rule_sort', 'asc')->find();
         if ($rule) {
-            $reply = $rule->replies()->order('sort', 'asc')->find();
+            $reply = $rule->replies()->where('status', '=', 1)->order('sort', 'asc')->find();
             if ($reply) {
 
                 switch ($reply->type) {
