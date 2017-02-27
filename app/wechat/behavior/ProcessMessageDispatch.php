@@ -88,7 +88,7 @@ class ProcessMessageDispatch
                         break;
                     case 'news':
                         $news = unserialize($reply->content);
-                        return new News(count($news) == 1 ? $news[1] : $news);
+                        return new News(count($news) == 1 ? $news[0] : $news);
                         break;
                 }
 
