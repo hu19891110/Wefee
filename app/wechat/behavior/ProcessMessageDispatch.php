@@ -87,8 +87,17 @@ class ProcessMessageDispatch
                         return new Voice(unserialize($reply->content));
                         break;
                     case 'news':
+                        /** 单图文 */
                         $news = unserialize($reply->content);
-                        return new News(count($news) == 1 ? $news[0] : $news);
+                        if (count($news) == 1) {
+                            return new News($news);
+                        }
+                        /** 多条图文消息 */
+                        $container = [];
+                        foreach ($news as $new) {
+                            $container[] = new News($new);
+                        }
+                        return $container;
                         break;
                 }
 
