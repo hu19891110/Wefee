@@ -253,12 +253,29 @@ if (!function_exists('get_addon_config')) {
      * @param string $addon_sign 插件标识
      * @return array
      */
-    function get_addon_config($addon_sign)
+    function get_addon_config($addon_sign, $key = '')
     {
-        $addon = \think\Db::table(full_table('addons'))->field(['addons_config'])->where('addons_sign', $addon_sign)->find();
+        $cacheKey = $addon_sign.'-config';
+        $cache = cache($cacheKey);
+        if ($cache === false) {
+            $addon = \think\Db::table(full_table('addons'))->field(['addons_config'])->where('addons_sign', $addon_sign)->find();
+            cache($cacheKey, $addon);
+        } else {
+            $addon = $cache;
+        }
 
         if ($addon) {
-            return $addon['addons_config'] == '' ? [] : unserialize($addon['addons_config']);
+            if ($addon['addons_config'] == '') {
+                return [];
+            }
+
+            $config = unserialize($addon['addons_config']);
+
+            if ($key == '') {
+                return $config;
+            }
+
+            return isset($config[$key]) ? $config[$key] : null;
         }
 
         return [];
