@@ -49,6 +49,12 @@ class Api extends Controller
         /** 插件的视图路径常量 */
         define('VIEW_PATH', ROOT_PATH . 'addons' . DS . strtolower($request->param('addons')) . DS . 'views');
 
+        /** 组件依赖自动加载 */
+        $path = APP_PATH . '../addons/' . $addons['addons_sign'] . '/vendor/autoload.php';
+        if (file_exists($path)) {
+            require_once $path;
+        }
+
         /** Autoload */
         $controller = explode('.', $request->param('controller'));
         $controller[count($controller) - 1] = ucfirst($controller[count($controller) - 1]);
