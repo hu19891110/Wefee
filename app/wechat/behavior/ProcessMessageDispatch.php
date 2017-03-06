@@ -25,8 +25,7 @@ class ProcessMessageDispatch
                 return $hook->listen('wefee-process-event', $message);
                 break;
             case 'text':
-                /** 文本消息 */
-                //return $hook->listen('wefee-process-text', $message);
+                /** 交给 Wefee 自己处理。 */
                 return $this->textMessageProcess($message);
                 break;
             case 'image':

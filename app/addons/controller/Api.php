@@ -33,21 +33,26 @@ class Api extends Controller
         /** 插件配置 */
         $addons['addons_config'] = $addons['addons_config'] == '' ? [] : unserialize($addons['addons_config']);
 
+        $controller = explode('.', $request->param('controller'));
+        $controller[count($controller) - 1] = ucfirst($controller[count($controller) - 1]);
+
         /** 实例化插件控制器对象 */
         $path =
             ADDONS_PATH . strtolower($request->param('addons')) .
             DS . 'controller' .
-            DS . ucfirst($request->param('controller')) . EXT;
+            DS . implode(DS, $controller) . EXT;
 
         if (! file_exists($path)) {
-            $this->error('插件文件文件丢失');
+            $this->error('文件不存在');
         }
 
-        /** 预定义常量 */
+        /** 插件的视图路径常量 */
         define('VIEW_PATH', ROOT_PATH . 'addons' . DS . strtolower($request->param('addons')) . DS . 'views');
 
-        require_once $path;
-        $objName = 'addons\\'.strtolower($request->param('addons')).'\\controller\\'.ucfirst($request->param('controller'));
+        /** Autoload */
+        $controller = explode('.', $request->param('controller'));
+        $controller[count($controller) - 1] = ucfirst($controller[count($controller) - 1]);
+        $objName = 'addons\\'.strtolower($request->param('addons')).'\\controller\\'.implode('\\', $controller);
         $obj     = new $objName();
         $action  = $request->param('action');
 
