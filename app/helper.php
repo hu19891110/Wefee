@@ -256,22 +256,19 @@ if (!function_exists('get_addon_config')) {
     function get_addon_config($addon_sign, $key = '')
     {
         $cacheKey = $addon_sign.'-config';
-        $cache = cache($cacheKey);
-        if ($cache === false) {
+        cache($cacheKey, null);
+        $config = cache($cacheKey);
+        if ($config === false) {
             $addon = \think\Db::table(full_table('addons'))->field(['addons_config'])->where('addons_sign', $addon_sign)->find();
-            cache($cacheKey, $addon);
-        } else {
-            $addon = $cache;
+            if (! $addon) {
+                throw new \DataNotFoundException();
+            }
+            $config = $addon['addons_config'] != '' ? unserialize($addon['addons_config']) : [];
+            cache($cacheKey, $config);
         }
 
-        if ($addon) {
-            if ($addon['addons_config'] == '') {
-                return [];
-            }
-
-            $config = unserialize($addon['addons_config']);
-
-            if ($key == '') {
+        if (! empty($config)) {
+            if ('' == $key) {
                 return $config;
             }
 
