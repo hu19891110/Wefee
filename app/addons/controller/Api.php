@@ -52,8 +52,14 @@ class Api extends Controller
         /** Autoload */
         $controller = explode('.', $request->param('controller'));
         $controller[count($controller) - 1] = ucfirst($controller[count($controller) - 1]);
+
         $objName = 'addons\\'.strtolower($request->param('addons')).'\\controller\\'.implode('\\', $controller);
         $obj     = new $objName();
+
+        if (! method_exists($obj, $request->param('action'))) {
+            throw new \MethodNotFoundException('方法不存在');
+        }
+
         $action  = $request->param('action');
 
         return $obj->$action();
