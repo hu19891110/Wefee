@@ -49,11 +49,6 @@ class Api extends Controller
         /** 插件的视图路径常量 */
         define('VIEW_PATH', ROOT_PATH . 'addons' . DS . strtolower($request->param('addons')) . DS . 'views');
 
-        /** 组件依赖自动加载 */
-        $path = ROOT_PATH . '/addons/' . $addons['addons_sign'] . '/vendor/autoload.php';
-        if (file_exists($path)) {
-            require_once $path;
-        }
         /** Bootstrap */
         $bootstrapFile = ROOT_PATH . '/addons/' . $addons['addons_sign'] . '/bootstrap.php';
         if (file_exists($bootstrapFile)) {
@@ -63,7 +58,6 @@ class Api extends Controller
         /** Autoload */
         $controller = explode('.', $request->param('controller'));
         $controller[count($controller) - 1] = ucfirst($controller[count($controller) - 1]);
-
 
         $objName = 'addons\\'.strtolower($request->param('addons')).'\\controller\\'.implode('\\', $controller);
         $obj     = new $objName();
