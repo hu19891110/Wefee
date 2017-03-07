@@ -100,8 +100,8 @@ class InitConfig
     }
 
     /** 插件自动加载 */
-//    protected function autoloadRegister()
-//    {
+    protected function autoloadRegister()
+    {
 //        /** 1.获取已经安装的插件 */
 //        $as = Db::table(full_table('addons'))->field(['addons_sign'])->where('addons_status', 1)->select();
 //
@@ -115,6 +115,6 @@ class InitConfig
 //                require_once $path;
 //            }
 //        }
-//    }
+    }
 
 }
