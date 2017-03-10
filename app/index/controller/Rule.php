@@ -2,9 +2,9 @@
 
 use think\Request;
 use think\Validate;
-use app\model\ReplyContent;
+use app\model\ReplyRules;
+use app\model\ReplyContents;
 use app\common\controller\Base;
-use app\model\Rule AS RuleModel;
 
 class Rule extends Base
 {
@@ -19,7 +19,7 @@ class Rule extends Base
             $where['rule_status'] = ['=', $request->get('rule_status')];
         }
 
-        $rules = RuleModel::where($where)->order('created_at', 'dec')->paginate(15);
+        $rules = ReplyRules::where($where)->order('created_at', 'dec')->paginate(15);
 
         $title = '微信消息回复规则';
 
@@ -39,7 +39,7 @@ class Rule extends Base
 
         $this->validator($data);
 
-        $rule = new RuleModel($data);
+        $rule = new ReplyRules($data);
         $rule->save();
 
         $this->success('操作成功');
@@ -89,7 +89,7 @@ class Rule extends Base
      */
     protected function findRule($id)
     {
-        $rule = RuleModel::get($id);
+        $rule = ReplyRules::get($id);
 
         if (! $rule) {
             $this->error('规则不存在');
@@ -101,9 +101,9 @@ class Rule extends Base
     public function delete(Request $request)
     {
         /** 删除该规则下的回复内容 */
-        ReplyContent::destroy(['rule_id' => $request->param('id')]);
+        ReplyContents::destroy(['rule_id' => $request->param('id')]);
 
-        RuleModel::destroy($request->param('id'));
+        ReplyRules::destroy($request->param('id'));
 
         $this->success('操作成功');
     }

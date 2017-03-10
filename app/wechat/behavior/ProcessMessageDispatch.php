@@ -5,8 +5,8 @@
  */
 namespace app\wechat\behavior;
 
-use app\model\Rule;
 use app\wefee\Tree;
+use app\model\ReplyRules;
 use EasyWeChat\Message\News;
 use EasyWeChat\Message\Text;
 use EasyWeChat\Message\Image;
@@ -67,7 +67,7 @@ class ProcessMessageDispatch
         $where = "'{$content}' REGEXP rule_content AND rule_status = 1";
 
         /** 3.查询结果 */
-        $rule = Rule::where($where)->order('rule_sort', 'asc')->find();
+        $rule = ReplyRules::where($where)->order('rule_sort', 'asc')->find();
         if ($rule) {
             $reply = $rule->replies()->where('status', '=', 1)->order('sort', 'asc')->find();
             if ($reply) {

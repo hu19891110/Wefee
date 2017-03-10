@@ -1,10 +1,10 @@
 <?php namespace app\index\controller;
 
 use think\Request;
-use app\model\Rule;
+use app\model\ReplyRules;
 use think\Validate;
 use app\common\controller;
-use app\model\ReplyContent;
+use app\model\ReplyContents;
 
 class Reply extends controller\Base
 {
@@ -28,7 +28,7 @@ class Reply extends controller\Base
 
         $data['content'] = serialize($this->getMessageContent($request));
 
-        $reply = new ReplyContent($data);
+        $reply = new ReplyContents($data);
         $reply->save();
 
         $this->success('操作成功');
@@ -141,7 +141,7 @@ class Reply extends controller\Base
      */
     protected function getRule($id)
     {
-        $rule = Rule::get($id);
+        $rule = ReplyRules::get($id);
 
         if (! $rule) {
             $this->error('规则不存在');
@@ -157,7 +157,7 @@ class Reply extends controller\Base
      */
     protected function getReply($id)
     {
-        $reply = ReplyContent::get($id);
+        $reply = ReplyContents::get($id);
 
         if (! $reply) {
             $this->error('回复内容不存在');
@@ -168,7 +168,7 @@ class Reply extends controller\Base
 
     public function delete(Request $request)
     {
-        ReplyContent::destroy($request->param('id'));
+        ReplyContents::destroy($request->param('id'));
 
         $this->success('操作成功');
     }
