@@ -14,17 +14,30 @@ return [
     // 应用初始化
     'app_init'     => [
         'app\\behavior\\InitConfig',
+        'app\\behavior\\SystemBehaviorInit',
     ],
     // 应用开始
-    'app_begin'    => [],
+    'app_begin'    => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
     // 模块初始化
-    'module_init'  => [],
+    'module_init'  => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
     // 操作开始执行
-    'action_begin' => [],
+    'action_begin' => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
     // 视图内容过滤
-    'view_filter'  => [],
+    'view_filter'  => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
     // 日志写入
-    'log_write'    => [],
+    'log_write'    => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
     // 应用结束
-    'app_end'      => [],
+    'app_end'      => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
 ];

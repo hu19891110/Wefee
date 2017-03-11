@@ -170,7 +170,7 @@ class Hooks
         }
 
         foreach ($hook->addons as $addons) {
-            $obj = $this->getAddonsHookObj($hook->hook_type, $addons);
+            $obj = $this->getAddonsHookObj($hook->hook_type, $addons->addons);
 
             if ($obj === false) {
                 /** 修改状态，下次取消读取 */
@@ -178,7 +178,7 @@ class Hooks
                 break;
             }
 
-            if (!$this->checkAddonsHasHookMethods($hook, $addons)) {
+            if (!$this->checkAddonsHasHookMethods($hook, $addons->addons)) {
                 $hook->save(['hook_status' => 3]);
                 break;
             }
