@@ -1,4 +1,4 @@
-<?php namespace app\wefee\components\tablib;
+<?php namespace app\wefee\components\taglib;
 
 use think\template\TagLib;
 
