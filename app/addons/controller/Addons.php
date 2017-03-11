@@ -5,28 +5,19 @@ use think\Request;
 use app\wefee\Tree;
 use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
-use app\repository\AddonsRepository;
+use app\model\Addons AS AddonsModel;
 
 class Addons extends Base
 {
 
-    protected $repository;
-
     protected $index_template = './common/addons';
-
-    public function _initialize()
-    {
-        parent::_initialize();
-
-        $this->repository = new AddonsRepository();
-    }
 
     /**
      * 已安装插件列表
      */
     public function getList()
     {
-        $addons = $this->repository->select([], 'created_at desc');
+        $addons = AddonsModel::order('created_at', 'desc')->select();
 
         $title = '已安装插件';
 
@@ -56,7 +47,7 @@ class Addons extends Base
                 continue;
             }
 
-            if ($this->repository->find(['addons_sign' => $value])) {
+            if (AddonsModel::get(['addons_sign' => $value])) {
                 continue;
             }
 
@@ -86,7 +77,7 @@ class Addons extends Base
         $addons_sign = strtolower($request->param('addons_sign'));
 
         /** 1.重复性检测 */
-        if ($this->repository->find(['addons_sign' => $addons_sign])) {
+        if (AddonsModel::get(['addons_sign' => $addons_sign])) {
             $this->error('该插件已经安装了');
         }
 
@@ -122,29 +113,30 @@ class Addons extends Base
             'addons_config'  => '',
             'updated_at'     => date('Y-m-d H:i:s'),
         ];
-        $id = $this->repository->insert($data);
-        if (! $id) {
+        $addons = new AddonsModel;
+        $addons->save($data);
+
+        if (! $addons) {
             $this->error('安装失败，错误代码：100.');
         }
 
         /** 4.安装钩子 */
-        if (!Tree::hook()->install($data['addons_sign'])) {
+        if (! Tree::hook()->install($addons)) {
             /** 数据库回滚 */
-            $this->repository->delete($id);
+            $addons->delete();
             /** 通知错误信息 */
             $this->error('插件钩子安装失败，请联系技术人员。');
         }
 
         /** 5.插件安装 */
-        $obj = $this->getAddonsObj($data);
+        $obj = $this->getAddonsObj($addons);
         if (method_exists($obj, 'up')) {
             try {
                 /** 执行插件安装方法 */
                 $obj->up();
             } catch (\Exception $e) {
-                halt($e->getMessage());
                 /** 数据库回滚 */
-                $this->repository->delete($id);
+                $addons->delete();
                 /** 注册钩子回滚 */
                 Tree::hook()->uninstall($data['addons_sign']);
                 /** 通知错误信息 */
@@ -204,12 +196,12 @@ class Addons extends Base
     {
         $addons = $this->existsValidator($request);
 
-        $this->removeAddonLogo($addons['addons_sign']);
+        $this->removeAddonLogo($addons->addons_sign);
 
-        $this->removeAddonAssets($addons['addons_sign']);
+        $this->removeAddonAssets($addons->addons_sign);
 
         /** 1.卸载钩子 */
-        if (!Tree::hook()->uninstall($addons['addons_sign'])) {
+        if (! Tree::hook()->uninstall($addons)) {
             $this->error('插件钩子卸载失败，请联系技术人员。');
         }
 
@@ -224,8 +216,7 @@ class Addons extends Base
             }
         }
 
-        /** 3.删除数据库记录 */
-        $this->repository->delete($addons['id']);
+        $addons->delete();
 
         $this->success('操作成功');
     }
@@ -261,10 +252,15 @@ class Addons extends Base
             $this->error('不能升级为低版本。');
         }
 
+        /** 更新资源文件 */
+        $path = ADDONS_PATH . $addons->addons_sign . '/';
+        $this->distAssets($path, $addons->addons_sign);
+        $this->distAddonLogo($path, $addons->addons_sign);
+
         $obj = $this->getAddonsObj($addons);
 
         /** 1。更新钩子 */
-        if (!Tree::hook()->upgrade($addons['addons_sign'])) {
+        if (! Tree::hook()->upgrade($addons)) {
             $this->error('插件钩子更新失败，请联系技术人员。');
         }
 
@@ -278,13 +274,10 @@ class Addons extends Base
         }
 
         /** 3.修改数据库信息 */
-        $this->repository->update(
-            ['id' => $addons['id']],
-            [
-                'addons_version' => $addonsInfo['version'],
-                'updated_at'     => date('Y-m-d H:i:s'),
-            ]
-        );
+        $addons->save([
+            'addons_version' => $addonsInfo['version'],
+            'updated_at'     => date('Y-m-d H:i:s'),
+        ]);
 
         $this->success('操作成功');
     }
@@ -316,12 +309,12 @@ class Addons extends Base
 
     /**
      * 获取插件信息
-     * @param array $addons 插件
+     * @param \app\model\Addons $addons 插件
      * @return array
      */
-    protected function getAddonsInfo(array $addons)
+    protected function getAddonsInfo(AddonsModel $addons)
     {
-        $file = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'wefee.json';
+        $file = ADDONS_PATH . strtolower($addons->addons_sign) . DS . 'wefee.json';
 
         !file_exists($file) && $this->error('插件wefee.json文件不存在');
 
@@ -332,20 +325,13 @@ class Addons extends Base
 
     /**
      * 获取插件对象
-     * @param array $addons 插件信息
-     * @return addons\addons\Object
+     * @param \app\model\Addons $addons 插件信息
+     * @return
      */
-    protected function getAddonsObj(array $addons)
+    protected function getAddonsObj(AddonsModel $addons)
     {
-        $file = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . ucfirst($addons['addons_sign']) . EXT;
-        if (!file_exists($file)) {
-            $this->error('当前插件主文件丢失');
-        }
-
-        require_once $file;
-        $objName = 'addons\\' . strtolower($addons['addons_sign']) . '\\' . ucfirst($addons['addons_sign']);
+        $objName = 'addons\\' . strtolower($addons->addons_sign) . '\\' . ucfirst($addons->addons_sign);
         $obj = new $objName();
-
         return $obj;
     }
 
@@ -358,7 +344,7 @@ class Addons extends Base
 
         $status = $addons['addons_status'] == 1 ? 3 : 1;
 
-        $this->repository->update(['id' => $addons['id']], ['addons_status' => $status]);
+        $addons->save(['addons_status' => $status]);
 
         $this->success('操作成功');
     }
@@ -373,19 +359,18 @@ class Addons extends Base
         $addons_sign = $request->param('addons_sign');
 
         /** 1.检测是否安装 */
-        if ($this->repository->find(['addons_sign' => $addons_sign])) {
+        if (AddonsModel::get(['addons_sign' => $addons_sign])) {
             $this->error('请先卸载该插件');
         }
 
         /** 2.检测目录是否存在 */
         $path = ADDONS_PATH . $addons_sign;
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             $this->error('插件不存在');
         }
 
         /** 3.删除插件 */
-        $dirObj = new \phootwork\file\Directory($path);
-        $dirObj->delete();
+        delete_dir($path);
 
         $this->success('操作成功.');
     }
@@ -396,36 +381,27 @@ class Addons extends Base
     public function index(Request $request)
     {
         $addons = $this->existsValidator($request);
-        if ($addons['addons_config']) {
-            $addons['addons_config'] = unserialize($addons['addons_config']);
-        }
 
-        $path = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'wefee.html';
+        $path = ADDONS_PATH . strtolower($addons->addons_sign) . DS . 'wefee.html';
 
         $path = file_exists($path) ? $path : $this->index_template;
 
-        $title = "{$addons['addons_name']}的主页 - PowerBy Wefee.CC";
+        $title = "{$addons->addons_name}的主页 - PowerBy Wefee.CC";
 
         $user = Auth::user();
 
         return view($path, compact('user', 'title', 'addons'));
     }
 
-    /**
-     * 插件配置
-     */
+    /** 插件配置 */
     public function config(Request $request)
     {
         $addons = $this->existsValidator($request);
 
-        $path = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'config.html';
+        $path = ADDONS_PATH . strtolower($addons->addons_sign) . DS . 'config.html';
 
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             $this->error('该插件无需配置');
-        }
-
-        if ($addons['addons_config']) {
-            $addons['addons_config'] = unserialize($addons['addons_config']);
         }
 
         $title = '插件配置';
@@ -444,26 +420,16 @@ class Addons extends Base
 
         $post = $request->except(['__token__', 'addons_sign']);
 
-        $data = [
-            'addons_config' => serialize($post),
-        ];
+        $addons->save(['addons_config' => $post]);
 
-        if ($this->repository->update(['id' => $addons['id']], $data)) {
-            $this->success('配置成功');
-        }
-
-        $this->error('配置失败');
+        $this->success('操作成功');
     }
 
-    /**
-     * 插件是否存在检测
-     * @param think\Request $request
-     */
     protected function existsValidator(Request $request)
     {
         $this->queryValidator($request);
 
-        $addons = $this->repository->find(['addons_sign' => $request->param('addons_sign')]);
+        $addons = AddonsModel::get(['addons_sign' => $request->param('addons_sign')]);
 
         !$addons && $this->error('插件未安装');
 

@@ -89,26 +89,6 @@ if (!function_exists('get_addon_logo')) {
     }
 }
 
-if (!function_exists('has_new_version')) {
-    /**
-     * 插件升级版本检测
-     * @param array $addons 待检测的插件
-     * @return boolean
-     */
-    function has_new_version(array $addons)
-    {
-        $path = ADDONS_PATH . strtolower($addons['addons_sign']) . DS . 'wefee.json';
-
-        if (!file_exists($path)) {
-            return false;
-        }
-
-        $json = json_decode(@file_get_contents($path), true);
-
-        return version_compare($json['version'], $addons['addons_version'], '>');
-    }
-}
-
 if (!function_exists('get_method_by_hook_name')) {
     /**
      * 将hook名转换为首字母小写的驼峰法写法
