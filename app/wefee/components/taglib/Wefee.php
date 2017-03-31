@@ -270,7 +270,7 @@ HTML;
         if ('$' == $flag || ':' == $flag) {
             $content = $this->autoBuildVar($tag['content']);
         } else {
-            $content = $tag['content'];
+            $content = '""';
         }
 
         $html = <<<HTML
