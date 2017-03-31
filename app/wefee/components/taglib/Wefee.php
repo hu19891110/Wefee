@@ -277,7 +277,7 @@ HTML;
 <div class="form-group">
     <label class="control-label col-sm-2">{$title}</label>
     <div class="col-sm-10">
-          <textarea name="{$name}" id="{$name}" style="width: 100%; height: 450px;">{$content}</textarea>
+          <textarea name="{$name}" id="{$name}" style="width: 100%; height: 450px;"><?php echo $content; ?></textarea>
     </div>
 </div>
 <script >
