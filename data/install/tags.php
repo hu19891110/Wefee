@@ -11,6 +11,25 @@
 
 return [
     'app_init'     => [
-        'app\\behavior\\InstallCheck',
+        'app\\behavior\\InitConfig',
+        'app\\behavior\\SystemBehaviorInit',
+    ],
+    'app_begin'    => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
+    'module_init'  => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
+    'action_begin' => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
+    'view_filter'  => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
+    'log_write'    => [
+        'app\\behavior\\SystemBehaviorInit',
+    ],
+    'app_end'      => [
+        'app\\behavior\\SystemBehaviorInit',
     ],
 ];
