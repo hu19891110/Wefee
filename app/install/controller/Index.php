@@ -17,7 +17,7 @@ class Index extends Controller
 
     public function step2()
     {
-        /** PHP�汾 */
+        /**  */
         $php_version = PHP_VERSION;
         $is_on_php = version_compare($php_version, '5.6.0', '>=');
 
