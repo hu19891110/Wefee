@@ -13,7 +13,7 @@ class Hooks
 
     public function __construct()
     {
-        $this->addons_path = ADDONS_PATH;
+        $this->addons_path = ROOT_PATH . DS . 'addons' . DS;
     }
 
     /** 插件钩子安装 */
