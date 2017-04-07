@@ -34,7 +34,7 @@ class Wefee extends TagLib
         if ('$' == $flag || ':' == $flag) {
             $value = $this->autoBuildVar($tag['value']);
         } else {
-            $value = '""';
+            $value = '"'.$tag['value'].'"';
         }
         /** // */
         $id = mt_rand(1, 100) . $name;
@@ -182,7 +182,7 @@ HTML;
         if ('$' == $flag || ':' == $flag) {
             $value = $this->autoBuildVar($tag['value']);
         } else {
-            $value = '""';
+            $value = '"'.$tag['value'].'"';
         }
 
         $html = <<<HTML
@@ -242,7 +242,7 @@ HTML;
         if ('$' == $flag || ':' == $flag) {
             $value = $this->autoBuildVar($tag['value']);
         } else {
-            $value = '""';
+            $value = '"'.$tag['value'].'"';
         }
 
         $html = <<<HTML
@@ -270,7 +270,7 @@ HTML;
         if ('$' == $flag || ':' == $flag) {
             $content = $this->autoBuildVar($tag['content']);
         } else {
-            $content = $tag['content'];
+            $content = '"'. $tag['content'] . '"';
         }
 
         $html = <<<HTML
