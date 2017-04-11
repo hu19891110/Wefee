@@ -77,6 +77,7 @@ class Index extends Controller
         /** 生成配置文件 */
         $text = '';
         $text .= 'database_hostname='.session('config.db_host')."\r\n";
+        $text .= 'database_port='.session('config.db_port')."\r\n";
         $text .= 'database_database='.session('config.db_name')."\r\n";
         $text .= 'database_username='.session('config.db_user')."\r\n";
         $text .= 'database_password='.session('config.db_pass')."\r\n";
