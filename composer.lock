@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4cff2b3f5571b52f661e421d697f4012",
-    "content-hash": "7204670b154afe2c8a6cf9a5c0b38401",
+    "hash": "cf198687c635756b90242cf23c3b803f",
+    "content-hash": "c61e69712126cf68717a89851507c543",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -334,16 +334,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855"
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/guzzle/psr7/0d6c7ca039329247e4f0f8f8f6506810e8248855.zip",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855",
+                "url": "https://files.phpcomposer.com/files/guzzle/psr7/f5b8a8512e2b58b0071a7280e39f14f72e05d87c.zip",
+                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "shasum": ""
             },
             "require": {
@@ -395,20 +395,20 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-27 10:51:17"
+            "time": "2017-03-20 17:10:46"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.22.0",
+            "version": "1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558"
+                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/Seldaek/monolog/bad29cb8d18ab0315e6c477751418a82c850d558.zip",
-                "reference": "bad29cb8d18ab0315e6c477751418a82c850d558",
+                "url": "https://files.phpcomposer.com/files/Seldaek/monolog/1e044bc4b34e91743943479f1be7a1d5eb93add0.zip",
+                "reference": "1e044bc4b34e91743943479f1be7a1d5eb93add0",
                 "shasum": ""
             },
             "require": {
@@ -473,20 +473,20 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-11-26 00:15:39"
+            "time": "2017-03-13 07:08:03"
         },
         {
             "name": "overtrue/socialite",
-            "version": "1.0.22",
+            "version": "1.0.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/socialite.git",
-                "reference": "e749ea09ab7b356a94c823804e95650efc616337"
+                "reference": "2040343fd871e6d745a1d2ffb9b353097efffa36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/overtrue/socialite/e749ea09ab7b356a94c823804e95650efc616337.zip",
-                "reference": "e749ea09ab7b356a94c823804e95650efc616337",
+                "url": "https://files.phpcomposer.com/files/overtrue/socialite/2040343fd871e6d745a1d2ffb9b353097efffa36.zip",
+                "reference": "2040343fd871e6d745a1d2ffb9b353097efffa36",
                 "shasum": ""
             },
             "require": {
@@ -523,20 +523,20 @@
                 "wechat",
                 "weibo"
             ],
-            "time": "2017-02-13 09:01:56"
+            "time": "2017-04-08 11:39:52"
         },
         {
             "name": "overtrue/wechat",
-            "version": "3.2.5",
+            "version": "3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/overtrue/wechat.git",
-                "reference": "ac77966d3549e14222c15e3950bc2c6949c2ce31"
+                "reference": "1ae43c00335462290ae3a8a621f9564ac39bc25b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/overtrue/wechat/ac77966d3549e14222c15e3950bc2c6949c2ce31.zip",
-                "reference": "ac77966d3549e14222c15e3950bc2c6949c2ce31",
+                "url": "https://files.phpcomposer.com/files/overtrue/wechat/1ae43c00335462290ae3a8a621f9564ac39bc25b.zip",
+                "reference": "1ae43c00335462290ae3a8a621f9564ac39bc25b",
                 "shasum": ""
             },
             "require": {
@@ -551,7 +551,7 @@
                 "symfony/psr-http-message-bridge": "~0.3|^1.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.0@dev",
+                "mockery/mockery": "^0.9.9",
                 "overtrue/phplint": "dev-master",
                 "phpunit/phpunit": "~4.0"
             },
@@ -581,7 +581,7 @@
                 "weixin",
                 "weixin-sdk"
             ],
-            "time": "2017-02-04 05:38:34"
+            "time": "2017-03-31 11:14:48"
         },
         {
             "name": "phootwork/file",
@@ -1972,7 +1972,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v2.8.18",
+            "version": "v2.8.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
@@ -2028,16 +2028,16 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.2.4",
+            "version": "v3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "a90da6dd679605d88c9803a57a6fc1fb7a19a6e0"
+                "reference": "cb0b6418f588952c9290b3df4ca650f1b7ab570a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/symfony/http-foundation/a90da6dd679605d88c9803a57a6fc1fb7a19a6e0.zip",
-                "reference": "a90da6dd679605d88c9803a57a6fc1fb7a19a6e0",
+                "url": "https://files.phpcomposer.com/files/symfony/http-foundation/cb0b6418f588952c9290b3df4ca650f1b7ab570a.zip",
+                "reference": "cb0b6418f588952c9290b3df4ca650f1b7ab570a",
                 "shasum": ""
             },
             "require": {
@@ -2077,7 +2077,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-16 22:46:52"
+            "time": "2017-04-04 15:30:56"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2200,16 +2200,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.4",
+            "version": "v3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
+                "reference": "62b4cdb99d52cb1ff253c465eb1532a80cebb621"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/symfony/yaml/9724c684646fcb5387d579b4bfaa63ee0b0c64c8.zip",
-                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "url": "https://files.phpcomposer.com/files/symfony/yaml/62b4cdb99d52cb1ff253c465eb1532a80cebb621.zip",
+                "reference": "62b4cdb99d52cb1ff253c465eb1532a80cebb621",
                 "shasum": ""
             },
             "require": {
@@ -2251,7 +2251,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-16 22:46:52"
+            "time": "2017-03-20 09:45:15"
         },
         {
             "name": "topthink/framework",
@@ -2342,16 +2342,16 @@
         },
         {
             "name": "topthink/think-helper",
-            "version": "v1.0.5",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/top-think/think-helper.git",
-                "reference": "ed64408cdc4cdbd390365ba0906d208b987af520"
+                "reference": "0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/top-think/think-helper/ed64408cdc4cdbd390365ba0906d208b987af520.zip",
-                "reference": "ed64408cdc4cdbd390365ba0906d208b987af520",
+                "url": "https://files.phpcomposer.com/files/top-think/think-helper/0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f.zip",
+                "reference": "0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f",
                 "shasum": ""
             },
             "type": "library",
@@ -2374,7 +2374,7 @@
                 }
             ],
             "description": "The ThinkPHP5 Helper Package",
-            "time": "2016-12-01 07:08:40"
+            "time": "2017-04-05 07:15:37"
         },
         {
             "name": "topthink/think-image",
@@ -2640,7 +2640,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=5.6.0",
+        "ext-gd": "*"
     },
     "platform-dev": []
 }
