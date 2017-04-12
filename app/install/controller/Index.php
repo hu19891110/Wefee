@@ -10,6 +10,15 @@ use think\helper\Hash;
 class Index extends Controller
 {
 
+    public function _initialize()
+    {
+        parent::_initialize();
+
+        if (file_exists(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'install.lock')) {
+            $this->error('您已经安装过了，请不要重复安装程序！');
+        }
+    }
+
     public function step1()
     {
         return view('install/step1');
@@ -62,6 +71,26 @@ class Index extends Controller
     public function postStep3()
     {
         $data = request()->post();
+
+        /** 检测数据库是否存在 行为开始 */
+        try {
+            $pdo = new \PDO(
+                "mysql:host=" . $data['db_host'] . ";port=" . $data['db_port'],
+                $data['db_user'],
+                $data['db_pass']
+            );
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+
+        if (false === $pdo->query("use {$data['db_name']};")) {
+            /** 数据库不存在 => 需要创建数据库 */
+            $result = $pdo->query("CREATE DATABASE {$data['db_name']};");
+            if (false === $result) {
+                $this->error('数据库创建失败！请手动创建！');
+            }
+        }
+        /** 检测数据库是否存在 行为结束 */
 
         session('config', $data);
 
@@ -564,8 +593,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}wechat_focus_records` (
 
     protected function installHook()
     {
-        $content = file_get_contents(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'tags.php');
-        return file_put_contents(ROOT_PATH . DS . 'app' . DS . 'tags.php', $content);
+        return true;
     }
 
     protected function genLockFile()

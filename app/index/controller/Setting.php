@@ -20,23 +20,20 @@ class Setting extends Base
     {
         $this->checkToken($request);
 
-        $data = $request->post();
+        $data = $request->except(['__token__']);
 
         foreach ($data as $key => $val) {
-            if ($key == '__token__') {
-                continue;
-            }
             /** 不存在直接创建 */
-            $exists = Db::table('wefee_settings')->where('wefee_key', $key)->find();
+            $exists = Db::table(full_table('settings'))->where('wefee_key', $key)->find();
             if (! $exists) {
-                Db::table('wefee_settings')->insert([
+                Db::table(full_table('settings'))->insert([
                     'wefee_key'   => $key,
                     'wefee_value' => $val,
                 ]);
                 continue;
             }
             /** 修改值 */
-            Db::table('wefee_settings')->where('wefee_key', $key)->update(['wefee_value' => $val]);
+            Db::table(full_table('settings'))->where('wefee_key', $key)->update(['wefee_value' => $val]);
         }
 
         $this->success('操作成功');

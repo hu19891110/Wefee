@@ -9,11 +9,6 @@ class InitConfig
 
     public function run(&$params)
     {
-        /** 插件Autoload Register */
-        if (table_exists(full_table('addons'))) {
-            $this->autoloadRegister();
-        }
-
         /** 配置预注册 */
         if (table_exists(full_table('settings'))) {
             $settings = Db::table('wefee_settings')->select();
@@ -97,24 +92,6 @@ class InitConfig
         ];
 
         Config::set('redis', array_merge(Config::get('redis'), $redis));
-    }
-
-    /** 插件自动加载 */
-    protected function autoloadRegister()
-    {
-//        /** 1.获取已经安装的插件 */
-//        $as = Db::table(full_table('addons'))->field(['addons_sign'])->where('addons_status', 1)->select();
-//
-//        if (! $as) {
-//            return ;
-//        }
-//
-//        foreach ($as as $item) {
-//            $path = APP_PATH . '../addons/' . $item['addons_sign'] . '/vendor/autoload.php';
-//            if (file_exists($path)) {
-//                require_once $path;
-//            }
-//        }
     }
 
 }

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cf198687c635756b90242cf23c3b803f",
-    "content-hash": "c61e69712126cf68717a89851507c543",
+    "hash": "336e22697e39a56e2416b2cac9d360c4",
+    "content-hash": "55b37e5f9f3d9f8ddc8e12d55ce4ec1e",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -1514,46 +1514,6 @@
                 "thinkphp5"
             ],
             "time": "2016-12-01 02:33:52"
-        },
-        {
-            "name": "qsnh/think-repository",
-            "version": "0.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Qsnh/think-repository.git",
-                "reference": "2612667859dbc81954aa476592fa5ed94d781e38"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/Qsnh/think-repository/2612667859dbc81954aa476592fa5ed94d781e38.zip",
-                "reference": "2612667859dbc81954aa476592fa5ed94d781e38",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Qsnh\\think\\Repository\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "qsnh",
-                    "email": "616896861@qq.com"
-                }
-            ],
-            "description": "Thinkphp5 Repository Library.",
-            "keywords": [
-                "repository",
-                "thinkphp5"
-            ],
-            "time": "2016-12-08 05:23:22"
         },
         {
             "name": "qsnh/think-upload",
