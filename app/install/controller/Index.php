@@ -10,6 +10,15 @@ use think\helper\Hash;
 class Index extends Controller
 {
 
+    public function _initialize()
+    {
+        parent::_initialize();
+
+        if (file_exists(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'install.lock')) {
+            $this->error('您已经安装过了，请不要重复安装程序！');
+        }
+    }
+
     public function step1()
     {
         return view('install/step1');
