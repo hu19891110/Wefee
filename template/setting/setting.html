@@ -26,13 +26,13 @@
                             <label class="col-lg-2 text-right">存储驱动</label>
                             <div class="col-lg-5">
                                 <div class="col-lg-4">
-                                    <input type="radio" name="upload_driver" value="default" {if condition="$upload['driver'] eq 'default'"}checked{/if}> 本地存储
+                                    <input type="radio" name="upload_driver" value="default" {$upload['driver'] == 'default' ? 'checked' : ''}> 本地存储
                                 </div>
                                 <div class="col-lg-4">
-                                    <input type="radio" name="upload_driver" value="qiniu" {if condition="$upload['driver'] eq 'qiniu'"}checked{/if}> 七牛云
+                                    <input type="radio" name="upload_driver" value="qiniu" {$upload['driver'] == 'qiniu' ? 'checked' : ''}> 七牛云
                                 </div>
                                 <div class="col-lg-4">
-                                    <input type="radio" name="upload_driver" value="aliyun" {if condition="$upload['driver'] eq 'aliyun'"}checked{/if}> 阿里云
+                                    <input type="radio" name="upload_driver" value="aliyun" {$upload['driver'] == 'aliyun' ? 'checked' : ''}> 阿里云
                                 </div>
                             </div>
                         </div>
@@ -67,18 +67,19 @@
                             </div>
                         </div>
 
-                        <div class="row mb-20">
-                            <label class="col-lg-2 text-right">本地文件保存路径</label>
-                            <div class="col-lg-5">
-                                <input type="text" name="upload_path" value="{$upload.path}" class="form-control">
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="help-block">从public目录下面计算</div>
-                            </div>
-                        </div>
-
                         <div {if condition="$upload.driver neq 'default'"}style="display: none;"{/if} class="upload-param upload-default">
                             <hr>
+
+                            <div class="row mb-20">
+                                <label class="col-lg-2 text-right">本地文件保存路径</label>
+                                <div class="col-lg-5">
+                                    <input type="text" name="upload_path" value="{$upload.path}" class="form-control">
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="help-block">从public目录下面计算</div>
+                                </div>
+                            </div>
+
                             <div class="row mb-20">
                                 <label class="col-lg-2 text-right">文件访问URL路径</label>
                                 <div class="col-lg-5">

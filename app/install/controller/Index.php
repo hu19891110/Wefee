@@ -564,8 +564,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}wechat_focus_records` (
 
     protected function installHook()
     {
-        $content = file_get_contents(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'tags.php');
-        return file_put_contents(ROOT_PATH . DS . 'app' . DS . 'tags.php', $content);
+        return true;
     }
 
     protected function genLockFile()
