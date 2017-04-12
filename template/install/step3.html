@@ -152,6 +152,8 @@
             $.post("{:url('install/index/postStep3')}", $('.form').serialize(), function (data) {
                 if (data.code == 1) {
                     location.href = '{:url("install/index/step4")}';
+                } else {
+                    alert(data.msg);
                 }
             }, 'json');
         });
