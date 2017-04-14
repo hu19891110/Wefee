@@ -69,13 +69,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-sm-10 col-sm-offset-2">
-                        <a href="javascript:void(0);" class="db-test">点击测试</a>
-                        <p class="test-result"></p>
-                    </div>
-                </div>
-
                 <h4>管理员账户</h4>
                 <div class="form-group">
                     <label class="col-sm-2 form-label">用户名</label>
@@ -109,22 +102,6 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
     $(function () {
-
-        $('.db-test').click(function () {
-            $('.test-result').html('');
-            $('.test-result').append('测试中...<br />');
-            $.post('{:url("install/test/db")}', {
-                db_host: $('input[name="db_host"]').val(),
-                db_port: $('input[name="db_port"]').val(),
-                db_name: $('input[name="db_name"]').val(),
-                db_user: $('input[name="db_user"]').val(),
-                db_pass: $('input[name="db_pass"]').val(),
-                db_prefix: $('input[name="db_prefix"]').val()
-            }, function (data) {
-                console.log(data);
-                $('.test-result').append(data.msg + '<br />');
-            }, 'json');
-        });
 
         $('.go').click(function () {
             if (
