@@ -7,7 +7,7 @@ namespace app\addons\controller;
 
 use think\Request;
 use think\Controller;
-use app\repository\AddonsRepository;
+use app\model\Addons;
 
 class Api extends Controller
 {
@@ -17,21 +17,19 @@ class Api extends Controller
     public function _initialize()
     {
         parent::_initialize();
-
-        $this->repository = new AddonsRepository();
     }
 
     /** 插件的访问 */
     public function plus(Request $request)
     {
-        $addons = $this->repository->find(['addons_sign' => $request->param('addons')]);
+        $addons = Addons::where(['addons_sign' => $request->param('addons')])->find();
 
         !$addons && $this->error('插件不存在');
 
         $addons['addons_status'] != 1 && $this->error('该插件已被禁用');
 
         /** 插件配置 */
-        $addons['addons_config'] = $addons['addons_config'] == '' ? [] : unserialize($addons['addons_config']);
+        $addons['addons_config'] = $addons['addons_config'] == '' ? [] : $addons['addons_config'];
 
         $controller = explode('.', $request->param('controller'));
         $controller[count($controller) - 1] = ucfirst($controller[count($controller) - 1]);
