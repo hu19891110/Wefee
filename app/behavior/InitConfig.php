@@ -11,7 +11,7 @@ class InitConfig
     {
         /** 配置预注册 */
         if (table_exists(full_table('settings'))) {
-            $settings = Db::table('wefee_settings')->select();
+            $settings = Db::table(full_table('settings'))->select();
             $config = [];
 
             foreach ($settings as $value) {
