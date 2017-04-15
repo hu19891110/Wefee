@@ -239,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}reply_contents` (
   `type` varchar(10) NOT NULL DEFAULT 'text' COMMENT '回复类型',
   `content` text NOT NULL COMMENT '序列化内容',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常-1停止',
-  `created_at` timestamp NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
