@@ -10,6 +10,11 @@
 // +----------------------------------------------------------------------
 
 if (! file_exists(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'install.lock')) {
+    /** 兼容命令行安装模式 =》 命令行安装之后需要手动的创建install.lock */
+    if (isset($_SERVER['_'])) {
+        return [];
+    }
+    /** 程序未安装注册的Hook */
     return [
         'app_init'     => [
             'app\\behavior\\InstallCheck',
@@ -17,6 +22,7 @@ if (! file_exists(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'install.lock'
     ];
 }
 
+/** 安装之后的程序注册Hook */
 return [
     'app_init'     => [
         'app\\behavior\\InitConfig',

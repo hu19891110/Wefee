@@ -37,8 +37,8 @@ class CreateReplyContentsTable extends AbstractMigration
             ->addColumn('type', 'string', ['limit' => 10, 'comment' => '回复类型', 'default' => 'text'])
             ->addColumn('content', 'text', ['comment' => '序列化内容'])
             ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1, 'comment' => '1正常-1停止'])
-            ->addColumn('created_at', 'timestamp')
-            ->addColumn('updated_at', 'timestamp')
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->save();
     }
 

@@ -36,7 +36,7 @@ class CreateHooksTable extends AbstractMigration
             ->addColumn('hook_sign', 'string', ['limit' => 64, 'comment' => 'Hook标识符'])
             ->addColumn('hook_description', 'string', ['limit' => 255, 'default' => '', 'comment' => 'Hook介绍'])
             ->addColumn('hook_status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '1正常 3禁用', 'default' => 1])
-            ->addColumn('updated_at', 'timestamp')
+            ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->save();
     }
 

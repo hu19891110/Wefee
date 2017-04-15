@@ -165,8 +165,8 @@ CREATE TABLE IF NOT EXISTS `{$prefix}addons` (
   `addons_version` varchar(24) NOT NULL COMMENT '插件版本',
   `addons_config` text NOT NULL COMMENT '插件配置，json格式',
   `addons_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常 3禁用',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}admins` (
   `username` varchar(32) NOT NULL COMMENT '用户名',
   `password` varchar(64) NOT NULL COMMENT '密码',
   `last_login_ip` varchar(32) NOT NULL COMMENT '最后登录IP',
-  `last_login_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后登录时间',
+  `last_login_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间',
   `login_times` int(11) NOT NULL DEFAULT '0' COMMENT '登录次数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}migrations` (
   `version` bigint(20) NOT NULL,
   `migration_name` varchar(100) DEFAULT NULL,
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `breakpoint` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -239,8 +239,8 @@ CREATE TABLE IF NOT EXISTS `{$prefix}reply_contents` (
   `type` varchar(10) NOT NULL DEFAULT 'text' COMMENT '回复类型',
   `content` text NOT NULL COMMENT '序列化内容',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常-1停止',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
@@ -256,8 +256,8 @@ CREATE TABLE IF NOT EXISTS `{$prefix}reply_rules` (
   `rule_type` varchar(12) NOT NULL COMMENT '匹配规则',
   `rule_content` varchar(32) NOT NULL COMMENT '规则名',
   `rule_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常-1停止',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
@@ -284,7 +284,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}wechat_focus_records` (
   `focus_cancel_num` int(11) NOT NULL,
   `focus_confirm_num` int(11) NOT NULL,
   `focus_all_num` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");

@@ -37,7 +37,7 @@ class CreateWechatFocusRecordsTable extends AbstractMigration
             ->addColumn('focus_cancel_num', 'integer')
             ->addColumn('focus_confirm_num', 'integer')
             ->addColumn('focus_all_num', 'integer')
-            ->addColumn('created_at', 'timestamp')
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->save();
     }
 

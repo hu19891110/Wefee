@@ -37,8 +37,8 @@ class CreateAddonsTable extends AbstractMigration
             ->addColumn('addons_version', 'string', ['limit' => 24, 'comment' => '插件版本'])
             ->addColumn('addons_config', 'text', ['comment' => '插件配置，json格式'])
             ->addColumn('addons_status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'comment' => '1正常 3禁用', 'default' => 1])
-            ->addColumn('created_at', 'timestamp')
-            ->addColumn('updated_at', 'timestamp')
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->save();
     }
 
