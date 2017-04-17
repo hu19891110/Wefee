@@ -11,7 +11,7 @@
 
 if (! file_exists(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'install.lock')) {
     /** 兼容命令行安装模式 =》 命令行安装之后需要手动的创建install.lock */
-    if (isset($_SERVER['_'])) {
+    if (PHP_SAPI == 'cli') {
         return [];
     }
     /** 程序未安装注册的Hook */
