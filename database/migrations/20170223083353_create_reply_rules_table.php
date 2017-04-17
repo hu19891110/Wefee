@@ -38,7 +38,7 @@ class CreateReplyRulesTable extends AbstractMigration
             ->addColumn('rule_content', 'string', ['limit' => 32, 'comment' => '规则名'])
             ->addColumn('rule_status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1, 'comment' => '1正常-1停止'])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', ['default' => '0000-00-00 00:00:00'])
             ->save();
     }
 
