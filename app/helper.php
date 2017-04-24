@@ -252,10 +252,10 @@ if (!function_exists('get_addon_config')) {
                 return $config;
             }
 
-            return isset($config[$key]) ? $config[$key] : null;
+            return isset($config[$key]) ? $config[$key] : '';
         }
 
-        return [];
+        return '';
     }
 }
 
