@@ -46,6 +46,9 @@
     "autoload": {
         "psr-4": {
             "addons\\": "addons/"
-        }
+        },
+        "files": [
+            "app/helper.php"
+        ]
     }
 }
