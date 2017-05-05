@@ -27,6 +27,7 @@ return [
     'app_init'     => [
         'app\\behavior\\InitConfig',
         'app\\behavior\\SystemBehaviorInit',
+        'app\\behavior\\MulTheme',
     ],
     'app_begin'    => [
         'app\\behavior\\SystemBehaviorInit',

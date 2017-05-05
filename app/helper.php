@@ -221,7 +221,7 @@ if (!function_exists('env')) {
      * @param mixed $default 默认值，没有获取到值的情况下返回
      * @return mixed
      */
-    function env($key, $default = null)
+    function env($key, $default = '')
     {
         return \think\Env::get($key, $default);
     }

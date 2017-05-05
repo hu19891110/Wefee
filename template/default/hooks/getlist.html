@@ -43,23 +43,6 @@
                 </div>
             </div>
         </div>
-        <!--<script>-->
-            <!--require(["jquery", "sortable"], function ($, Sortable) {-->
-                <!--var id = 'box_{$index}',hook_sign='{$hook->hook_sign}';-->
-                <!--Sortable.create(document.getElementById(id), {-->
-                    <!--animation: 150,-->
-                    <!--onEnd: function () {-->
-                        <!--var array = [];-->
-                        <!--$('#' + id + ' li').each(function (ind,obj) {-->
-                            <!--array.push($(obj).attr('data-sign'));-->
-                        <!--});-->
-                        <!--$.post("{:url('addons/hooks/postSort')}", {hook_sign: hook_sign, sortArray: array}, function (data) {-->
-                            <!--//-->
-                        <!--}, 'json');-->
-                    <!--},-->
-                <!--});-->
-            <!--});-->
-        <!--</script>-->
         {/volist}
     </div>
 </div>

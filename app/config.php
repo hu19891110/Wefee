@@ -123,7 +123,7 @@ return [
         // 模板引擎类型 支持 php think 支持扩展
         'type'         => 'Think',
         // 模板路径
-        'view_path'    => ROOT_PATH . 'template/',
+        'view_path'    => ROOT_PATH . 'template' . DS,
         // 模板后缀
         'view_suffix'  => 'html',
         // 模板文件名分隔符
@@ -143,8 +143,8 @@ return [
     // 视图输出字符串内容替换
     'view_replace_str'       => [],
     // 默认跳转页面对应的模板文件
-    'dispatch_success_tmpl'  => ROOT_PATH . DS . 'template' . DS . 'common' . DS . 'dispatch_jump.html',
-    'dispatch_error_tmpl'    => ROOT_PATH . DS . 'template' . DS . 'common' . DS . 'dispatch_jump.html',
+    'dispatch_success_tmpl'  => ROOT_PATH . DS . 'template' . DS . 'theme' . DS . 'common' . DS . 'dispatch_jump.html',
+    'dispatch_error_tmpl'    => ROOT_PATH . DS . 'template' . DS . 'theme' . DS . 'common' . DS . 'dispatch_jump.html',
 
     // +----------------------------------------------------------------------
     // | 异常及错误设置
@@ -227,7 +227,7 @@ return [
         //  cookie 启用安全传输
         'secure'    => false,
         // httponly设置
-        'httponly'  => '',
+        'httponly'  => true,
         // 是否使用 setcookie
         'setcookie' => true,
     ],
