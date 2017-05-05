@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}addons` (
   `addons_config` text NOT NULL COMMENT '插件配置，json格式',
   `addons_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常 3禁用',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '2000-01-01 01:01:01',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}migrations` (
   `version` bigint(20) NOT NULL,
   `migration_name` varchar(100) DEFAULT NULL,
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `end_time` timestamp NOT NULL DEFAULT '2000-01-01 01:01:01',
   `breakpoint` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -240,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}reply_contents` (
   `content` text NOT NULL COMMENT '序列化内容',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常-1停止',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '2000-01-01 01:01:01',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `{$prefix}reply_rules` (
   `rule_content` varchar(32) NOT NULL COMMENT '规则名',
   `rule_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常-1停止',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '2000-01-01 01:01:01',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
