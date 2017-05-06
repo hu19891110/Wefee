@@ -185,7 +185,11 @@ class Hooks
 
             /** 执行方法 */
             $method = get_method_by_hook_name($hook->hook_sign);
-            return $obj->$method($params);
+            $result = $obj->$method($params);
+
+            if ($result) {
+                return $result;
+            }
         }
 
         return ;

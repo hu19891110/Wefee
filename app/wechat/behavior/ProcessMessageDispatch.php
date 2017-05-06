@@ -57,6 +57,8 @@ class ProcessMessageDispatch
 
     /**
      * 文本消息给 Wefee 自身处理
+     * @param $message \EasyWeChat\Message 消息
+     * @return mixed
      */
     protected function textMessageProcess($message)
     {
@@ -105,5 +107,4 @@ class ProcessMessageDispatch
 
         return '';
     }
-
 }
