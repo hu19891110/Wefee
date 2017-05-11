@@ -18,6 +18,7 @@ if (! file_exists(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'install.lock'
     return [
         'app_init'     => [
             'app\\behavior\\InstallCheck',
+            'app\\behavior\\MulTheme',
         ],
     ];
 }
