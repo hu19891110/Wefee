@@ -147,19 +147,16 @@ if (!function_exists('data_size')) {
         }
 
         $kb = $size / 1024;
-
         if ($kb < 1024) {
             return round($kb, 2) . ' KB';
         }
 
         $mb = $kb / 1024;
-
         if ($mb < 1024) {
             return round($mb, 2) . ' MB';
         }
 
         $gb = $mb / 1024;
-
         return round($gb, 2) . ' GB';
     }
 }
