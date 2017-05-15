@@ -5,6 +5,7 @@
  */
 namespace app\wechat\behavior;
 
+use think\Log;
 use app\wefee\Tree;
 use app\model\ReplyRules;
 use EasyWeChat\Message\News;
@@ -18,11 +19,22 @@ class ProcessMessageDispatch
 
     public function run(&$message)
     {
-        $hook = Tree::hook();
+        /** 记录日志 */
+        $log = [
+            'type'         => $message->MsgType,
+            'from_user'    => $message->FromUserName,
+            'created_time' => $message->CreateTime,
+            'msg_id'       => $message->MsgId,
+        ];
+
+        $eventName = null;
         switch ($message->MsgType) {
             case 'event':
                 /** 事件 */
-                return $hook->listen('wefee-process-event', $message);
+                $log['event'] = [
+                    'event'     => $message->Event,
+                ];
+                $eventName = 'wefee-process-event';
                 break;
             case 'text':
                 /** 交给 Wefee 自己处理。 */
@@ -30,29 +42,57 @@ class ProcessMessageDispatch
                 break;
             case 'image':
                 /** 图片消息 */
-                return $hook->listen('wefee-process-image', $message);
+                $log['pic'] = [
+                    'url' => $message->PicUrl,
+                ];
+                $eventName = 'wefee-process-image';
                 break;
             case 'voice':
                 /** 声音消息 */
-                return $hook->listen('wefee-process-voice', $message);
+                $log['voice'] = [
+                    'media_id' => $message->MediaId,
+                    'format'   => $message->Format,
+                ];
+                $eventName = 'wefee-process-voice';
                 break;
+            case 'shortvideo':
             case 'video':
                 /** 视频消息 */
-                return $hook->listen('wefee-process-video', $message);
+                $log['video'] = [
+                    'media_id'       => $message->MediaId,
+                    'thumb_media_id' => $message->ThumbMediaId,
+                ];
+                $eventName = 'wefee-process-video';
                 break;
             case 'location':
                 /** 位置消息 */
-                return $hook->listen('wefee-process-location', $message);
+                $log['location'] = [
+                    'x'     => $message->Location_X,
+                    'y'     => $message->Location_Y,
+                    'scale' => $message->Scale,
+                    'label' => $message->Label,
+                ];
+                $eventName = 'wefee-process-location';
                 break;
             case 'link':
                 /** 链接消息 */
-                return $hook->listen('wefee-process-link', $message);
+                $log['link'] = [
+                    'title'       => $message->Title,
+                    'description' => $message->Description,
+                    'url'         => $message->Url,
+                ];
+                $eventName = 'wefee-process-link';
                 break;
             default:
-                /** 原消息 */
-                return $hook->listen('wefee-process-original', $message);
+                /** 原始微信消息 */
+                $eventName = 'wefee-process-original';
                 break;
         }
+
+        /** 记录日志 */
+        Log::log($log);
+
+        return Tree::hook()->listen($eventName, $message);
     }
 
     /**
@@ -62,11 +102,22 @@ class ProcessMessageDispatch
      */
     protected function textMessageProcess($message)
     {
+        /** 记录日志 */
+        Log::log([
+            'type'         => $message->MsgType,
+            'from_user'    => $message->FromUserName,
+            'created_time' => $message->CreateTime,
+            'msg_id'       => $message->MsgId,
+            'content'      => $message->Content,
+        ]);
+
         /** 1.获取消息内容 */
         $content = $message->Content;
 
         /** 2.构造WhereCondition */
-        $where = "'{$content}' REGEXP rule_content AND rule_status = 1";
+        $where = "(`rule_type` = 'equal' AND `rule_content` = '{$content}')
+                    OR (`rule_type` = 'reg' AND '{$content}' REGEXP `rule_content`)
+                    AND `rule_status` = 1";
 
         /** 3.查询结果 */
         $rule = ReplyRules::where($where)->order('rule_sort', 'asc')->find();
