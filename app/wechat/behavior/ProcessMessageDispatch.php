@@ -116,7 +116,7 @@ class ProcessMessageDispatch
 
         /** 2.构造WhereCondition */
         $where = "(`rule_type` = 'equal' AND `rule_content` = '{$content}')
-                    AND (`rule_type` = 'include' AND `rule_content` LIKE '%{$content}%')
+                    OR (`rule_type` = 'include' AND `rule_content` LIKE '%{$content}%')
                     OR (`rule_type` = 'reg' AND `rule_content` REGEXP '{$content}')
                     AND `rule_status` = 1";
 
