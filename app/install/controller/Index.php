@@ -104,7 +104,7 @@ class Index extends Controller
         }
 
         /** 生成配置文件 */
-        $text = '';
+        $text = "app_debug=false\r\n";;
         $text .= 'database_hostname='.session('config.db_host')."\r\n";
         $text .= 'database_port='.session('config.db_port')."\r\n";
         $text .= 'database_database='.session('config.db_name')."\r\n";
