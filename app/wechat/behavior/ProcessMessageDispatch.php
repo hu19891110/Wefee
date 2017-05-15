@@ -92,9 +92,7 @@ class ProcessMessageDispatch
         /** 记录日志 */
         Log::log($log);
 
-        /** 返回钩子处理的值. */
-        $hook = Tree::hook();
-        return $hook->listen($eventName, $message);
+        return Tree::hook()->listen($eventName, $message);
     }
 
     /**
