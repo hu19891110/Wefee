@@ -117,7 +117,9 @@ class ProcessMessageDispatch
         $content = $message->Content;
 
         /** 2.构造WhereCondition */
-        $where = "'{$content}' REGEXP rule_content AND rule_status = 1";
+        $where = "(`rule_type` = 'equal' AND `rule_content` = '{$content}')
+                    OR (`rule_type` <> 'equal' AND `rule_content` REGEXP '{$content}')
+                    AND `rule_status` = 1";
 
         /** 3.查询结果 */
         $rule = ReplyRules::where($where)->order('rule_sort', 'asc')->find();
