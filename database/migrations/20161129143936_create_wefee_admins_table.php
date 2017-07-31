@@ -30,7 +30,8 @@ class CreateWefeeAdminsTable extends AbstractMigration
     public function up()
     {
         $table = $this->table('admins');
-        $table->addColumn('username', 'string', ['limit' => 32, 'comment' => '用户名'])
+        $table
+            ->addColumn('username', 'string', ['limit' => 32, 'comment' => '用户名'])
             ->addColumn('password', 'string', ['limit' => 64, 'comment' => '密码'])
             ->addColumn('last_login_ip', 'string', ['limit' => 32, 'comment' => '最后登录IP'])
             ->addColumn('last_login_date', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP', 'comment' => '最后登录时间'])

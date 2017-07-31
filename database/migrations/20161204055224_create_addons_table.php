@@ -30,7 +30,8 @@ class CreateAddonsTable extends AbstractMigration
     public function up()
     {
         $table = $this->table('addons');
-        $table->addColumn('addons_sign', 'string', ['limit' => 24, 'comment' => '插件标识符'])
+        $table
+            ->addColumn('addons_sign', 'string', ['limit' => 24, 'comment' => '插件标识符'])
             ->addColumn('addons_name', 'string', ['limit' => 64, 'comment' => '插件名'])
             ->addColumn('addons_description', 'string', ['limit' => 255, 'comment' => '插件描述'])
             ->addColumn('addons_author', 'string', ['limit' => 24, 'comment' => '插件作者'])

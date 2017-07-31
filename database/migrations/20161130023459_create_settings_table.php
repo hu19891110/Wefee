@@ -29,7 +29,8 @@ class CreateSettingsTable extends AbstractMigration
     public function up()
     {
         $table = $this->table('settings');
-        $table->addColumn('wefee_key', 'string', ['length' => 255])
+        $table
+            ->addColumn('wefee_key', 'string', ['length' => 255])
             ->addColumn('wefee_value', 'string', ['length' => 255])
             ->save();
     }
