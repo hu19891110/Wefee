@@ -20,7 +20,7 @@ if (!function_exists('table_exists')) {
     function table_exists($table)
     {
         $result = \think\Db::query('show tables;');
-        if (is_null($table)) {
+        if (is_null($result)) {
             return false;
         }
         $tables = [];

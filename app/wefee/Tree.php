@@ -1,5 +1,4 @@
-<?php
-namespace app\wefee;
+<?php namespace app\wefee;
 
 use EasyWeChat\Foundation\Application;
 
