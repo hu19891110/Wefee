@@ -1,7 +1,6 @@
 <?php namespace app\index\controller;
 
 use app\common\controller\Base;
-use think\Request;
 
 class Assets extends Base
 {

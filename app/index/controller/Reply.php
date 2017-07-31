@@ -1,8 +1,8 @@
 <?php namespace app\index\controller;
 
 use think\Request;
-use app\model\ReplyRules;
 use think\Validate;
+use app\model\ReplyRules;
 use app\common\controller;
 use app\model\ReplyContents;
 
@@ -23,11 +23,9 @@ class Reply extends controller\Base
         $data = $request->only([
             'rule_id', 'sort', 'type', 'status',
         ]);
-
         $this->validator($data);
 
         $data['content'] = serialize($this->getMessageContent($request));
-
         $reply = new ReplyContents($data);
         $reply->save();
 
@@ -52,11 +50,9 @@ class Reply extends controller\Base
         $data = $request->only([
             'sort', 'type', 'status',
         ]);
-
         $this->validator($data);
 
         $data['content'] = serialize($this->getMessageContent($request));
-
         $reply->save($data);
 
         $this->success('操作成功');

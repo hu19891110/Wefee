@@ -141,7 +141,7 @@ class Database extends Base
     }
 
     /**
-     * POST提交还原，验证token,防止CSRF攻击
+     * POST提交还原
      */
     public function postRestore(Request $request)
     {
@@ -236,11 +236,9 @@ class Database extends Base
         $this->checkToken($request);
 
         $tables = $request->post('table/a');
-
         !$tables && $this->error('请选择需要优化的数据表');
 
         $tableString = implode(',', $tables);
-
         Db::query('OPTIMIZE TABLE '.$tableString.';');
 
         $this->success('优化成功');
