@@ -10,61 +10,46 @@ use app\model\Addons AS AddonsModel;
 class Addons extends Base
 {
 
-    protected $index_template = './common/addons';
-
-    /**
-     * 已安装插件列表
-     */
-    public function getList()
+    public function installed()
     {
         $addons = AddonsModel::order('created_at', 'desc')->select();
-
         $title = '已安装插件';
-
-        $user = Auth::user();
-
-        return view('', compact('user', 'title', 'addons'));
+        return view('installed', compact('title', 'addons'));
     }
 
-    /**
-     * 未安装插件列表
-     */
-    public function getNoInstallList()
+    public function non()
     {
+        // 读取插件目录下所有的插件
         $files = scandir(ADDONS_PATH);
+        unset($files[0], $files[1]);
 
-        /** 未安装插件容器 */
+        // 读取已经安装的插件
+        $installAddons = AddonsModel::field('addons_sign')->select();
+        $installAddons = array_column($installAddons, 'addons_sign');
+
         $noInstallContainer = [];
-
-        foreach ($files as $value) {
-            if (in_array($value, ['.', '..'])) {
+        foreach ($files as $filename) {
+            $path = ADDONS_PATH . $filename;
+            if (! is_dir($path)) {
                 continue;
             }
 
-            $path = ADDONS_PATH . $value;
-
-            if (!is_dir($path)) {
+            // 检测插件配置文件是否存在
+            $infoPath = "{$path}/wefee.json";
+            if (! file_exists($infoPath)) {
                 continue;
             }
 
-            if (AddonsModel::get(['addons_sign' => $value])) {
+            // 检测是否已经安装
+            if (in_array($filename, $installAddons)) {
                 continue;
             }
 
-            $infoPath = $path . '/wefee.json';
-
-            if (!file_exists($infoPath)) {
-                continue;
-            }
-
-            $noInstallContainer[$value] = json_decode(@file_get_contents("{$path}/wefee.json"), true);
+            $noInstallContainer[$filename] = json_decode(file_get_contents("{$path}/wefee.json"), true);
         }
 
         $title = '未安装插件';
-
-        $user = Auth::user();
-
-        return view('', compact('user', 'title', 'noInstallContainer'));
+        return view('', compact('title', 'noInstallContainer'));
     }
 
     /**
@@ -82,19 +67,19 @@ class Addons extends Base
         }
 
         /** 2.读取插件信息 */
-        $path = ADDONS_PATH . $addons_sign . '/';
-        if (!is_dir($path)) {
+        $path = ADDONS_PATH . $addons_sign . DS;
+        if (! is_dir($path)) {
             $this->error('插件不存在');
         }
-        if (!file_exists($path . ucfirst($addons_sign) . EXT)) {
-            $this->error('插件主文件缺失.');
+        if (! file_exists($path . ucfirst($addons_sign) . EXT)) {
+            $this->error('插件主文件缺失');
         }
-        if (!file_exists($path . 'wefee.json')) {
-            $this->error('插件缺少wefee.json文件');
+        if (! file_exists($path . 'wefee.json')) {
+            $this->error('插件缺少配置文件');
         }
 
         /** 获取插件的信息 */
-        $addons = json_decode(@file_get_contents($path . 'wefee.json'), true);
+        $addons = json_decode(file_get_contents($path . 'wefee.json'), true);
         $addons['sign'] = $addons_sign;
 
         /** 分发Logo */
@@ -105,13 +90,13 @@ class Addons extends Base
 
         /** 3.数据库安装 */
         $data = [
-            'addons_sign'    => $addons['sign'],
-            'addons_name'    => $addons['name'],
+            'addons_sign'        => $addons['sign'],
+            'addons_name'        => $addons['name'],
             'addons_description' => $addons['description'],
-            'addons_author'  => $addons['author'],
-            'addons_version' => $addons['version'],
-            'addons_config'  => '',
-            'updated_at'     => date('Y-m-d H:i:s'),
+            'addons_author'      => $addons['author'],
+            'addons_version'     => $addons['version'],
+            'addons_config'      => '',
+            'updated_at'         => date('Y-m-d H:i:s'),
         ];
         $addons = new AddonsModel;
         $addons->save($data);
@@ -244,7 +229,7 @@ class Addons extends Base
      */
     public function upgrade(Request $request)
     {
-        $addons     = $this->existsValidator($request);
+        $addons = $this->existsValidator($request);
 
         $addonsInfo = $this->getAddonsInfo($addons);
 
@@ -288,7 +273,6 @@ class Addons extends Base
         if (! is_dir($path)) {
             return @mkdir($path, 0777, true);
         }
-
         return true;
     }
 
@@ -372,7 +356,7 @@ class Addons extends Base
         /** 3.删除插件 */
         delete_dir($path);
 
-        $this->success('操作成功.');
+        $this->success('操作成功');
     }
 
     /**
@@ -388,9 +372,7 @@ class Addons extends Base
 
         $title = "{$addons->addons_name}的主页 - PowerBy Wefee.CC";
 
-        $user = Auth::user();
-
-        return view($path, compact('user', 'title', 'addons'));
+        return view($path, compact('title', 'addons'));
     }
 
     /** 插件配置 */
@@ -406,9 +388,7 @@ class Addons extends Base
 
         $title = '插件配置';
 
-        $user = Auth::user();
-
-        return view($path, compact('user', 'title', 'addons'));
+        return view($path, compact('title', 'addons'));
     }
 
     /**

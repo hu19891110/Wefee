@@ -33,7 +33,7 @@ class InitConfig
 
     protected function uploadConfig($config)
     {
-        if (!isset($config['upload_driver'])) {
+        if (! isset($config['upload_driver'])) {
             return ;
         }
 
@@ -66,7 +66,7 @@ class InitConfig
 
     protected function memcacheConfig($config)
     {
-        if (!isset($config['memcache_host'])) {
+        if (! isset($config['memcache_host'])) {
             return ;
         }
 
@@ -80,7 +80,7 @@ class InitConfig
 
     protected function redisConfig($config)
     {
-        if (!isset($config['redis_host'])) {
+        if (! isset($config['redis_host'])) {
             return ;
         }
 

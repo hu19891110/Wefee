@@ -10,9 +10,7 @@ class Assets extends Base
     public function _initialize()
     {
         parent::_initialize();
-
         $this->imageDir = ROOT_PATH . 'public' . DS . 'images' . DS;
-
     }
 
     public function images()

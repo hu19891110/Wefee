@@ -1,6 +1,8 @@
 <?php
 namespace app\index\controller;
 
+use app\behavior\LoginAfter;
+use think\Hook;
 use think\Request;
 use think\Validate;
 use think\helper\Hash;
@@ -12,6 +14,13 @@ class Index extends Base
     protected $loginOnly = [
         'admin', 'postchangepassword'
     ];
+
+    public function _initialize()
+    {
+        parent::_initialize();
+
+        Hook::add('after-login', LoginAfter::class);
+    }
 
     public function index()
     {
@@ -27,39 +36,16 @@ class Index extends Base
     {
         $this->checkToken($request);
 
-        if (
-            $request->post('username') == '' ||
-            $request->post('password') == ''
-        ) {
-            $this->error('请输入完整信息');
-        }
+        $loginData = [
+            'username' => $request->post('username'),
+            'password' => $request->post('password')
+        ];
 
-        if (
-            !Auth::attempt([
-                'username' => $request->post('username'),
-                'password' => $request->post('password')
-            ])
-        ) {
-            $this->error('登录失败');
-        }
+        !Auth::attempt($loginData) && $this->error('登录失败');
 
-        $this->loginAfter($request);
+        Hook::listen('after-login', $request);
 
         $this->success('登录成功', url('dashboard/index'));
-    }
-
-    /**
-     * 登录之后
-     * @param $request \think\Request 登录请求
-     * @return void
-     */
-    protected function loginAfter(Request $request)
-    {
-        $user = Auth::user();
-        $user->last_login_date = date('Y-m-d H:i:s');
-        $user->last_login_ip   = $request->ip();
-        $user->login_times     = $user->login_times + 1;
-        $user->save();
     }
 
     /**
@@ -68,7 +54,6 @@ class Index extends Base
     public function logout()
     {
         Auth::logout();
-
         $this->success('成功退出', url('index/index'));
     }
 
@@ -78,9 +63,7 @@ class Index extends Base
     public function admin()
     {
         $title = '账户中心';
-
         $user = Auth::user();
-
         return view('', compact('title', 'user'));
     }
 
@@ -98,11 +81,11 @@ class Index extends Base
 
         $user = Auth::user();
 
-        if (!$validator->check($request->post())) {
+        if (! $validator->check($request->post())) {
             $this->error($validator->getError());
         }
 
-        if (!Hash::check($request->post('old_password'), $user->password)) {
+        if (! Hash::check($request->post('old_password'), $user->password)) {
             $this->error('原密码错误');
         }
 

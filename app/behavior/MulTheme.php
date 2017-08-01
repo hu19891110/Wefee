@@ -11,7 +11,7 @@ class MulTheme
     public function run(&$params)
     {
         $theme = config('wefee.current_theme');
-        $theme = $theme ?: 'default';
+        $theme = $theme ?:'default';
 
         /** 通用模板 */
         config('template.view_path', config('template.view_path') . $theme . DS);

@@ -1,6 +1,6 @@
 <?php
 
-use think\helper;
+use think\helper\Hash;
 use Phinx\Seed\AbstractSeed;
 
 class AdminInitSeeder extends AbstractSeed
@@ -17,7 +17,7 @@ class AdminInitSeeder extends AbstractSeed
     {
         $init = [
             'username'      => 'admin',
-            'password'      => helper\Hash::make('ilovewefee'),
+            'password'      => Hash::make('ilovewefee'),
             'last_login_ip' => '127.0.0.1',
         ];
         $table = $this->table('admins');

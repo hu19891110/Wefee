@@ -285,20 +285,20 @@ if (! function_exists('copy_all')) {
 if (! function_exists('delete_dir')) {
     /**
      * 删除目录
-     * @param string $dest 待删除的目录
+     * @param string $dir 待删除的目录
      * @return void
      */
-    function delete_dir($dest)
+    function delete_dir($dir)
     {
-        if (! is_dir($dest)) {
+        if (! is_dir($dir)) {
             return ;
         }
-        $dest = realpath($dest);
+        $dir = realpath($dir);
 
         if (strtolower(substr(PHP_OS, 0, 3)) == 'win') {
-            exec('rmdir /s/q '. $dest);
+            exec('rmdir /s/q ' . $dir);
         } else {
-            exec('rm -rf '. $dest);
+            exec('rm -rf ' . $dir);
         }
     }
 }

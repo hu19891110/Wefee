@@ -1,6 +1,6 @@
-<?php
-namespace app\common\controller;
+<?php namespace app\common\controller;
 
+use think\View;
 use think\Session;
 use think\Request;
 use think\Controller;
@@ -15,14 +15,12 @@ class Base extends Controller
 
     protected $loginExcept = [];
 
-    protected $repository = null;
-
     public function _initialize()
     {
         $this->loginCheck();
 
-        /** 当前认证用户 */
-        \think\View::share('user', Auth::user());
+        /** 视图数据共享 */
+        View::share('user', Auth::user());
     }
 
     protected function checkToken(Request $request)

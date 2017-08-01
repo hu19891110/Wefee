@@ -190,7 +190,6 @@ class Database extends Base
         }
     }
 
-
     /**
      * 删除备份文件
      */
@@ -209,9 +208,9 @@ class Database extends Base
         $this->success('操作成功');
     }
 
+    // 优化数据表视图
     public function optimize()
     {
-        /** 获取需要优化的表 */
         $mysql = Db::query('SHOW TABLE STATUS;');
         $tables = [];
         foreach ($mysql as $table) {
@@ -224,13 +223,10 @@ class Database extends Base
         }
 
         $title = '数据库优化';
-
         return view('', compact('title', 'tables'));
     }
 
-    /**
-     * 优化数据库
-     */
+    // 优化数据表
     public function postOptimize(Request $request)
     {
         $this->checkToken($request);

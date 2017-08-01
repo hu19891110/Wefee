@@ -12,7 +12,7 @@ class Uploader extends Base
 
         $result = $upload->upload();
 
-        if (!$result) {
+        if (! $result) {
             exit(json_encode([
                 'status' => 1,
                 'message' => $upload->getError(),

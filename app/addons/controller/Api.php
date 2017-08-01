@@ -12,13 +12,6 @@ use app\model\Addons;
 class Api extends Controller
 {
 
-    protected $repository = null;
-
-    public function _initialize()
-    {
-        parent::_initialize();
-    }
-
     /** 插件的访问 */
     public function plus(Request $request)
     {
