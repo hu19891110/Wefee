@@ -20,9 +20,7 @@ class AdminInitSeeder extends AbstractSeed
             'password'      => helper\Hash::make('ilovewefee'),
             'last_login_ip' => '127.0.0.1',
         ];
-
         $table = $this->table('admins');
-
         $table->insert($init)->save();
     }
 }
