@@ -32,7 +32,7 @@ if (!function_exists('table_exists')) {
 }
 if (!function_exists('get_wechat_config')) {
     /**
-     * 获取 Easywechat 需要的微信配置格式数组
+     * 获取 EasyWechat 需要的微信配置格式数组
      * @return array
      */
     function get_wechat_config()
