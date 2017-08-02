@@ -2,10 +2,13 @@
 
 {block name="body"}
 
-{include file="common:nav" /}
+<div class="container-fluid">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="javascript:void(0)">主面板</a></li>
+            <li class="active">全局配置</li>
+        </ol>
 
-<div class="container bg-fff mt-20 br-5">
-    <div class="row pt-15-pb-15">
         <div class="col-lg-12">
             <form action="{:url('index/setting/postSave')}" method="post">
                 {:token()}
@@ -234,8 +237,6 @@
         </div>
     </div>
 </div>
-
-{include file="common:footer" /}
 
 {/block}
 

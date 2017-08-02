@@ -13,7 +13,13 @@
 </head>
 <body>
 
-{block name="body"}{/block}
+{include file="common:nav" /}
+
+{include file="common:menu" /}
+
+<div class="wefee-main">
+    {block name="body"}{/block}
+</div>
 
 {literal}
 <script>require(['bootstrap'])</script>

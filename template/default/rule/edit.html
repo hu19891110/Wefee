@@ -2,10 +2,14 @@
 
 {block name="body"}
 
-{include file="common:nav" /}
+<div class="container-fluid">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="javascript:void(0)">主面板</a></li>
+            <li><a href="javascript:void(0)">微信回复</a></li>
+            <li class="active">编辑规则</li>
+        </ol>
 
-<div class="container">
-    <div class="row bg-fff mt-20 pt-15-pb-15">
         <div class="col-lg-12">
             <a href="{:url('index/rule/index')}" class="btn btn-primary">返回规则列表</a>
         </div>
@@ -71,8 +75,6 @@
 
     </div>
 </div>
-
-{include file="common:footer" /}
 
 {/block}
 
