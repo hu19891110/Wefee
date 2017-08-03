@@ -1,24 +1,35 @@
-{extend name="layout:base" /}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title}</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/js/layer/skin/default/layer.css">
+    <script src="/static/require.js"></script>
+    <script src="/static/main.js"></script>
+    <style>
+        #particleground {
+            position: fixed; top: 0px; left: 0px; height: 100%; width: 100%; overflow: hidden;
+            background-color: #20A0FF;
+        }
+        .login-form {
+            position: fixed; left: 50%; top: 50%; z-index: 11; width: 400px; height: auto;
+            min-height: 260px; background-color: #FFF; margin-top: -240px; margin-left: -200px;
+            border-radius: 3px; padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
 
-{block name="header"}
-<style>
-    #particleground {
-        position: fixed; top: 0px; left: 0px; height: 100%; width: 100%; overflow: hidden;
-    }
-    .login-form {
-        position: fixed; left: 50%; top: 50%; z-index: 11; width: 400px; height: auto;
-        min-height: 350px; background-color: #FFF; margin-top: -240px; margin-left: -200px;
-        border-radius: 3px;
-    }
-</style>
-{/block}
+{include file="common:nav" /}
 
-{block name="body"}
+
 <div id="particleground">
     <div class="login-form">
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
-                <h3 class="text-center">Wefee</h3>
                 <form action="{:url('index/postLogin')}" method="post" role="form">
                     {:token()}
                     <div class="form-group">
@@ -30,16 +41,15 @@
                         <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码">
                     </div>
 
-                    <button type="submit" class="btn btn-default">点击登录</button>
+                    <button type="submit" class="btn btn-primary btn-block">点击登录</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-{/block}
 
-{block name="footer"}
 <script>
+    require(['bootstrap']);
     require(['jquery', 'particleground'], function ($) {
         $().ready(function () {
             $('#particleground').particleground({
@@ -49,4 +59,5 @@
         });
     });
 </script>
-{/block}
+</body>
+</html>

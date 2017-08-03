@@ -9,7 +9,8 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-if (! file_exists(ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'install.lock')) {
+$lockFile = ROOT_PATH . DS . 'data' . DS . 'install' . DS . 'install.lock';
+if (! file_exists($lockFile)) {
     /** 兼容命令行安装模式 =》 命令行安装之后需要手动的创建install.lock */
     if (PHP_SAPI == 'cli') {
         return [];
