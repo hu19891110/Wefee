@@ -6,7 +6,9 @@
 namespace app\wechat\behavior;
 
 use think\Log;
+use think\Hook;
 use app\wefee\Tree;
+use app\behavior\ProcessWechatSubscribe;
 
 class SubscribeMessageDispatch
 {
@@ -26,7 +28,8 @@ class SubscribeMessageDispatch
             case 'event':
                 /** 系统自身关注统计 */
                 if ($message->Event == 'subscribe' || $message->Event == 'unsubscribe') {
-                    wechat_subscribe_event($message->Event == 'subscribe' ? 1 : -1);
+                    $type = $message->Event == 'subscribe' ? 1 : -1;
+                    Hook::exec(ProcessWechatSubscribe::class, '', $type);
                 }
 
                 /** 事件 */

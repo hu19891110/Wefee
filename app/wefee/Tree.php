@@ -21,7 +21,8 @@ class Tree
     public static function wechat()
     {
         if (is_null(self::$tree[self::WECHAT])) {
-            self::$tree[self::WECHAT] = new Application(get_wechat_config());
+            $config = get_wechat_config();
+            self::$tree[self::WECHAT] = new Application($config);
         }
 
         return self::$tree[self::WECHAT];
