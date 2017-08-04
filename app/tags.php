@@ -30,6 +30,7 @@ return [
         'app\\behavior\\InitConfig',
         'app\\behavior\\SystemBehaviorInit',
         'app\\behavior\\MulTheme',
+        'app\\behavior\\WefeeSecondMenus',
     ],
     'app_begin'    => [
         'app\\behavior\\SystemBehaviorInit',

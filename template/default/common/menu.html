@@ -49,10 +49,15 @@
 </nav>
 
 <nav class="wefee-menu-second">
-    <h5 style="padding-left: 10px;">快捷菜单</h5>
     <ul>
+        {if condition="config('WEFEE_SECOND_MENUS')"}
+        {volist name=":config('WEFEE_SECOND_MENUS')" id="item"}
         <li>
-            <a href="">二级菜单</a>
+            <a href="{$item.href}">{$item.title}</a>
         </li>
+        {/volist}
+        {else}
+        <li>暂无</li>
+        {/if}
     </ul>
 </nav>
