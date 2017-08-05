@@ -1,4 +1,49 @@
 <?php
+if (!function_exists('is_wechat')) {
+    /**
+     * 是否通过微信访问
+     * @return boolean
+     */
+    function is_wechat()
+    {
+        return strpos(request()->server('HTTP_USER_AGENT'), "MicroMessenger") !== false;
+    }
+}
+if (! function_exists('wechat_web_auth')) {
+    /**
+     * 获取微信授权信息
+     * @return mixed
+     */
+    function wechat_web_auth()
+    {
+        if (! is_wechat()) {
+            return ;
+        }
+        if (session('?wechat_user')) {
+            return session('wechat_user');
+        }
+        $url = urlencode(request()->url());
+        header('Location:' . url('wechat/wechat/auth', ['back' => $url]));
+        exit;
+    }
+}
+if (! function_exists('emoji_filter')) {
+    /**
+     * 过滤emoji表情
+     * @return string
+     */
+    function emoji_filter($str)
+    {
+        $str = preg_replace_callback(
+            '/./u',
+            function (array $match) {
+                return strlen($match[0]) >= 4 ? '' : $match[0];
+            },
+            $str
+        );
+        return $str;
+    }
+}
 if (!function_exists('full_table')) {
     /**
      * 补全数据库表的前缀

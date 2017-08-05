@@ -60,8 +60,7 @@ class Wechat extends Controller
      */
     public function auth(Request $request)
     {
-        /** 前一页地址 */
-        $targetUrl = $_SERVER['HTTP_REFERER'];
+        $targetUrl = urldecode($request->param('back'));
         Session::set('target_url', $targetUrl);
         $oauth = Tree::wechat()->oauth;
         $oauth->redirect()->send();
@@ -76,7 +75,7 @@ class Wechat extends Controller
         $user = $oauth->user();
         Session::set('wechat_user', $user);
         $url = Session::has('target_url') ? Session::get('target_url') : '/';
-        header('Location:'.$url);
+        return header('Location:' . $url);
     }
 
 }

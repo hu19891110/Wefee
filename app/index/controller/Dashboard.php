@@ -11,6 +11,7 @@ class Dashboard extends Base
 
     public function index()
     {
+        echo aurl('WefeeMall/index.index/index');
         Hook::exec(ProcessWechatSubscribe::class);
 
         $subscribe_today = Db::table(full_table('wechat_focus_records'))->whereTime('created_at', 'today')->find();
