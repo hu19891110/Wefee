@@ -249,12 +249,9 @@ HTML;
 <div class="form-group">
     <label class="control-label col-sm-2">{$title}</label>
     <div class="col-sm-10">
-        <input type="text" name="{$name}" class="form-control jscolor" value="<?php echo $value; ?>">
+        <input type="color" name="{$name}" value="<?php echo $value; ?>">
     </div>
 </div>
-<script >
-require(['jquery', 'jscolor']);
-</script>
 HTML;
 
         return $html;
