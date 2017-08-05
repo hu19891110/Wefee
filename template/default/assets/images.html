@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>本站图片资源浏览</title>
+    <title>微信图片素材处理中心 - PowerBy Wefee.CC</title>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <script src="/static/require.js"></script>
     <script src="/static/main.js"></script>
     <style>
-        h3 { line-height: 160px; background-color: #16987e; color: #FFF; margin: 0px; font-family: "Microsoft Yahei"; margin-bottom: 20px; }
+        h3 { line-height: 160px; background-color: #20a0ff; color: #FFF; margin: 0px; font-family: "Microsoft Yahei"; margin-bottom: 20px; }
         li { list-style: none; }
         .container { width: 990px!important; }
         ul { width: 100%; height: auto; }
@@ -19,58 +19,60 @@
 
 {:token()}
 
-<h3 class="text-center">图片资源文件</h3>
+<h3 class="text-center">微信图片素材处理中心</h3>
 
 <div class="container">
     <div class="row">
-
         <div class="col-lg-12 form-horizontal">
-            {wefee:image name="image" title="上传图片" value="" /}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">图片素材ID</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" name="file" class="form-control" placeholder="请选择图片">
+                        <div class="input-group-addon select-image">选择图片</div>
+                    </div>
+                    <div style="display: none" id="select-image"></div>
+                </div>
+            </div>
         </div>
 
         <div class="col-lg-12">
             <div class="alert alert-warning">
-                <p><b>问：怎么获取图片的 MediaID 值？</b></p>
-                <p>答：点击图片就行辣。</p>
+                <p><b>注意：</b></p>
+                <p>大小：2M，支持 PNG,GIF,JPG 格式</p>
             </div>
         </div>
 
-        <div class="col-md-12">
-            <ul style="padding: 0px;">
-                {volist name="images" id="image"}
-                <li>
-                    <img data-original="/images/{$image}" class="lazy" width="150" height="120">
-                </li>
-                {/volist}
-            </ul>
-        </div>
     </div>
 </div>
 
-<script>require(['bootstrap'])</script>
-<script>
-    require(['jquery', 'lazyload', 'layer'], function ($) {
-        $('img.lazy').lazyload();
-
-        $('img').click(function () {
-            var src = $(this).attr('src');
-            var _token = $('input[name="__token__"]').val();
-            if (confirm('确定获取该图片MediaID？')) {
-                layer.load(1, {shade: [0.5, '#fff']});
-                $.post("{:url('wechat/service/uploadImage')}", {
-                    "file": src,
-                    "_token": _token
-                }, function (data) {
-                    layer.closeAll('loading');
-                    if (typeof (data.error) != 'undefined') {
-                        layer.alert(data.error, {icon: 3});
-                    } else {
-                        layer.alert('MediaID值：' + data.success, {icon: 6});
-                    }
-                }, 'json');
+<script >
+    require(['jquery', 'webuploader'], function ($, wu) {
+        $('.select-image').click(function () {
+            $('#select-image input[name="file"]').click();
+        });
+        var uploader = wu.create({
+            auto: true,
+            server: '{:url("wechat/service/uploadImage")}',
+            pick: {
+                id: '#select-image',
+                multiple: false
+            },
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/gif,image/png,image/jpg,image/jpeg'
             }
+        });
+        uploader.on('uploadSuccess', function(file, response) {
+            if (response.code != 200) {
+                alert(response.message);
+                return ;
+            }
+            $('input[name="file"]').val(response.msg);
         });
     });
 </script>
+
 </body>
 </html>

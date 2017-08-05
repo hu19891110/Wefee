@@ -12,9 +12,7 @@ class Reply extends controller\Base
     public function add(Request $request)
     {
         $rule = $this->getRule($request->param('rule_id'));
-
         $title = '添加回复内容';
-
         return view('', compact('title', 'rule'));
     }
 
@@ -35,18 +33,15 @@ class Reply extends controller\Base
     public function edit(Request $request)
     {
         $reply = $this->getReply($request->param('id'));
-
         $reply->content = unserialize($reply->content);
 
         $title = '编辑回复内容';
-
         return view('', compact('title', 'reply'));
     }
 
     public function update(Request $request)
     {
         $reply = $this->getReply($request->param('id'));
-
         $data = $request->only([
             'sort', 'type', 'status',
         ]);

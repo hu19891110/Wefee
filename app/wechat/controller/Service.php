@@ -1,5 +1,6 @@
 <?php namespace app\wechat\controller;
 
+use think\Exception;
 use think\Request;
 use app\wefee\Tree;
 use app\common\controller\Base;
@@ -7,123 +8,119 @@ use app\common\controller\Base;
 class Service extends Base
 {
 
+    const ROOT_UPLOAD_PATH = ROOT_PATH . 'public' . DS . 'uploads' . DS;
+
     protected $voiceDir = '';
-
     protected $videoDir = '';
-
     protected $thumbDir = '';
 
     public function _initialize()
     {
         parent::_initialize();
-
-        $this->voiceDir = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'voices';
-        $this->voiceDir = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'video';
-        $this->thumbDir = ROOT_PATH . 'public' . DS . 'uploads' . DS . 'thumb';
+        $this->voiceDir = self::ROOT_UPLOAD_PATH . 'voices' . DS;
+        $this->videoDir = self::ROOT_UPLOAD_PATH . 'video' . DS;
+        $this->thumbDir = self::ROOT_UPLOAD_PATH . 'thumb' . DS;
     }
 
     /** 上传图片到微信 */
-    public function uploadImage(Request $request)
+    public function uploadImage()
     {
-        $file = $request->param('file');
-
-        if ($file == '') {
-            return json(['error' => '请选择文件。']);
+        $validate = [
+            'size' => 10240000,
+            'ext' => ['jpg', 'png', 'gif', 'jpeg'],
+        ];
+        try {
+            // 上传文件
+            $file = $this->upload($validate, $this->thumbDir);
+            $file = $this->thumbDir . $file;
+            // 上传到微信
+            $res = json_decode(Tree::wechat()->material_temporary->uploadImage($file), true);
+            if (isset($res['errcode'])) {
+                throw new Exception('获取MediaID失败！可能原因：文件过大，文件敏感。', 406);
+            }
+            return $this->wefeeResponse($res['media_id'], 200);
+        } catch (Exception $e) {
+            return $this->wefeeResponse($e->getMessage(), $e->getCode());
         }
-
-        $tmp = explode('images', $file);
-
-        $path = realpath(ROOT_PATH . DS . 'public' . DS . 'images' . DS . $tmp[1]);
-
-        if (! $path) {
-            return json(['error' => '文件不存在']);
-        }
-
-        $res = json_decode(Tree::wechat()->material_temporary->uploadImage($path), true);
-
-        if (isset($res['errcode'])) {
-            return json(['error' => '获取MediaID失败！可能原因：文件过大，文件敏感。']);
-        }
-
-        return json(['success' => $res['media_id']]);
     }
 
-    public function uploadVoice(Request $request)
+    public function uploadVoice()
     {
-        $file = $request->file('file');
-
-        $result = $file->validate([
+        $validate = [
             'size' => 1024 * 2048,
-            'ext'  => 'mp3,amr',
-        ])->move($this->voiceDir);
-
-        if (! $result) {
-            return json(['error' => $file->getError()]);
+            'ext' => ['mp3', 'amr'],
+        ];
+        try {
+            // 上传文件
+            $file = $this->upload($validate, $this->voiceDir);
+            $file = $this->voiceDir . $file;
+            // 上传到微信
+            $res = json_decode(Tree::wechat()->material_temporary->uploadVoice($file), true);
+            if (isset($res['errcode'])) {
+                throw new Exception('获取音频MediaID失败！可能原因：文件过大。', 406);
+            }
+            return $this->wefeeResponse($res['media_id'], 200);
+        } catch (Exception $e) {
+            return $this->wefeeResponse($e->getMessage(), $e->getCode());
         }
-
-        $path = $this->voiceDir . DS . $result->getSaveName();
-
-        /** 上传到Wechat */
-        $res = json_decode(Tree::wechat()->material_temporary->uploadVoice($path), true);
-
-        if (isset($res['errcode'])) {
-            return json(['error' => '获取音频MediaID失败！可能原因：文件过大。']);
-        }
-
-        return json(['success' => $res['media_id']]);
     }
 
-    public function uploadVideo(Request $request)
+    public function uploadVideo()
     {
-        $file = $request->file('file');
-
-        if (is_null($file)) {
-            return json(['error' => '请上传文件']);
-        }
-
-        $result = $file->validate([
+        $validate = [
             'size' => 1024 * 1024 * 10,
-            'ext'  => 'mp4',
-        ])->move($this->videoDir);
-
-        if (! $result) {
-            return json(['error' => $file->getError()]);
+            'ext' => ['mp4'],
+        ];
+        try {
+            // 上传文件
+            $file = $this->upload($validate, $this->videoDir);
+            $file = $this->videoDir . $file;
+            // 上传到微信
+            $res = json_decode(Tree::wechat()->material_temporary->uploadVideo($file), true);
+            if (isset($res['errcode'])) {
+                throw new Exception('获取音频MediaID失败！可能原因：文件过大。', 406);
+            }
+            return $this->wefeeResponse($res['media_id'], 200);
+        } catch (Exception $e) {
+            return $this->wefeeResponse($e->getMessage(), $e->getCode());
         }
-
-        $path = $this->videoDir . DS . $result->getSaveName();
-
-        /** 上传到Wechat */
-        $res = json_decode(Tree::wechat()->material_temporary->uploadVideo($path), true);
-
-        if (isset($res['errcode'])) {
-            return json(['error' => '获取视频MediaID失败！可能原因：文件过大。']);
-        }
-
-        return json(['success' => $res['media_id']]);
     }
 
-    public function uploadThumb(Request $request)
+    public function uploadThumb()
     {
-        $file = $request->file('file');
-
-        $result = $file->validate([
+        $validate = [
             'size' => 1024 * 64,
-            'ext'  => 'jpg',
-        ])->move($this->thumbDir);
-
-        if (! $result) {
-            return json(['error' => $file->getError()]);
+            'ext' => ['jpg'],
+        ];
+        try {
+            // 上传文件
+            $file = $this->upload($validate, $this->thumbDir);
+            $file = $this->thumbDir . $file;
+            // 上传到微信
+            $res = json_decode(Tree::wechat()->material_temporary->uploadThumb($file), true);
+            if (isset($res['errcode'])) {
+                throw new Exception('获取缩率图MediaID失败！可能原因：文件过大，文件敏感。', 406);
+            }
+            return $this->wefeeResponse($res['thumb_media_id'], 200);
+        } catch (Exception $e) {
+            return $this->wefeeResponse($e->getMessage(), $e->getCode());
         }
-
-        $path = $this->thumbDir . DS . $result->getSaveName();
-
-        $res = json_decode(Tree::wechat()->material_temporary->uploadThumb($path), true);
-
-        if (isset($res['errcode'])) {
-            return json(['error' => '获取缩率图MediaID失败！可能原因：文件过大，文件敏感。']);
-        }
-
-        return json(['success' => $res['thumb_media_id']]);
     }
 
+    /**
+     * 通用上传方法
+     * @param array $validate 验证规则
+     * @param string $path 保存路径
+     * @throws \think\Exception
+     * @return mixed
+     */
+    protected function upload($validate, $path)
+    {
+        $file = request()->file('file');
+        $result = $file->validate($validate)->move($path);
+        if (! $result) {
+            throw new Exception($result->getError(), 406);
+        }
+        return $result->getSaveName();
+    }
 }

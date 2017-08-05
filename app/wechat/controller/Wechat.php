@@ -6,6 +6,8 @@ use think\Request;
 use think\Session;
 use app\wefee\Tree;
 use think\Controller;
+use app\wechat\behavior\ProcessMessageDispatch;
+use app\wechat\behavior\SubscribeMessageDispatch;
 
 class Wechat extends Controller
 {
@@ -13,16 +15,10 @@ class Wechat extends Controller
     public function _initialize()
     {
         parent::_initialize();
-
         /** 消息订阅钩子注册 */
-        Hook::add('subscribe_message', [
-            'app\\wechat\\behavior\\SubscribeMessageDispatch',
-        ]);
-
+        Hook::add('subscribe_message', [SubscribeMessageDispatch::class]);
         /** 消息处理钩子注册 */
-        Hook::add('process_message', [
-            'app\\wechat\\behavior\\ProcessMessageDispatch',
-        ]);
+        Hook::add('process_message', [ProcessMessageDispatch::class]);
     }
 
     /**
@@ -67,9 +63,7 @@ class Wechat extends Controller
         /** 前一页地址 */
         $targetUrl = $_SERVER['HTTP_REFERER'];
         Session::set('target_url', $targetUrl);
-
         $oauth = Tree::wechat()->oauth;
-
         $oauth->redirect()->send();
     }
 

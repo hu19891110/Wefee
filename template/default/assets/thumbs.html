@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>获取缩率图MediaID - PowerBy Wefee.CC</title>
+    <title>微信缩率图素材处理中心 - PowerBy Wefee.CC</title>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <script src="/static/require.js"></script>
     <script src="/static/main.js"></script>
     <style>
-        h3 { line-height: 160px; background-color: #16987e; color: #FFF; margin: 0px; font-family: "Microsoft Yahei"; margin-bottom: 20px; }
+        h3 { line-height: 160px; background-color: #20a0ff; color: #FFF; margin: 0px; font-family: "Microsoft Yahei"; margin-bottom: 20px; }
         li { list-style: none; }
     </style>
 </head>
@@ -15,7 +15,7 @@
 
 {:token()}
 
-<h3 class="text-center">获取缩率图MediaID</h3>
+<h3 class="text-center">微信缩率图素材处理中心</h3>
 
 <div class="container">
     <div class="row">
@@ -35,14 +35,14 @@
         <div class="col-lg-12">
             <div class="alert alert-warning">
                 <p><b>注意：</b></p>
-                <p> 缩略图（thumb）：64KB，支持JPG格式</p>
+                <p> 缩略图（thumb）：64KB，仅支持JPG格式</p>
             </div>
         </div>
 
     </div>
 </div>
 
-<script>require(['bootstrap'])</script>
+
 <script>
     require(['jquery', 'webuploader'], function ($, wu) {
         $('.select-file').click(function () {
@@ -60,16 +60,12 @@
                 extensions: 'jpg'
             }
         });
-        uploader.on('startUpload', function () {
-            layer.load(1, {shade: [0.5, '#fff']});
-        });
         uploader.on('uploadSuccess', function(file, response) {
-            if (typeof (response.error) != 'undefined') {
-                alert(response.error);
+            if (response.code != 200) {
+                alert(response.msg);
                 return ;
             }
-            $('input[name="thumb_media_id"]').val(response.success);
-            layer.closeAll();
+            $('input[name="thumb_media_id"]').val(response.msg));
         });
     });
 </script>

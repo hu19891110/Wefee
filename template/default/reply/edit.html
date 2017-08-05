@@ -80,12 +80,12 @@
                                     {/case}
                                     {case value="voice"}
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">图片MediaID</label>
+                                        <label class="control-label col-sm-2">音频MediaID</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="image_media_id" value="{$reply->content['media_id']}" class="form-control">
+                                            <input type="text" name="voice_media_id" value="{$reply->content['media_id']}" class="form-control">
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-2">
-                                            <span class="help-block"><a href="{:url('index/assets/images')}" target="_blank">点击获取图片MediaID</a></span>
+                                            <span class="help-block"><a href="{:url('index/assets/voices')}" target="_blank">点击获取音频MediaID</a></span>
                                         </div>
                                     </div>
                                     {/case}
@@ -93,7 +93,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">视频MediaID</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="video_media_id" value="{$reply->content['video']}" class="form-control">
+                                            <input type="text" name="video_media_id" value="{$reply->content['media_id']}" class="form-control">
                                         </div>
                                         <div class="col-sm-10 col-sm-offset-2">
                                             <span class="help-block"><a href="{:url('index/assets/videos')}" target="_blank">点击获取视频MediaID</a></span>
