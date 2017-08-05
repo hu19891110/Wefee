@@ -3,12 +3,12 @@ namespace app\addons\controller;
 
 use think\Request;
 use app\wefee\Tree;
-use Qsnh\think\Auth\Auth;
 use app\common\controller\Base;
 use app\model\Addons AS AddonsModel;
 
 class Addons extends Base
 {
+    const ADDONS_MAIN_TEMPLATE = 'common/addons';
 
     public function installed()
     {
@@ -57,9 +57,7 @@ class Addons extends Base
      */
     public function install(Request $request)
     {
-        $this->queryValidator($request);
-
-        $addons_sign = strtolower(str_replace('_', '', $request->param('addons_sign')));
+        $addons_sign = $this->queryValidator($request);
 
         /** 1.重复性检测 */
         if (AddonsModel::get(['addons_sign' => $addons_sign])) {
@@ -335,9 +333,7 @@ class Addons extends Base
      */
     public function delete(Request $request)
     {
-        $this->queryValidator($request);
-
-        $addons_sign = $request->param('addons_sign');
+        $addons_sign = $this->queryValidator($request);
 
         /** 1.检测是否安装 */
         if (AddonsModel::get(['addons_sign' => $addons_sign])) {
@@ -364,11 +360,9 @@ class Addons extends Base
         $addons = $this->existsValidator($request);
 
         $path = ADDONS_PATH . strtolower($addons->addons_sign) . DS . 'wefee.html';
-
-        $path = file_exists($path) ? $path : $this->index_template;
+        $path = file_exists($path) ? $path : self::ADDONS_MAIN_TEMPLATE;
 
         $title = "{$addons->addons_name}的主页 - PowerBy Wefee.CC";
-
         return view($path, compact('title', 'addons'));
     }
 
@@ -393,31 +387,35 @@ class Addons extends Base
      */
     public function postConfig(Request $request)
     {
-        $addons = $this->existsValidator($request);
-
         $post = $request->except(['__token__', 'addons_sign']);
-
+        $addons = $this->existsValidator($request);
         $addons->save(['addons_config' => $post]);
-
         $this->success('操作成功');
     }
 
+    /**
+     * 判断当前插件是否存在，如果存在则返回该插件的Model对象
+     * @return AddonsModel
+     */
     protected function existsValidator(Request $request)
     {
-        $this->queryValidator($request);
-
-        $addons = AddonsModel::get(['addons_sign' => $request->param('addons_sign')]);
-
+        $addonSign = $this->queryValidator($request);
+        $addons = AddonsModel::get(['addons_sign' => $addonSign]);
         !$addons && $this->error('插件未安装');
-
         return $addons;
     }
 
+    /**
+     * 简单判断当前插件sign是否为空
+     * @return string 插件标识
+     */
     protected function queryValidator(Request $request)
     {
-        if ($request->param('addons_sign') == '') {
+        $addonSign = strtolower($request->param('addons_sign'));
+        if ($addonSign == '') {
             $this->error('参数错误');
         }
+        return $addonSign;
     }
 
 }

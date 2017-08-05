@@ -27,7 +27,7 @@ class Api extends Controller
 
         /** 实例化插件控制器对象 */
         $path =
-            ADDONS_PATH . strtolower(str_replace('_', '', $request->param('addons'))) .
+            ADDONS_PATH . strtolower($request->param('addons')) .
             DS . 'controller' .
             DS . implode(DS, $controller) . EXT;
 
