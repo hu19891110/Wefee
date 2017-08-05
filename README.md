@@ -1,3 +1,4 @@
+<p align=center><img src="public/thumbs/screen.png" width=100% height=auto></p>   
 <h1 align="center">Wefee</h1>
 <p align="center">
 <a href="https://wefee.cc/">主页</a> |
