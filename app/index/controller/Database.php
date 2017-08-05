@@ -13,7 +13,6 @@ class Database extends Base
     public function _initialize()
     {
         parent::_initialize();
-
         $this->path = ROOT_PATH . 'data' . DS . 'backup';
     }
 
@@ -21,9 +20,7 @@ class Database extends Base
     public function backup()
     {
         $tables = $this->getAllTables();
-
         $title = '数据库备份';
-
         return view('', compact('title', 'tables'));
     }
 
@@ -42,7 +39,6 @@ class Database extends Base
             $tmp['count'] = Db::table($tmp['name'])->count();
             $tables[] = $tmp;
         }
-
         return $tables;
     }
 
@@ -54,7 +50,6 @@ class Database extends Base
         $this->checkToken($request);
 
         $tables = $request->post('table/a');
-
         !$tables && $this->error('请选择需要备份的表');
 
         $sql = "-- Wefee Backup System\r\n";
@@ -136,7 +131,6 @@ class Database extends Base
         }
 
         $title = '数据库恢复';
-
         return view('', compact('title', 'backupFiles'));
     }
 
@@ -201,11 +195,10 @@ class Database extends Base
 
         try {
             $obj->delete();
+            $this->success('操作成功');
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
-
-        $this->success('操作成功');
     }
 
     // 优化数据表视图

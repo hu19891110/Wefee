@@ -11,7 +11,6 @@ class Setting extends Base
     public function wechat()
     {
         $title = '微信配置';
-
         return view('', compact('title'));
     }
 
@@ -42,11 +41,8 @@ class Setting extends Base
     public function setting()
     {
         $upload = config('upload');
-
         $themes = $this->getThemes();
-
         $title = '站点配置';
-
         return view('', compact('title', 'themes', 'upload'));
     }
 
@@ -54,13 +50,11 @@ class Setting extends Base
     {
         /** 主题扫描 */
         $themes = scandir(ROOT_PATH . 'template');
-
         foreach ($themes as $key => $value) {
             if (in_array($value, ['.', '..', 'default'])) {
                 unset($themes[$key]);
             }
         }
-
         return $themes;
     }
 

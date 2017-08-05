@@ -76,7 +76,6 @@ class Rule extends Base
         $data = $request->only(['rule_name', 'rule_sort', 'rule_type', 'rule_content', 'rule_status']);
 
         $this->validator($data);
-
         $rule->save($data);
 
         $this->success('操作成功');
@@ -90,7 +89,6 @@ class Rule extends Base
     protected function findRule($id)
     {
         $rule = ReplyRules::get($id);
-
         if (! $rule) {
             $this->error('规则不存在');
         }
@@ -100,11 +98,8 @@ class Rule extends Base
 
     public function delete(Request $request)
     {
-        /** 删除该规则下的回复内容 */
         ReplyContents::destroy(['rule_id' => $request->param('id')]);
-
         ReplyRules::destroy($request->param('id'));
-
         $this->success('操作成功');
     }
 

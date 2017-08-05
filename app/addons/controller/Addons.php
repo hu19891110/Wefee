@@ -59,7 +59,7 @@ class Addons extends Base
     {
         $this->queryValidator($request);
 
-        $addons_sign = strtolower($request->param('addons_sign'));
+        $addons_sign = strtolower(str_replace('_', '', $request->param('addons_sign')));
 
         /** 1.重复性检测 */
         if (AddonsModel::get(['addons_sign' => $addons_sign])) {

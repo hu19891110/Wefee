@@ -18,14 +18,12 @@ class Index extends Base
     public function _initialize()
     {
         parent::_initialize();
-
         Hook::add('after-login', LoginAfter::class);
     }
 
     public function index()
     {
         $title = 'Wefee 微信管理系统';
-
         return view('', compact('title'));
     }
 
