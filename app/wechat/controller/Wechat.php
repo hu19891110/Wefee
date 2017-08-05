@@ -58,7 +58,7 @@ class Wechat extends Controller
      * 网页授权回调
      * @param \think\Request $request
      */
-    public function requestAuth(Request $request)
+    public function auth(Request $request)
     {
         /** 前一页地址 */
         $targetUrl = $_SERVER['HTTP_REFERER'];
@@ -70,16 +70,12 @@ class Wechat extends Controller
     /**
      * 微信网页授权回调
      */
-    public function webNotify(Request $request)
+    public function authNotify(Request $request)
     {
         $oauth = Tree::wechat()->oauth;
-
         $user = $oauth->user();
-
         Session::set('wechat_user', $user);
-
         $url = Session::has('target_url') ? Session::get('target_url') : '/';
-
         header('Location:'.$url);
     }
 

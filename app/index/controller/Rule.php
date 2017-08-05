@@ -20,9 +20,7 @@ class Rule extends Base
         }
 
         $rules = ReplyRules::where($where)->order('created_at', 'dec')->paginate(15);
-
         $title = '微信消息回复规则';
-
         return view('', compact('title', 'rules'));
     }
 

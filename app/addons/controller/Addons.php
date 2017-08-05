@@ -325,11 +325,8 @@ class Addons extends Base
     public function ban(Request $request)
     {
         $addons = $this->existsValidator($request);
-
         $status = $addons['addons_status'] == 1 ? 3 : 1;
-
         $addons->save(['addons_status' => $status]);
-
         $this->success('操作成功');
     }
 

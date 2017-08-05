@@ -68,16 +68,16 @@ require(['jquery', 'webuploader'], function ($, wu) {
         accept: {
             title: 'Images',
             extensions: 'gif,jpg,jpeg,bmp,png',
-            mimeTypes: 'image/*'
+            mimeTypes: 'image/gif,image/png,image/jpg,image/jpeg'
         }
     });
     uploader.on('uploadSuccess', function(file, response) {
-        if (response.status != 0) {
-            alert(response.message);
+        if (response.code != 200) {
+            alert(response.msg);
             return ;
         }
-        $('input[name="$name"]').val(response.message);
-        $('#{$id}preview').attr('src', response.message);
+        $('input[name="$name"]').val(response.msg);
+        $('#{$id}preview').attr('src', response.msg);
     });
 });
 </script>
@@ -146,17 +146,17 @@ require(['jquery', 'webuploader'], function ($, wu) {
         accept: {
             title: 'Images',
             extensions: 'gif,jpg,jpeg,bmp,png',
-            mimeTypes: 'image/*'
+            mimeTypes: 'image/gif,image/png,image/jpg,image/jpeg'
         }
     });
     uploader.on('uploadSuccess', function(file, response) {
-        if (response.status != 0) {
-            alert(response.message);
+        if (response.code != 200) {
+            alert(response.msg);
             return ;
         }
         var html = '<div class="col-sm-3"><b class="delete-image-{$id}" style="position: absolute; top: 0px; right: 0px; z-index: 3; color: red;">删除</b>';
-        html += '<img src="' + response.message + '" width="150" height="150" class="img-thumbnail" >';
-        html += '<input type="hidden" name="{$name}[]" value="' + response.message + '" >';
+        html += '<img src="' + response.msg + '" width="150" height="150" class="img-thumbnail" >';
+        html += '<input type="hidden" name="{$name}[]" value="' + response.msg + '" >';
         html += '</div>';
 
         $('.{$id}-preview').append(html);
